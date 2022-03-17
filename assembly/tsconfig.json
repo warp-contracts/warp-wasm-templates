@@ -1,0 +1,16 @@
+{
+  "extends": "assemblyscript/std/assembly.json",
+  "include": [
+    "./**/*.ts",
+    "./contract.d.ts",
+    "../node_modules/@serial-as/core/assembly/as_types.d.ts"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.collection"
+    ]
+  }
+}

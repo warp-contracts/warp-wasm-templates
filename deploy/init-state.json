@@ -1,0 +1,8 @@
+{
+  "ticker": "PLasMA",
+  "name": "WARP engine fuel",
+  "balances": {},
+  "networks": {},
+  "canEvolve": true,
+  "evolve": null
+}
