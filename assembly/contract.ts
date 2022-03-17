@@ -22,12 +22,12 @@ functions.set("mint", mint);
 let contractState: StateSchema;
 
 @contract
-function handle(contractState: StateSchema, action: ActionSchema): ResultSchema | null {
+function handle(state: StateSchema, action: ActionSchema): ResultSchema | null {
   console.log(`Function called: "${action.function}"`);
 
   const fn = action.function;
   if (functions.has(fn)) {
-    const handlerResult = functions.get(fn)(contractState, action);
+    const handlerResult = functions.get(fn)(state, action);
     if (handlerResult.state != null) {
       console.logO('Setting new state', stringify(handlerResult.state))
       contractState = handlerResult.state;

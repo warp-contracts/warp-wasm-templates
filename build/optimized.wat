@@ -7586,7 +7586,7 @@
     call $assembly/imports/console/console.logO
     local.get $2
     i32.load
-    drop
+    global.set $assembly/contract/contractState
    end
    local.get $2
    i32.load offset=4
