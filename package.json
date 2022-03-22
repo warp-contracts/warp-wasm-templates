@@ -14,6 +14,7 @@
     "deploy:mainnet": "yarn run asbuild && node deploy/mainnet/deploy-mainnet.js",
     "read:local": "yarn run deploy:local && node deploy/local/read-contract-state-local.js",
     "read:testnet": "yarn run deploy:testnet && node deploy/testnet/read-contract-state-testnet.js",
+    "read:mainnet": "yarn run deploy:local && node deploy/mainnet/read-contract-state-mainnet.js",
     "test": "jest"
   },
   "engines": {

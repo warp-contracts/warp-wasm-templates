@@ -1,4 +1,4 @@
-_REDSTONE SMARTCONTRACTS ASSEMBLYSCRIPT_
+# redstone smartweave contracts - assemblyscript template
 
 Following repository is a template for writing SmartWeave contracts in Assemblyscript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
@@ -6,13 +6,14 @@ Assemblyscript compiles a variant of Typescript to WebAssembly using Binaryen. A
 
 This template lets you quickly write Assemblyscript contract, test it, compile it to WebAssembly and deploy.
 
-- [Installation]
-- [Writing contract]
-- [Tests]
-- [Build]
-- [Deploy]
+- [Installation](#installation)
+- [Writing contract](#writing-contract)
+- [Tests](#tests)
+- [Build](#build)
+- [Deploy](#deploy)
+- [Using SDK](#using-sdk)
 
-# Installation
+## Installation
 
 It is required to install both - Assemblyscript [loader](https://www.assemblyscript.org/loader.html#using-the-loader) and [compiler](https://www.assemblyscript.org/compiler.html#using-the-compiler). We'll also need SmartWeave-oriented libraries - [RedStone SmartWeave SDK](https://github.com/redstone-finance/redstone-smartcontracts), [arweave-js](https://github.com/ArweaveTeam/arweave-js) and [arlocal](https://github.com/textury/arlocal) as well as [typescript](https://www.typescriptlang.org/), [jest](https://github.com/facebook/jest) for testing and [serial-as](https://github.com/gagdiez/serial-as) which simplifies creating serialized encoders/decoders for Assemblyscript.
 
@@ -24,7 +25,7 @@ You can quickly initialize Assemblyscript by using following command:
 npx asinit .
 ```
 
-# Writing contract
+## Writing contract
 
 ### Actions
 
@@ -141,6 +142,10 @@ We will then get an action passed to the contract, get it from the `functions` m
 
 Custom decorators are ignored in AssemblyScript, unless we decide to give them a special meaning by using [transform option](#contract-transform). And that is the reason why we're using `@contract` decorator in the contract code.
 
+### No support
+
+Please remember that AssemblyScript does not support closures and for... of... methods. You can check which other features are not supported (and also what other implementation plans has the AssemblyScript team) [here](https://www.assemblyscript.org/status.html#language-features).
+
 ### tsconfig.json
 
 TypeScript configuration inheriting recommended AssemblyScript settings.
@@ -176,7 +181,7 @@ Instead of providing the options outlined above on the command line, a configura
     }
 ```
 
-# Build
+## Build
 
 Now we need to compile our contract. Similar to TypeScript's `tsc` transpiling to JavaScript, AssemblyScript's `asc` compiles to WebAssembly. Non-option arguments are treated as the names of entry files - in our case it will be a contract file.
 
@@ -221,7 +226,7 @@ Run your test with this command:
 yarn run test
 ```
 
-# Deploy
+## Deploy
 
 You can deploy the contract to three types of networks - mainnet, RedStone public testnet and local testnet. All of them share some common code which you can view in [deploy/scripts/utils](deploy/scripts/utils).
 Deploy script does not differ from the one you would write when deploying a regular Javascript contract. These are the steps you need to follow to deploy a contract:
@@ -241,12 +246,12 @@ Then, you just need to deploy contract by running proper deploy command which fi
     npm run deploy:[network]
 ```
 
-# Read state
+# Using SDK
 
 Optionally - you can run following script:
 
 ```bash
-    npm run deploy:[network]
+    npm run read:[network]
 ```
 
 ...which compiles contract, deploys it and then reads its state. Using SDKs' methods works exactly the same like in case of a regular JS contract.
