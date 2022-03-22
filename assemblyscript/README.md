@@ -2,7 +2,17 @@
 
 Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
-It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our RedStone Academy.
+It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our [RedStone Academy](https://redstone.academy).
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Writing contract](#writing-contract)
+- [Tests](#tests)
+- [Build](#build)
+- [Deploy](#deploy)
+- [Using SDK](#using-sdk)
+
+# Introduction
 
 ## What is AssemblyScript?
 
@@ -13,13 +23,6 @@ This template lets you quickly write AssemblyScript contract, test it, compile i
 ## Current implementation limitations
 
 Please note, that current implementation for AssemblyScript has its limits. RedStone SDK's **Smarteave.readContractState method** which allows to read other contracts' state is not supported. It will be available in other implementation - Rust and Go - which will be soon released and enabled to use.
-
-- [Installation](#installation)
-- [Writing contract](#writing-contract)
-- [Tests](#tests)
-- [Build](#build)
-- [Deploy](#deploy)
-- [Using SDK](#using-sdk)
 
 ## Installation
 
@@ -44,7 +47,7 @@ If you want to edit contract's code and create your own implementation you can d
 
 1. Edit `init-state.json` by adding the initial state for your contract - [deploy/state/init-state.json](deploy/state/init-state.json)
 
-2. Edit/add actions which user will be able to call while interactinh with the contract - [assembly/actions](assembly/actions)
+2. Edit/add actions which user will be able to call while interacting with the contract - [assembly/actions](assembly/actions)
 
 3. Add AssemblyScript schemas which should describe input and output types for your actions - similair to what you would do when writing in Typescript - [assembly/schemas.ts](assembly/schemas.ts)
 
