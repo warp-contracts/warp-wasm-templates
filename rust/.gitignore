@@ -1,6 +1,6 @@
 node_modules
 dist
-build
+pkg
 __tests__/*.json
 /coverage
 .DS_Store
