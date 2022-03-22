@@ -4,7 +4,7 @@ Following repository is a template for writing SmartWeave contracts in Assemblyc
 
 It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our RedStone Academy.
 
-## What is Assemblyscript?
+## What is AssemblyScript?
 
 AssemblyScript compiles a variant of TypeScript to WebAssembly using Binaryen. As it's written in the AssemblyScript documentation - in its simplest form it is JavaScript with WebAssembly types compiled to WebAssembly exports and imports.
 
