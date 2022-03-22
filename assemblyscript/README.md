@@ -1,14 +1,18 @@
-# redstone smartweave contracts - AssemblyScript template
+# Redstone SmartWeave contracts - AssemblyScript template
 
-Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
+Following repository is a template for writing SmartWeave contracts in Assemblycript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
 It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our RedStone Academy.
 
-Please note, that current implementation for Assemblyscript has its limits. RedStone SDK's [Smarteave.readContractState method]() which allows reading other contracts' state is not supported. It will be available in other implementation - Rust and Go - which will be soon released and enabled to use.
+## What is Assemblyscript?
 
-AssemblyScript compiles a variant of TypeScript to WebAssembly using Binaryen. As it's written in the Assemblyscrit documentation - in its simplest form it is JavaScript with WebAssembly types compiled to WebAssembly exports and imports.
+AssemblyScript compiles a variant of TypeScript to WebAssembly using Binaryen. As it's written in the AssemblyScript documentation - in its simplest form it is JavaScript with WebAssembly types compiled to WebAssembly exports and imports.
 
 This template lets you quickly write AssemblyScript contract, test it, compile it to WebAssembly and deploy.
+
+## Current implementation limitations
+
+Please note, that current implementation for AssemblyScript has its limits. RedStone SDK's **Smarteave.readContractState method** which allows to read other contracts' state is not supported. It will be available in other implementation - Rust and Go - which will be soon released and enabled to use.
 
 - [Installation](#installation)
 - [Writing contract](#writing-contract)
@@ -32,7 +36,7 @@ yarn install
 
 ## Writing contract
 
-Following template is designed for you to quickly understand basic concepts of writing contracts using Assemblyscript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you will feel the need to explore some more - walk through the rest of the tutorial starting with [Implementation](#implementation) section.
+Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you will feel the need to explore some more - walk through the rest of the tutorial starting with [Implementation](#implementation) section.
 
 ## Quick start
 
@@ -42,7 +46,7 @@ If you want to edit contract's code and create your own implementation you can d
 
 2. Edit/add actions which user will be able to call while interactinh with the contract - [assembly/actions](assembly/actions)
 
-3. Add Assemblyscript schemas which should describe input and output types for your actions - similair to what you would do when writing in Typescript - [assembly/schemas.ts](assembly/schemas.ts)
+3. Add AssemblyScript schemas which should describe input and output types for your actions - similair to what you would do when writing in Typescript - [assembly/schemas.ts](assembly/schemas.ts)
 
 4. Add above action functions to the `functions` Map in [assembly/contract.ts](assembly/contract.ts#L16) - when user will interact with the contract, required action function will be searched for in the map and called with `state` and `action` as arguments in order to output the result of the function and optionally set a new state (if indicated action changes the state).
 
