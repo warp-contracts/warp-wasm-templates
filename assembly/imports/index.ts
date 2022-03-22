@@ -1,5 +1,4 @@
 export * from './console';
-// export * from './api';
 
 export { parse, stringify } from '@serial-as/json';
 export * from './smartweave/block';

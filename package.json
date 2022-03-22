@@ -7,8 +7,13 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "asbuild": "asc assembly/contract.ts --sourceMap --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release",
-    "run": "yarn run asbuild && node deploy/local/deploy.js",
+    "asbuild": "asc assembly/contract.ts --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release",
+    "asbuild:debug": "asc assembly/contract.ts --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target debug",
+    "deploy:local": "yarn run asbuild && node deploy/local/deploy-local.js",
+    "deploy:testnet": "yarn run asbuild && node deploy/testnet/deploy-test.js",
+    "deploy:mainnet": "yarn run asbuild && node deploy/mainnet/deploy-mainnet.js",
+    "read:local": "yarn run deploy:local && node deploy/local/read-contract-state-local.js",
+    "read:testnet": "yarn run deploy:testnet && node deploy/testnet/read-contract-state-testnet.js",
     "test": "jest"
   },
   "engines": {
@@ -26,10 +31,8 @@
     "assemblyscript": "^0.19.23",
     "asyncify-wasm": "^1.2.1",
     "jest": "^27.5.1",
-    "redstone-smartweave": "0.4.44",
+    "redstone-smartweave": "0.4.50",
     "ts-jest": "^27.1.3",
-    "visitor-as": "^0.8.0",
-    "wasm-json-toolkit": "^0.2.6",
-    "wasm-metering": "^0.2.1"
+    "visitor-as": "^0.8.0"
   }
 }

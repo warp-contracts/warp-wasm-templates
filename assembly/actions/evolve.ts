@@ -7,7 +7,7 @@ export function evolve(
   state: StateSchema,
   action: ActionSchema
 ): HandlerResultSchema {
-  const evolve = action.evolve;
+  const evolve = action.value;
   const contractOwner = Contract.owner();
   const sender = Transaction.owner();
 
@@ -21,7 +21,6 @@ export function evolve(
     throw new Error('[CE:ECE] Evolve not allowed');
   }
 
-  // TODO: validate evolve txid format
   state.evolve = evolve;
 
   return {
