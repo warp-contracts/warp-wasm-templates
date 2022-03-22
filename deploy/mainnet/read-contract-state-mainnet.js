@@ -5,5 +5,5 @@ readContractState(
   443,
   'https',
   'mainnet',
-  'deploy/local/wallet_local.json'
+  'deploy/mainnet/.secrets/wallet_mainnet.json'
 ).finally();
