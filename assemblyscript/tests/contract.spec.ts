@@ -12,7 +12,7 @@ import {
   SmartWeaveNodeFactory,
 } from 'redstone-smartweave';
 import path from 'path';
-import { addFunds, mineBlock } from '../utils';
+import { addFunds, mineBlock } from '../../utils';
 
 describe('Testing the Profit Sharing Token', () => {
   let contractSrc: Buffer;
