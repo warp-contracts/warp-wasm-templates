@@ -1,6 +1,6 @@
 # Redstone SmartWeave contracts - AssemblyScript template
 
-Following repository is a template for writing SmartWeave contracts in Assemblycript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
+Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
 It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our RedStone Academy.
 
