@@ -2,7 +2,6 @@
 
 import {parse, stringify} from "@serial-as/json";
 import {console} from "./imports/console";
-import {msg} from "./imports/smartweave/msg";
 import {Block} from "./imports/smartweave/block";
 import {Transaction} from "./imports/smartweave/transaction";
 import {Contract} from "./imports/smartweave/contract";
