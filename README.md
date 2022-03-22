@@ -1,10 +1,15 @@
-# redstone smartweave contracts - assemblyscript template
+# redstone smartweave contracts - AssemblyScript template
 
-Following repository is a template for writing SmartWeave contracts in Assemblyscript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
+Dodać info że template kontraktu to PST. Więcej o PST - w akademii!
 
-Assemblyscript compiles a variant of Typescript to WebAssembly using Binaryen. As it's written in the Assemblyscrit documentation - in its simplest form it is JavaScript with WebAssembly types compiled to WebAssembly exports and imports.
+Dodać info braku wsparcia dla odczytu stanu innych kontraktów (Smartweave.readContractState)
+- można wspomnieć, że będą dostępne w Rust i Go, które niedługo zostaną opublikowane.
 
-This template lets you quickly write Assemblyscript contract, test it, compile it to WebAssembly and deploy.
+Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
+
+AssemblyScript compiles a variant of TypeScript to WebAssembly using Binaryen. As it's written in the Assemblyscrit documentation - in its simplest form it is JavaScript with WebAssembly types compiled to WebAssembly exports and imports.
+
+This template lets you quickly write AssemblyScript contract, test it, compile it to WebAssembly and deploy.
 
 - [Installation](#installation)
 - [Writing contract](#writing-contract)
@@ -15,21 +20,16 @@ This template lets you quickly write Assemblyscript contract, test it, compile i
 
 ## Installation
 
-It is required to install both - Assemblyscript [loader](https://www.assemblyscript.org/loader.html#using-the-loader) and [compiler](https://www.assemblyscript.org/compiler.html#using-the-compiler). We'll also need SmartWeave-oriented libraries - [RedStone SmartWeave SDK](https://github.com/redstone-finance/redstone-smartcontracts), [arweave-js](https://github.com/ArweaveTeam/arweave-js) and [arlocal](https://github.com/textury/arlocal) as well as [typescript](https://www.typescriptlang.org/), [jest](https://github.com/facebook/jest) for testing and [serial-as](https://github.com/gagdiez/serial-as) which simplifies creating serialized encoders/decoders for Assemblyscript.
-
-### Initialize Assemblyscript
-
-You can quickly initialize Assemblyscript by using following command:
-
-```bash
-npx asinit .
-```
+dodać info o instalacji yarn oraz wymaganej wersji node-a
+yarn install też tutaj
 
 ## Writing contract
 
 ### Actions
 
-Like in a classic Typescript example we will need contract's action functions which we'll divide into separate files. You can divide them further into write and read folders.
+Like in a classic TypeScript example we will need contract's action functions which we'll divide into separate files. You can divide them further into write and read folders.
+
+Linki do przykładowej akcji balance - zamiast tego z dupy kodu poniżej
 
 ```js
 export function balance(
@@ -40,7 +40,7 @@ export function balance(
 
 ### Types
 
-For each action we'll define input and output variables types. We'll create a dedicated `schemas.ts` file with all the types used in the contract. Assemblyscript is a Typescript-like language but unlike the second one - because of being compiled statically ahead of time it's not designed to describe Javascript dynamic features and it required stricter type checking. API for most of the types is quite similair to Typescript with couple of differences, e.g.:
+For each action we'll define input and output variables types. We'll create a dedicated `schemas.ts` file with all the types used in the contract. AssemblyScript is a TypeScript-like language but unlike the second one - because of being compiled statically ahead of time it's not designed to describe JavaScript dynamic features and it required stricter type checking. API for most of the types is quite similair to TypeScript with couple of differences, e.g.:
 
 - There is no `any` or `undefined`
 - AssemblyScript inherits WebAssembly's more specific integer, floating point and reference types (e.g. `i32` - a 32-bit signed integer). You can view the whole list in the [documentation](https://www.assemblyscript.org/types.html#types)
@@ -115,7 +115,7 @@ if (!state.balances.has(target)) {
 
 ### Contract.ts
 
-Firstly, we'll create a mapping of action functions names to functions itself. Side note: inline 'array' map initializer doe not work in Assemblyscript so we need to initialize it by setting elements with a specified key and a value by using `set()` method.
+Firstly, we'll create a mapping of action functions names to functions itself. Side note: inline 'array' map initializer doe not work in AssemblyScript so we need to initialize it by setting elements with a specified key and a value by using `set()` method.
 
 ```js
 const functions: Map<string, ContractFn> = new Map();
@@ -138,17 +138,9 @@ We will then get an action passed to the contract, get it from the `functions` m
     ```
 ````
 
-### Custom decorators
+### Language limitations
 
-Custom decorators are ignored in AssemblyScript, unless we decide to give them a special meaning by using [transform option](#contract-transform). And that is the reason why we're using `@contract` decorator in the contract code.
-
-### No support
-
-Please remember that AssemblyScript does not support closures and for... of... methods. You can check which other features are not supported (and also what other implementation plans has the AssemblyScript team) [here](https://www.assemblyscript.org/status.html#language-features).
-
-### tsconfig.json
-
-TypeScript configuration inheriting recommended AssemblyScript settings.
+Please remember that AssemblyScript does not support closures and for... of... iteration. You can check which other features are not supported (and also what other implementation plans has the AssemblyScript team) [here](https://www.assemblyscript.org/status.html#language-features).
 
 ### asconfig.json
 
@@ -200,14 +192,10 @@ You can view the whole list of compile options [here](https://www.assemblyscript
 
 After running `yarn run asbuild` (or `npm run asbuild`) `contract.ts` file will be compiled to WebAssembly. Compiled binary will be emitted to the `build/` directory (in case of debug mode - also source map and text format will be emitted).
 
-### Contract transform
-
-We cannot transform code at runtime because of AssemblyScript being compile statically. We need to do it at compile-time. It is enabled by `asc` - `transform` option which points to the file transforming the contract, in our case - `ContractTransform` file.
-
 ### Tests
 
 Writing tests do not differ much from writing tests for regular JS contracts. The only difference is - you need to inidicate correct compiled WASM file.
-While reading it you do not pass encoding option (`utf-8`). Remember that also contract source type differs - it needs to be of type `Buffer`. You should pass the path to the original wasm contract source code while deploying the contract. SDK will then zip it and pass to the data deployed while creating the transaction.
+You also need to pass the path to the original wasm contract source code while deploying the contract. SDK will then zip it and pass to the data deployed while creating the transaction.
 
 ```js
 const contractTxId = await smartweave.createContract.deploy(
@@ -229,7 +217,7 @@ yarn run test
 ## Deploy
 
 You can deploy the contract to three types of networks - mainnet, RedStone public testnet and local testnet. All of them share some common code which you can view in [deploy/scripts/utils](deploy/scripts/utils).
-Deploy script does not differ from the one you would write when deploying a regular Javascript contract. These are the steps you need to follow to deploy a contract:
+Deploy script does not differ from the one you would write when deploying a regular JavaScript contract. These are the steps you need to follow to deploy a contract:
 
 - initialize Arweave
 - initialize SmartWeave
@@ -255,3 +243,4 @@ Optionally - you can run following script:
 ```
 
 ...which compiles contract, deploys it and then reads its state. Using SDKs' methods works exactly the same like in case of a regular JS contract.
+
