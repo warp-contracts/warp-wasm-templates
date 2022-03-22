@@ -13,41 +13,15 @@ export class ActionSchema {
   function: string;
   contractTxId: string | null;
   target: string;
-  evolve: string | null;
+  value: string | null;
   qty: i32;
 }
 
 @serializable
 export class ResultSchema {
   balance: i32;
-}
-
-@serializable
-export class SmartweaveSchema {
-  contract: ContractSchema;
-  sender: string;
-  block: BlockSchema;
-  transaction: TransactionSchema;
-}
-
-@serializable
-export class BlockSchema {
-  height: i32;
-  indep_hash: string;
-  timestamp: i32;
-}
-
-@serializable
-export class TransactionSchema {
-  id: string;
-  owner: string;
   target: string;
-}
-
-@serializable
-export class ContractSchema {
-  id: string;
-  owner: string;
+  ticker: string;
 }
 
 @serializable

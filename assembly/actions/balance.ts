@@ -5,6 +5,7 @@ export function balance(
   action: ActionSchema
 ): HandlerResultSchema {
   const target = action.target;
+  const ticker = state.ticker;
 
   if (!target) {
     throw new Error('[CE:NOB] Must specify target to get balance for');
@@ -18,6 +19,8 @@ export function balance(
     state,
     result: {
       balance: state.balances.get(target),
+      target,
+      ticker,
     },
   };
 }

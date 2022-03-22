@@ -40,7 +40,6 @@ describe('Testing the Profit Sharing Token', () => {
     });
 
     LoggerFactory.INST.logLevel('error');
-    LoggerFactory.INST.logLevel('debug', 'WASM:AS');
 
     smartweave = SmartWeaveNodeFactory.memCached(arweave);
 
@@ -67,11 +66,14 @@ describe('Testing the Profit Sharing Token', () => {
     };
 
     // deploying contract using the new SDK.
-    const contractTxId = await smartweave.createContract.deploy({
-      wallet,
-      initState: JSON.stringify(initialState),
-      src: contractSrc,
-    });
+    const contractTxId = await smartweave.createContract.deploy(
+      {
+        wallet,
+        initState: JSON.stringify(initialState),
+        src: contractSrc,
+      },
+      path.join(__dirname, '../../assembly')
+    );
 
     // connecting to the PST contract
     pst = smartweave.pst(contractTxId);
@@ -117,71 +119,62 @@ describe('Testing the Profit Sharing Token', () => {
     ).toEqual(10000000 + 555);
   });
 
-  //   it('should properly view contract state', async () => {
-  //     const result = await pst.currentBalance(
-  //       'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-  //     );
-  //     expect(result.balance).toEqual(10000000 + 555);
-  //     expect(result.ticker).toEqual('EXAMPLE_PST_TOKEN');
-  //     expect(result.target).toEqual(
-  //       'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-  //     );
-  //   });
+  it('should properly view contract state', async () => {
+    const result = await pst.currentBalance(
+      'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
+    );
+    expect(result.balance).toEqual(10000000 + 555);
+    expect(result.ticker).toEqual('EXAMPLE_PST_TOKEN');
+    expect(result.target).toEqual(
+      'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
+    );
+  });
 
-  //   it('should properly mint tokens', async () => {
-  //     await pst.writeInteraction({
-  //       function: 'mint',
-  //       qty: 2000,
-  //     });
+  it("should properly evolve contract's source code", async () => {
+    expect((await pst.currentState()).balances[walletAddress]).toEqual(555114);
 
-  //     await mineBlock(arweave);
-  //     expect((await pst.currentState()).balances[walletAddress]).toEqual(2000);
-  //   });
+    const newSource = fs.readFileSync(
+      path.join(__dirname, './data/token-evolve.js'),
+      'utf8'
+    );
 
-  //   it("should properly evolve contract's source code", async () => {
-  //     expect((await pst.currentState()).balances[walletAddress]).toEqual(555114);
+    const newSrcTxId = await pst.saveNewSource(newSource);
+    console.log('txid', newSrcTxId);
+    await mineBlock(arweave);
 
-  //     const newSource = fs.readFileSync(
-  //       path.join(__dirname, '../data/token-evolve.js'),
-  //       'utf8'
-  //     );
+    await pst.evolve(newSrcTxId);
+    await mineBlock(arweave);
 
-  //     const newSrcTxId = await pst.saveNewSource(newSource);
-  //     await mineBlock(arweave);
+    // note: the evolved balance always adds 555 to the result
+    expect((await pst.currentBalance(walletAddress)).balance).toEqual(
+      555114 + 555
+    );
+  });
 
-  //     await pst.evolve(newSrcTxId);
-  //     await mineBlock(arweave);
+  it('should properly perform dry write with overwritten caller', async () => {
+    const newWallet = await arweave.wallets.generate();
+    const overwrittenCaller = await arweave.wallets.jwkToAddress(newWallet);
+    await pst.transfer({
+      target: overwrittenCaller,
+      qty: 1000,
+    });
 
-  //     // note: the evolved balance always adds 555 to the result
-  //     expect((await pst.currentBalance(walletAddress)).balance).toEqual(
-  //       555114 + 555
-  //     );
-  //   });
+    await mineBlock(arweave);
 
-  //   it('should properly perform dry write with overwritten caller', async () => {
-  //     const newWallet = await arweave.wallets.generate();
-  //     const overwrittenCaller = await arweave.wallets.jwkToAddress(newWallet);
-  //     await pst.transfer({
-  //       target: overwrittenCaller,
-  //       qty: 1000,
-  //     });
+    // note: transfer should be done from the "overwrittenCaller" address, not the "walletAddress"
+    const result: InteractionResult<PstState, unknown> = await pst.dryWrite(
+      {
+        function: 'transfer',
+        target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
+        qty: 333,
+      },
+      overwrittenCaller
+    );
 
-  //     await mineBlock(arweave);
-
-  //     // note: transfer should be done from the "overwrittenCaller" address, not the "walletAddress"
-  //     const result: InteractionResult<PstState, unknown> = await pst.dryWrite(
-  //       {
-  //         function: 'transfer',
-  //         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
-  //         qty: 333,
-  //       },
-  //       overwrittenCaller
-  //     );
-
-  //     expect(result.state.balances[walletAddress]).toEqual(555114 - 1000);
-  //     expect(
-  //       result.state.balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']
-  //     ).toEqual(10000000 + 555 + 333);
-  //     expect(result.state.balances[overwrittenCaller]).toEqual(1000 - 333);
-  //   });
+    expect(result.state.balances[walletAddress]).toEqual(555114 - 1000);
+    expect(
+      result.state.balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']
+    ).toEqual(10000000 + 555 + 333);
+    expect(result.state.balances[overwrittenCaller]).toEqual(1000 - 333);
+  });
 });
