@@ -172,7 +172,7 @@ Instead of providing the options outlined above on the command line, a configura
       "debug": true
     },
     "release": {
-      "binaryFile": "build/optimized.wasm",`
+      "binaryFile": "build/optimized.wasm",
       "sourceMap": false,
       "optimizeLevel": 3,
       "shrinkLevel": 0,
@@ -189,7 +189,7 @@ Now we need to compile our contract. Similar to TypeScript's `tsc` transpiling t
 - `runtime` - you can then specify runtime options - `stub` which does not provide a garbage collector at all and never frees (useful where modules are short-lived and collected as a whole anyhow).
 - `exportRuntime` compiler option wich exports runtime interface from the module to the host.
 - `transform` - specifies the path to a custom transform to load (`ContractTransform.js` file)
-- `exportTable` -
+- `exportTable` - exports the function table as 'table'
 - `target` - configuration file target to use. Defaults to 'release'.
 
 ```bash
