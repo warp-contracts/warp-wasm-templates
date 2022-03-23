@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import ArLocal from 'arlocal';
 import Arweave from 'arweave';
-import {JWKInterface} from 'arweave/node/lib/wallet';
+import { JWKInterface } from 'arweave/node/lib/wallet';
 import {
   InteractionResult,
   LoggerFactory,
@@ -12,7 +12,7 @@ import {
   SmartWeaveNodeFactory,
 } from 'redstone-smartweave';
 import path from 'path';
-import {addFunds, mineBlock} from '../utils';
+import { addFunds, mineBlock } from '../utils';
 
 describe('Testing the Profit Sharing Token', () => {
   let contractSrc: Buffer;
@@ -48,7 +48,7 @@ describe('Testing the Profit Sharing Token', () => {
     walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
     contractSrc = fs.readFileSync(
-      path.join(__dirname, './data/optimized.wasm')
+      path.join(__dirname, '../pkg/rust-contract_bg.wasm')
     );
     const stateFromFile: PstState = JSON.parse(
       fs.readFileSync(path.join(__dirname, './data/token-pst.json'), 'utf8')
@@ -72,7 +72,8 @@ describe('Testing the Profit Sharing Token', () => {
         initState: JSON.stringify(initialState),
         src: contractSrc,
       },
-      path.join(__dirname, '../assembly')
+      path.join(__dirname, '../src'),
+      path.join(__dirname, '../pkg/rust-contract.js')
     );
 
     // connecting to the PST contract
@@ -92,12 +93,10 @@ describe('Testing the Profit Sharing Token', () => {
     expect(await pst.currentState()).toEqual(initialState);
 
     expect(
-      (await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'))
-        .balance
+      (await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M')).balance
     ).toEqual(10000000);
     expect(
-      (await pst.currentBalance('33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA'))
-        .balance
+      (await pst.currentBalance('33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA')).balance
     ).toEqual(23111222);
     expect((await pst.currentBalance(walletAddress)).balance).toEqual(555669);
   });
@@ -115,7 +114,7 @@ describe('Testing the Profit Sharing Token', () => {
     expect(
       (await pst.currentState()).balances[
         'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-        ]
+      ]
     ).toEqual(10000000 + 555);
   });
 

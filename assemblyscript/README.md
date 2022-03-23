@@ -39,7 +39,7 @@ yarn install
 
 ## Writing contract
 
-Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you will feel the need to explore some more - walk through the rest of the tutorial starting with [Implementation](#implementation) section.
+Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you feel the need to explore some more - walk through the rest of the tutorial starting with [Implementation](#implementation) section.
 
 ## Quick start
 
@@ -49,7 +49,7 @@ If you want to edit contract's code and create your own implementation you can d
 
 2. Edit/add actions which user will be able to call while interacting with the contract - [assembly/actions](assembly/actions)
 
-3. Add AssemblyScript schemas which should describe input and output types for your actions - similair to what you would do when writing in Typescript - [assembly/schemas.ts](assembly/schemas.ts)
+3. Add AssemblyScript schemas which should describe input and output types for your actions - similar to what you would do when writing in Typescript - [assembly/schemas.ts](assembly/schemas.ts)
 
 4. Add above action functions to the `functions` Map in [assembly/contract.ts](assembly/contract.ts#L16) - when user will interact with the contract, required action function will be searched for in the map and called with `state` and `action` as arguments in order to output the result of the function and optionally set a new state (if indicated action changes the state).
 
@@ -309,4 +309,4 @@ Optionally - you can run following script:
     npm run read:[network]
 ```
 
-...which compiles contract, deploys it and then reads its state. Using SDKs' methods works exactly the same like in case of a regular JS contract.
+...which compiles contract, deploys it and then reads its state. Using SDKs' methods works exactly the same as in case of a regular JS contract.

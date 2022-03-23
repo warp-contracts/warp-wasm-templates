@@ -1,0 +1,7 @@
+node_modules
+dist
+__tests__/*.json
+/coverage
+.DS_Store
+.secrets
+.idea

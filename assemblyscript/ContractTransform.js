@@ -13,7 +13,6 @@ class ContractTransform extends SerialAsTransformer {
 
   // "inspired" by https://github.com/three-em/3em/blob/main/helpers/assemblyscript/transform.js ;-)
   afterParse(parser) {
-    console.log('afterParse');
     const p = new Parser(parser.diagnostics);
 
     const sources = parser.sources.filter(utils.not(utils.isLibrary));
