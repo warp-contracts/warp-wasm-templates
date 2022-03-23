@@ -16,7 +16,6 @@ pub enum Action {
     Evolve {
         value: String
     },
-    #[serde(rename_all = "camelCase")]
     ForeignCall {
         contract_tx_id: String
     }

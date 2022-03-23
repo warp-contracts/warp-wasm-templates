@@ -2,16 +2,16 @@
 /////////////// DO NOT MODIFY THIS FILE /////////////
 /////////////////////////////////////////////////////
 
+use std::cell::RefCell;
+
+use serde_json::Error;
 use wasm_bindgen::prelude::*;
 
-use std::cell::RefCell;
-use serde_json::Error;
-
-use crate::state::State;
 use crate::action::{Action, QueryResponseMsg};
 use crate::contract;
-use crate::error::ContractError;
 use crate::contract_utils::handler_result::HandlerResult;
+use crate::error::ContractError;
+use crate::state::State;
 
 /*
 Note: in order do optimize communication between host and the WASM module,
