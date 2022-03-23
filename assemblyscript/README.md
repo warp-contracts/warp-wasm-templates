@@ -5,26 +5,26 @@ Following repository is a template for writing SmartWeave contracts in AssemblyS
 It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our [RedStone Academy](https://redstone.academy).
 
 - [Introduction](#introduction)
-- [Installation](#installation)
+- [Quick start](#quick-start)
 - [Writing contract](#writing-contract)
 - [Tests](#tests)
 - [Build](#build)
 - [Deploy](#deploy)
 - [Using SDK](#using-sdk)
 
-# Introduction
+## Introduction
 
-## What is AssemblyScript?
+### What is AssemblyScript?
 
 AssemblyScript compiles a variant of TypeScript to WebAssembly using Binaryen. As it's written in the AssemblyScript documentation - in its simplest form it is JavaScript with WebAssembly types compiled to WebAssembly exports and imports.
 
 This template lets you quickly write AssemblyScript contract, test it, compile it to WebAssembly and deploy.
 
-## Current implementation limitations
+### Current implementation limitations
 
 Please note, that current implementation for AssemblyScript has its limits. RedStone SDK's **Smarteave.readContractState method** which allows to read other contracts' state is not supported. It will be available in other implementation - Rust and Go - which will be soon released and enabled to use.
 
-## Installation
+### Installation
 
 You will need:
 
@@ -37,9 +37,9 @@ To install all dependencies run following command:
 yarn install
 ```
 
-## Writing contract
+### Implementation
 
-Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you feel the need to explore some more - walk through the rest of the tutorial starting with [Implementation](#implementation) section.
+Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you feel the need to explore some more - walk through the rest of the tutorial starting with [Writing contract](#writing-contract) section.
 
 ## Quick start
 
@@ -87,7 +87,7 @@ If you would like to view `read-contract-state.js` script code you can check it 
 
 We recommend reading the rest of the docs, but you can start writing your contract right away.
 
-## Implementation
+## Writing contract
 
 ### Actions
 
@@ -259,7 +259,7 @@ Similar to TypeScript's `tsc` transpiling to JavaScript, AssemblyScript's `asc` 
 
 You can view the whole list of compile options [here](https://www.assemblyscript.org/compiler.html#compiler-options).
 
-### Tests
+## Tests
 
 Run your test with this command:
 
@@ -284,7 +284,15 @@ const contractTxId = await smartweave.createContract.deploy(
 ## Deploy
 
 You can deploy the contract to three types of networks - mainnet, RedStone public testnet and local testnet. All of them share some common code which you can view in [deploy/scripts/utils](deploy/scripts/utils).
-Deploy script does not differ from the one you would write when deploying a regular JavaScript contract. These are the steps you need to follow to deploy a contract:
+Deploy script does not differ from the one you would write when deploying a regular JavaScript contract.
+
+You can deploy contract by running proper deploy command which firstly compiles the contract and then fire correct NodeJS script:
+
+```bash
+    npm run deploy:[network]
+```
+
+These are the steps which are followed by the scripts in order to deploy the contract:
 
 - initialize Arweave
 - initialize SmartWeave
@@ -295,13 +303,7 @@ Deploy script does not differ from the one you would write when deploying a regu
 - deploy contract using SDK's `deploy` method
 - mine block - in case of testnets
 
-Then, you just need to deploy contract by running proper deploy command which firstly compiles the contract and then fire correct NodeJS script:
-
-```bash
-    npm run deploy:[network]
-```
-
-# Using SDK
+## Using SDK
 
 Optionally - you can run following script:
 
