@@ -1,13 +1,15 @@
 {
-  "name": "redstone-smartcontracts-rust-tmpl",
+  "name": "redstone-smartcontracts-go-tmpl",
   "version": "0.0.1",
-  "description": "RedStone SmartWeave wasm rust contract template",
+  "description": "RedStone SmartWeave go assemblyscript contract template",
   "main": "index.js",
   "author": "Redstone Team <dev@redstone.finance>",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "wasm-pack build --target nodejs --release --out-name rust-contract",
+    "generate": "easyjson -all src/types/types.go",
+    "build": "yarn generate && mkdir -p .out && tinygo build -o .out/go-contract.wasm -no-debug -target wasm src/main.go",
+    "build:debug": "yarn generate && mkdir -p .out && tinygo build -o .out/go-contract-debug.wasm -target wasm src/main.go",
     "deploy:local": "yarn build && node deploy/local/deploy-local.js",
     "deploy:testnet": "yarn build && node deploy/testnet/deploy-test.js",
     "deploy:mainnet": "yarn build && node deploy/mainnet/deploy-mainnet.js",

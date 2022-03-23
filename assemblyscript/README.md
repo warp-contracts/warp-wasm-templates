@@ -71,7 +71,7 @@ If you want to edit contract's code and create your own implementation you can d
 5. Compile your contract to WASM binary by running following command:
 
 ```bash
-yarn run asbuild
+yarn asbuild
 ```
 
 6. Write tests for your contract (we will use Jest library for testing) - you can find a template in the [tests/](tests) folder.
@@ -79,7 +79,7 @@ yarn run asbuild
 7. Deploy your contract to one of the networks (mainnet/RedStone public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
 
 ```bash
-yarn run deploy:[network]
+yarn deploy:[network]
 ```
 
 NOTE: If you want to deploy your contract locally you need to run Arlocal by typing following command:
@@ -95,7 +95,7 @@ You can view deploy script code [here](deploy/scripts/deploy.js)
 8. Using RedStone SmartWeave SDKs' methods is similair to how you should use them in case of regular JS contracts. You can run a script which compiles contract, deploys it and reads its state by running:
 
 ```bash
-yarn run read:[network]
+yarn read:[network]
 ```
 
 If you would like to view `read-contract-state.js` script code you can check it out [here](deploy/scripts/read-contract-state.js).
@@ -248,13 +248,13 @@ Instead of providing the options on the command line, a configuration file typic
 Now we need to compile our contract. You can achieve that by running following command:
 
 ```bash
-yarn run asbuild
+yarn asbuild
 ```
 
 Running `asbuild` command will compile `contract.ts` file to WebAssembly. Compiled binary will be emitted to the `build/` directory. You can also compile file in debug mode like so:
 
 ```bash
-yarn run asbuild:debug
+yarn asbuild:debug
 ```
 
 In case of debug mode - also source map and text format will be emitted.
@@ -279,7 +279,7 @@ You can view the whole list of compile options [here](https://www.assemblyscript
 Run your test with this command:
 
 ```bash
-yarn run test
+yarn test
 ```
 
 Writing tests do not differ much from writing tests for regular JS contracts. The only difference is - you need to inidicate correct compiled WASM file.

@@ -18,7 +18,7 @@ module.exports.deploy = async function (
   const walletAddr = await walletAddress(arweave, wallet);
 
   const contractSrc = fs.readFileSync(
-    path.join(__dirname, '../../pkg/rust-contract_bg.wasm')
+    path.join(__dirname, '../../.out/go-contract.wasm')
   );
   const stateFromFile = JSON.parse(
     fs.readFileSync(path.join(__dirname, '../state/init-state.json'), 'utf-8')
@@ -40,8 +40,7 @@ module.exports.deploy = async function (
       initState: JSON.stringify(initialState),
       src: contractSrc,
     },
-    path.join(__dirname, '../../src'),
-    path.join(__dirname, '../../pkg/rust-contract.js')
+    path.join(__dirname, '../../src')
   );
   fs.writeFileSync(
     path.join(__dirname, `../${target}/contract-tx-id.txt`),

@@ -4,12 +4,13 @@ import ArLocal from 'arlocal';
 import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import {
+  getTag,
   InteractionResult,
   LoggerFactory,
   PstContract,
   PstState,
   SmartWeave,
-  SmartWeaveNodeFactory,
+  SmartWeaveNodeFactory, SmartWeaveTags,
 } from 'redstone-smartweave';
 import path from 'path';
 import { addFunds, mineBlock } from '../utils';
@@ -28,6 +29,7 @@ describe('Testing the Profit Sharing Token', () => {
   let pst: PstContract;
 
   let foreignContractTxId: string;
+  let contractTxId: string;
 
   beforeAll(async () => {
     // note: each tests suit (i.e. file with tests that Jest is running concurrently
@@ -69,7 +71,7 @@ describe('Testing the Profit Sharing Token', () => {
     };
 
     // deploying contract using the new SDK.
-    const contractTxId = await smartweave.createContract.deploy(
+    contractTxId = await smartweave.createContract.deploy(
       {
         wallet,
         initState: JSON.stringify(initialState),
@@ -106,6 +108,18 @@ describe('Testing the Profit Sharing Token', () => {
 
   afterAll(async () => {
     await arlocal.stop();
+  });
+
+  it('should properly deploy contract', async () => {
+    const contractTx = await arweave.transactions.get(contractTxId);
+
+    expect(contractTx).not.toBeNull();
+    expect(getTag(contractTx, SmartWeaveTags.CONTRACT_TYPE)).toEqual('wasm');
+    expect(getTag(contractTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
+
+    const contractSrcTx = await arweave.transactions.get(getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID));
+    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
+    expect(getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
   });
 
   it('should read pst state and balance data', async () => {
@@ -153,7 +167,7 @@ describe('Testing the Profit Sharing Token', () => {
   it('should properly read foreign contract state', async () => {
     await pst.writeInteraction({
       function: 'foreignCall',
-      contract_tx_id: foreignContractTxId
+      contractTxId: foreignContractTxId
     });
     await mineBlock(arweave);
     expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555 + 1000);

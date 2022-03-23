@@ -1,0 +1,11 @@
+node_modules
+dist
+.out
+__tests__/*.json
+/coverage
+.DS_Store
+.secrets
+.idea
+
+# so that each developer won't overwrite their own local contract address
+contracts-registry.address.test.txt

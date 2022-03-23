@@ -9,12 +9,12 @@
   "scripts": {
     "asbuild": "asc assembly/contract.ts --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release",
     "asbuild:debug": "asc assembly/contract.ts --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target debug",
-    "deploy:local": "yarn run asbuild && node deploy/local/deploy-local.js",
-    "deploy:testnet": "yarn run asbuild && node deploy/testnet/deploy-test.js",
-    "deploy:mainnet": "yarn run asbuild && node deploy/mainnet/deploy-mainnet.js",
-    "read:local": "yarn run deploy:local && node deploy/local/read-contract-state-local.js",
-    "read:testnet": "yarn run deploy:testnet && node deploy/testnet/read-contract-state-testnet.js",
-    "read:mainnet": "yarn run deploy:local && node deploy/mainnet/read-contract-state-mainnet.js",
+    "deploy:local": "yarn asbuild && node deploy/local/deploy-local.js",
+    "deploy:testnet": "yarn asbuild && node deploy/testnet/deploy-test.js",
+    "deploy:mainnet": "yarn asbuild && node deploy/mainnet/deploy-mainnet.js",
+    "read:local": "yarn deploy:local && node deploy/local/read-contract-state-local.js",
+    "read:testnet": "yarn deploy:testnet && node deploy/testnet/read-contract-state-testnet.js",
+    "read:mainnet": "yarn deploy:local && node deploy/mainnet/read-contract-state-mainnet.js",
     "test": "jest"
   },
   "engines": {
