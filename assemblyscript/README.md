@@ -1,4 +1,4 @@
-# Redstone SmartWeave contracts - AssemblyScript template
+🅰️ Redstone SmartWeave contracts - AssemblyScript template
 
 Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
@@ -12,8 +12,6 @@ It's a template for writing PST contract. If you are not familiar with the conce
 - [Build](#build)
 - [Deploy](#deploy)
 - [Using SDK](#using-sdk)
-
-## Code structure
 
 ## 🔍 Code structure
 
@@ -29,7 +27,7 @@ It's a template for writing PST contract. If you are not familiar with the conce
 - [ContractTransform.js] - contains low-level code responsible for transforming contract code during build process
 - [tests/](tests) - contains integration tests written in Jest
 
-## Introduction
+## 🕵️‍♀️ Introduction
 
 ### What is AssemblyScript?
 
@@ -58,7 +56,7 @@ yarn install
 
 Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you feel the need to explore some more - walk through the rest of the tutorial starting with [Writing contract](#writing-contract) section.
 
-## Quick start
+## 🏃‍♂️ Quick start
 
 If you want to edit contract's code and create your own implementation you can do it by following these steps:
 
@@ -104,7 +102,7 @@ If you would like to view `read-contract-state.js` script code you can check it 
 
 We recommend reading the rest of the docs, but you can start writing your contract right away.
 
-## Writing contract
+## 📝 Writing contract
 
 ### Actions
 
@@ -245,7 +243,7 @@ Instead of providing the options on the command line, a configuration file typic
     }
 ```
 
-## Build
+## 👷 Build
 
 Now we need to compile our contract. You can achieve that by running following command:
 
@@ -276,7 +274,7 @@ Similar to TypeScript's `tsc` transpiling to JavaScript, AssemblyScript's `asc` 
 
 You can view the whole list of compile options [here](https://www.assemblyscript.org/compiler.html#compiler-options).
 
-## Tests
+## 🧪 Tests
 
 Run your test with this command:
 
@@ -298,7 +296,7 @@ const contractTxId = await smartweave.createContract.deploy(
 );
 ```
 
-## Deploy
+## 📜 Deploy
 
 You can deploy the contract to three types of networks - mainnet, RedStone public testnet and local testnet. All of them share some common code which you can view in [deploy/scripts/utils](deploy/scripts/utils).
 Deploy script does not differ from the one you would write when deploying a regular JavaScript contract.
@@ -320,7 +318,7 @@ These are the steps which are followed by the scripts in order to deploy the con
 - deploy contract using SDK's `deploy` method
 - mine block - in case of testnets
 
-## Using SDK
+## 🟥 Using SDK
 
 Optionally - you can run following script:
 
