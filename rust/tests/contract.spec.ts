@@ -27,6 +27,8 @@ describe('Testing the Profit Sharing Token', () => {
   let smartweave: SmartWeave;
   let pst: PstContract;
 
+  let foreignContractTxId: string;
+
   beforeAll(async () => {
     // note: each tests suit (i.e. file with tests that Jest is running concurrently
     // with another files has to have ArLocal set to a different port!)
@@ -40,6 +42,7 @@ describe('Testing the Profit Sharing Token', () => {
     });
 
     LoggerFactory.INST.logLevel('error');
+    LoggerFactory.INST.logLevel('debug', "WASM");
 
     smartweave = SmartWeaveNodeFactory.memCached(arweave);
 
@@ -71,6 +74,22 @@ describe('Testing the Profit Sharing Token', () => {
         wallet,
         initState: JSON.stringify(initialState),
         src: contractSrc,
+      },
+      path.join(__dirname, '../src'),
+      path.join(__dirname, '../pkg/rust-contract.js')
+    );
+
+    foreignContractTxId = await smartweave.createContract.deploy(
+      {
+        wallet,
+        initState: JSON.stringify({
+          ...initialState,
+          ...{
+            ticker: 'FOREIGN_PST',
+            name: 'foreign contract'
+          }
+        }),
+        src: contractSrc
       },
       path.join(__dirname, '../src'),
       path.join(__dirname, '../pkg/rust-contract.js')
@@ -129,8 +148,22 @@ describe('Testing the Profit Sharing Token', () => {
     );
   });
 
+  // note: the dummy logic on the test contract should add 1000 tokens
+  // to each address, if the foreign contract state 'ticker' field = 'FOREIGN_PST'
+  it('should properly read foreign contract state', async () => {
+    await pst.writeInteraction({
+      function: 'foreignCall',
+      contract_tx_id: foreignContractTxId
+    });
+    await mineBlock(arweave);
+    expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555 + 1000);
+    expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(
+      10000000 + 555 + 1000
+    );
+  });
+
   it("should properly evolve contract's source code", async () => {
-    expect((await pst.currentState()).balances[walletAddress]).toEqual(555114);
+    expect((await pst.currentState()).balances[walletAddress]).toEqual(556114);
 
     const newSource = fs.readFileSync(
       path.join(__dirname, './data/token-evolve.js'),
@@ -138,7 +171,6 @@ describe('Testing the Profit Sharing Token', () => {
     );
 
     const newSrcTxId = await pst.saveNewSource(newSource);
-    console.log('txid', newSrcTxId);
     await mineBlock(arweave);
 
     await pst.evolve(newSrcTxId);
@@ -146,7 +178,7 @@ describe('Testing the Profit Sharing Token', () => {
 
     // note: the evolved balance always adds 555 to the result
     expect((await pst.currentBalance(walletAddress)).balance).toEqual(
-      555114 + 555
+      556114 + 555
     );
   });
 
@@ -170,10 +202,12 @@ describe('Testing the Profit Sharing Token', () => {
       overwrittenCaller
     );
 
-    expect(result.state.balances[walletAddress]).toEqual(555114 - 1000);
+    expect(result.state.balances[walletAddress]).toEqual(555114 - 1000 + 1000);
     expect(
       result.state.balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']
-    ).toEqual(10000000 + 555 + 333);
+    ).toEqual(10000000 + 1000 + 555 + 333);
     expect(result.state.balances[overwrittenCaller]).toEqual(1000 - 333);
   });
+
+
 });
