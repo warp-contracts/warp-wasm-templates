@@ -8,6 +8,8 @@ If you are not familiar with the concept of Profit Sharing Tokens, check out a [
 - [Installation](#-installation)
 - [Code structure](#-code-structure)
 - [Writing contract](#-writing-contract)
+  - [Accessing JavaScript imports](#accessing-javascript-imports)
+  - [Foreign contract read](#foreign-contract-read)
 - [Build](#-build)
 - [Tests](#-tests)
 - [Deploy](#-deploy)
@@ -58,7 +60,15 @@ If you want to edit contract's code and create your own implementation you can d
 4. Add schemas which should describe input and output types for your actions - [src/action.rs](src/action.rs)
 5. Add above action functions to the pattern matching in `handle` function in [src/contract.rs](src/contract.rs#L9)
 
-### 👷 Build
+### Accessing JavaScript imports
+
+An example of how to access imports can be found here: [src/contract.rs](src/contract.rs#L11)
+
+### Foreign contract read
+
+An example of how to read other contract state can be found here: [src/actions/foreign_call.rs](src/actions/foreign_call.rs#L12)
+
+## 👷 Build
 
 Compile your contract to WASM binary by running following command:
 
@@ -66,7 +76,7 @@ Compile your contract to WASM binary by running following command:
 yarn build
 ```
 
-### 🧪 Tests
+## 🧪 Tests
 
 Write tests for your contract (we will use Jest library for testing) - you can find a template in the [tests/](tests) folder.
 Run tests with
@@ -75,7 +85,7 @@ Run tests with
 yarn test
 ```
 
-### 📜 Deploy
+## 📜 Deploy
 
 Deploy your contract to one of the networks (mainnet/RedStone public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
 
@@ -93,7 +103,7 @@ npx arlocal
 
 You can view deploy script code [here](deploy/scripts/deploy.js).
 
-### 🟥 Using SDK
+## 🟥 Using SDK
 
 Optionally - you can run one of the scripts which uses RedStone SmartWeave SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
 
