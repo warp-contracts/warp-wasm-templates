@@ -58,7 +58,7 @@ If you want to edit contract's code and create your own implementation you can d
 3. Edit/add actions which user will be able to call while interacting with the contract - [src/actions](src/actions).
    We suggest keeping each action in a separate file.
 4. Add schemas which should describe input and output types for your actions - [src/action.rs](src/action.rs)
-5. Add above action functions to the pattern matching in `handle` function in [src/contract.rs](src/contract.rs#L9)
+5. Add above action functions to the pattern matching in `handle` function in [src/contract.rs](src/contract.rs#L24)
 
 ### Accessing JavaScript imports
 
