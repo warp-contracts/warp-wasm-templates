@@ -16,7 +16,6 @@ module.exports.deploy = async function (
   const smartweave = SmartWeaveNodeFactory.memCached(arweave);
   const wallet = await loadWallet(arweave, walletJwk, target);
   const walletAddr = await walletAddress(arweave, wallet);
-
   const contractSrc = fs.readFileSync(
     path.join(__dirname, '../../pkg/rust-contract_bg.wasm')
   );
@@ -29,11 +28,11 @@ module.exports.deploy = async function (
     ...{
       owner: walletAddr,
       balances: {
+        ...stateFromFile.balances,
         [walletAddr]: 10000000,
       },
     },
   };
-
   const contractTxId = await smartweave.createContract.deploy(
     {
       wallet,
@@ -53,7 +52,9 @@ module.exports.deploy = async function (
   }
 
   if (target == 'testnet') {
-    console.log(`Check contract at https://sonar.redstone.tools/#/app/contract/${contractTxId}?network=testnet`);
+    console.log(
+      `Check contract at https://sonar.redstone.tools/#/app/contract/${contractTxId}?network=testnet`
+    );
   } else {
     console.log('Contract tx id', contractTxId);
   }

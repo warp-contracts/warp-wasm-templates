@@ -11,7 +11,7 @@ module.exports.readContractState = async function (
   walletJwk
 ) {
   const arweave = connectArweave(host, port, protocol);
-  const wallet = await loadWallet(arweave, walletJwk, target);
+  const wallet = await loadWallet(arweave, walletJwk, target, true);
 
   const txId = contractTxId(target);
   const contract = await connectContract(arweave, wallet, txId);
