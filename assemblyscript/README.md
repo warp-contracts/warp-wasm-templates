@@ -1,17 +1,17 @@
-🅰️ Redstone SmartWeave contracts - AssemblyScript template
+# 🅰️ Redstone SmartWeave contracts - AssemblyScript template
 
 Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
 It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our [RedStone Academy](https://redstone.academy).
 
-- [Introduction](#introduction)
-- [Code structure](#code-structure)
-- [Quick start](#quick-start)
-- [Writing contract](#writing-contract)
-- [Tests](#tests)
-- [Build](#build)
-- [Deploy](#deploy)
-- [Using SDK](#using-sdk)
+- [Introduction](#-introduction)
+- [Code structure](#-code-structure)
+- [Quick start](#-quick-start)
+- [Writing contract](#-writing-contract)
+- [Tests](#-tests)
+- [Build](#-build)
+- [Deploy](#-deploy)
+- [Using SDK](#-using-sdk)
 
 ## 🔍 Code structure
 
@@ -74,7 +74,11 @@ If you want to edit contract's code and create your own implementation you can d
 yarn asbuild
 ```
 
-6. Write tests for your contract (we will use Jest library for testing) - you can find a template in the [tests/](tests) folder.
+6. Write tests for your contract (we will use Jest library for testing) and execute them - you can find a template in the [tests/](tests) folder.
+
+```bash
+yarn test
+```
 
 7. Deploy your contract to one of the networks (mainnet/RedStone public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
 
@@ -82,13 +86,13 @@ yarn asbuild
 yarn deploy:[network]
 ```
 
-NOTE: If you want to deploy your contract locally you need to run Arlocal by typing following command:
+💡**NOTE** If you want to deploy your contract locally you need to run Arlocal by typing following command:
 
 ```bash
 npx arlocal
 ```
 
-NOTE: When using mainnet please put your wallet key in [deploy/mainnet/.secrets/wallet-mainnet.json](deploy/mainnet/.secrets/wallet-mainnet.json). `.secrets` folder has been added to `.gitignore` so your key is kept securely.
+💡**NOTE** When using mainnet please put your wallet key in [deploy/mainnet/.secrets/wallet-mainnet.json](deploy/mainnet/.secrets/wallet-mainnet.json). `.secrets` folder has been added to `.gitignore` so your key is kept securely.
 
 You can view deploy script code [here](deploy/scripts/deploy.js)
 
@@ -320,10 +324,24 @@ These are the steps which are followed by the scripts in order to deploy the con
 
 ## 🟥 Using SDK
 
-Optionally - you can run following script:
+Optionally - you can run one of the scripts which uses RedStone SmartWeave SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
+
+💡**NOTE** You will need to have a file with the wallet key and a file with the contract id to run these scripts. If you do not have them please run a [deploy](#-deploy) script.
+
+1. `read` - reads contract state, check out the code in [deploy/scripts/read-contract-state.js](deploy/scripts/read-contract-state.js)
 
 ```bash
     npm run read:[network]
 ```
 
-...which compiles contract, deploys it and then reads its state. Using SDKs' methods works exactly the same as in case of a regular JS contract.
+2. `balance` - get balance for a wallet address, check out the code in [deploy/scripts/interact-balance.js](deploy/scripts/interact-balance.js)
+
+```bash
+    npm run balance:[network]
+```
+
+3. `transfer` - transfer specific amount of tokens to the indicated wallet, check out the code in [deploy/scripts/interact-transfer.js](deploy/scripts/interact-transfer.js)
+
+```bash
+    npm run transfer:[network]
+```

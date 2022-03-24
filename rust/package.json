@@ -11,9 +11,15 @@
     "deploy:local": "yarn build && node deploy/local/deploy-local.js",
     "deploy:testnet": "yarn build && node deploy/testnet/deploy-test.js",
     "deploy:mainnet": "yarn build && node deploy/mainnet/deploy-mainnet.js",
-    "read:local": "yarn deploy:local && node deploy/local/read-contract-state-local.js",
-    "read:testnet": "yarn deploy:testnet && node deploy/testnet/read-contract-state-testnet.js",
-    "read:mainnet": "yarn deploy:local && node deploy/mainnet/read-contract-state-mainnet.js",
+    "read:local": "node deploy/local/read-contract-state-local.js",
+    "read:testnet": "node deploy/testnet/read-contract-state-testnet.js",
+    "read:mainnet": "node deploy/mainnet/read-contract-state-mainnet.js",
+    "transfer:local": "node deploy/local/interact-transfer-local.js",
+    "transfer:testnet": "node deploy/testnet/interact-transfer-testnet.js",
+    "transfer:mainnet": "node deploy/mainnet/interact-transfer-mainnet.js",
+    "balance:local": "node deploy/local/interact-balance-local.js",
+    "balance:testnet": "node deploy/testnet/interact-balance-testnet.js",
+    "balance:mainnet": "node deploy/mainnet/interact-balance-mainnet.js",
     "test": "jest"
   },
   "engines": {

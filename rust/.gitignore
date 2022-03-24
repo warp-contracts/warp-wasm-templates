@@ -1,6 +1,7 @@
 node_modules
 dist
 pkg
+target
 __tests__/*.json
 /coverage
 .DS_Store

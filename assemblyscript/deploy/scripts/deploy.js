@@ -16,7 +16,6 @@ module.exports.deploy = async function (
   const smartweave = SmartWeaveNodeFactory.memCached(arweave);
   const wallet = await loadWallet(arweave, walletJwk, target);
   const walletAddr = await walletAddress(arweave, wallet);
-
   const contractSrc = fs.readFileSync(
     path.join(__dirname, '../../build/optimized.wasm')
   );
@@ -29,11 +28,11 @@ module.exports.deploy = async function (
     ...{
       owner: walletAddr,
       balances: {
-        [walletAddr]: 10000000,
+        ...stateFromFile.balances,
+        [walletAddr]: 555669,
       },
     },
   };
-
   const contractTxId = await smartweave.createContract.deploy(
     {
       wallet,
@@ -52,7 +51,9 @@ module.exports.deploy = async function (
   }
 
   if (target == 'testnet') {
-    console.log(`Check contract at https://sonar.redstone.tools/#/app/contract/${contractTxId}?network=testnet`);
+    console.log(
+      `Check contract at https://sonar.redstone.tools/#/app/contract/${contractTxId}?network=testnet`
+    );
   } else {
     console.log('Contract tx id', contractTxId);
   }
