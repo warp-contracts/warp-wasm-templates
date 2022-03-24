@@ -1,6 +1,6 @@
-const { readContractState } = require('../scripts/read-contract-state');
+const { interactBalance } = require('../scripts/interact-balance');
 
-readContractState(
+interactBalance(
   'testnet.redstone.tools',
   443,
   'https',

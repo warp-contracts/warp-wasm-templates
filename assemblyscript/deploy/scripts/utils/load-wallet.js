@@ -4,9 +4,14 @@ const { generateWallet } = require('./create-testnet-wallet');
 
 const path = require('path');
 
-module.exports.loadWallet = async function (arweave, walletJwk, target) {
+module.exports.loadWallet = async function (
+  arweave,
+  walletJwk,
+  target,
+  generated
+) {
   let wallet;
-  if (target == 'local' || target == 'testnet') {
+  if (!generated && (target == 'local' || target == 'testnet')) {
     await generateWallet(arweave, target);
   }
   wallet = JSON.parse(fs.readFileSync(path.join(walletJwk), 'utf-8'));
