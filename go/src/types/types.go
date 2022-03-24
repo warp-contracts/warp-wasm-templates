@@ -14,9 +14,9 @@ type PstState struct {
 }
 
 type TransferAction struct {
-	Function string `json:"function"`
-	Target   string `json:"target"`
-	Qty      uint64 `json:"qty"`
+	common_types.Action
+	Target string `json:"target"`
+	Qty    uint64 `json:"qty"`
 }
 
 type EvolveAction struct {
