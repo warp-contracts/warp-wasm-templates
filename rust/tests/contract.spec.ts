@@ -10,10 +10,13 @@ import {
   PstContract,
   PstState,
   SmartWeave,
-  SmartWeaveNodeFactory, SmartWeaveTags,
+  SmartWeaveNodeFactory,
+  SmartWeaveTags,
 } from 'redstone-smartweave';
 import path from 'path';
 import { addFunds, mineBlock } from '../utils';
+
+jest.setTimeout(30000);
 
 describe('Testing the Profit Sharing Token', () => {
   let contractSrc: Buffer;
@@ -44,7 +47,7 @@ describe('Testing the Profit Sharing Token', () => {
     });
 
     LoggerFactory.INST.logLevel('error');
-    LoggerFactory.INST.logLevel('debug', "WASM");
+    LoggerFactory.INST.logLevel('debug', 'WASM');
 
     smartweave = SmartWeaveNodeFactory.memCached(arweave);
 
@@ -88,10 +91,10 @@ describe('Testing the Profit Sharing Token', () => {
           ...initialState,
           ...{
             ticker: 'FOREIGN_PST',
-            name: 'foreign contract'
-          }
+            name: 'foreign contract',
+          },
         }),
-        src: contractSrc
+        src: contractSrc,
       },
       path.join(__dirname, '../src'),
       path.join(__dirname, '../pkg/rust-contract.js')
@@ -117,8 +120,12 @@ describe('Testing the Profit Sharing Token', () => {
     expect(getTag(contractTx, SmartWeaveTags.CONTRACT_TYPE)).toEqual('wasm');
     expect(getTag(contractTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
 
-    const contractSrcTx = await arweave.transactions.get(getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID));
-    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
+    const contractSrcTx = await arweave.transactions.get(
+      getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID)
+    );
+    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual(
+      'application/wasm'
+    );
     expect(getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
   });
 
@@ -126,10 +133,12 @@ describe('Testing the Profit Sharing Token', () => {
     expect(await pst.currentState()).toEqual(initialState);
 
     expect(
-      (await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M')).balance
+      (await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'))
+        .balance
     ).toEqual(10000000);
     expect(
-      (await pst.currentBalance('33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA')).balance
+      (await pst.currentBalance('33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA'))
+        .balance
     ).toEqual(23111222);
     expect((await pst.currentBalance(walletAddress)).balance).toEqual(555669);
   });
@@ -167,13 +176,17 @@ describe('Testing the Profit Sharing Token', () => {
   it('should properly read foreign contract state', async () => {
     await pst.writeInteraction({
       function: 'foreignCall',
-      contractTxId: foreignContractTxId
+      contractTxId: foreignContractTxId,
     });
     await mineBlock(arweave);
-    expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555 + 1000);
-    expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(
-      10000000 + 555 + 1000
+    expect((await pst.currentState()).balances[walletAddress]).toEqual(
+      555669 - 555 + 1000
     );
+    expect(
+      (await pst.currentState()).balances[
+        'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
+      ]
+    ).toEqual(10000000 + 555 + 1000);
   });
 
   it("should properly evolve contract's source code", async () => {
@@ -222,6 +235,4 @@ describe('Testing the Profit Sharing Token', () => {
     ).toEqual(10000000 + 1000 + 555 + 333);
     expect(result.state.balances[overwrittenCaller]).toEqual(1000 - 333);
   });
-
-
 });

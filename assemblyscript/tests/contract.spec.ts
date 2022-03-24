@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import ArLocal from 'arlocal';
 import Arweave from 'arweave';
-import {JWKInterface} from 'arweave/node/lib/wallet';
+import { JWKInterface } from 'arweave/node/lib/wallet';
 import {
   getTag,
   InteractionResult,
@@ -10,10 +10,13 @@ import {
   PstContract,
   PstState,
   SmartWeave,
-  SmartWeaveNodeFactory, SmartWeaveTags,
+  SmartWeaveNodeFactory,
+  SmartWeaveTags,
 } from 'redstone-smartweave';
 import path from 'path';
-import {addFunds, mineBlock} from '../utils';
+import { addFunds, mineBlock } from '../utils';
+
+jest.setTimeout(30000);
 
 describe('Testing the Profit Sharing Token', () => {
   let contractSrc: Buffer;
@@ -95,11 +98,19 @@ describe('Testing the Profit Sharing Token', () => {
 
     expect(contractTx).not.toBeNull();
     expect(getTag(contractTx, SmartWeaveTags.CONTRACT_TYPE)).toEqual('wasm');
-    expect(getTag(contractTx, SmartWeaveTags.WASM_LANG)).toEqual('assemblyscript');
+    expect(getTag(contractTx, SmartWeaveTags.WASM_LANG)).toEqual(
+      'assemblyscript'
+    );
 
-    const contractSrcTx = await arweave.transactions.get(getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID));
-    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
-    expect(getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('assemblyscript');
+    const contractSrcTx = await arweave.transactions.get(
+      getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID)
+    );
+    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual(
+      'application/wasm'
+    );
+    expect(getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual(
+      'assemblyscript'
+    );
   });
 
   it('should read pst state and balance data', async () => {
@@ -129,7 +140,7 @@ describe('Testing the Profit Sharing Token', () => {
     expect(
       (await pst.currentState()).balances[
         'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-        ]
+      ]
     ).toEqual(10000000 + 555);
   });
 
