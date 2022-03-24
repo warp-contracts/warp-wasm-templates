@@ -16,7 +16,17 @@ If you are not familiar with the concept of Profit Sharing Tokens, check out a [
 ## 📦 Installation
 
 You will need:
-- Go :-) (https://go.dev/doc/install)
+- Go 1.17 (https://go.dev/doc/install).  
+💡**NOTE** Go 1.18 is currently *NOT* supported.  
+In case of issues on MacOS - make sure that these env. variables are set properly
+```bash
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOBIN
+export PATH=$PATH:$GOROOT/bin
+```
 - [tinygo](https://tinygo.org/getting-started/install/) (a compiler that produces much smaller binaries (up to 10x) than the default Go compiler)
 - [easyjson](https://github.com/mailru/easyjson#install) (a code generation tool for handling json marshalling/unmarshalling)
 - [Node.js](https://nodejs.org/en/download/) version 16.5 or above
