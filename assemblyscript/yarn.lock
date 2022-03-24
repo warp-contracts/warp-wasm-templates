@@ -5248,10 +5248,10 @@ redstone-isomorphic@1.1.4, redstone-isomorphic@^1.1.0:
     safe-buffer "^5.1.2"
     undici "^4.15.1"
 
-redstone-smartweave@0.4.50:
-  version "0.4.50"
-  resolved "https://registry.yarnpkg.com/redstone-smartweave/-/redstone-smartweave-0.4.50.tgz#b47fabdaacc13805e55b9e44259c4924a11e3cf7"
-  integrity sha512-JGiozuMQaVEGFSJZE+K49LWSvgMtD+i5MVenl8hFEvpeDmxI+xfz5twbF+vqV/ULWHC9u0+pxBVvmWxwGNbp+g==
+redstone-smartweave@0.4.51:
+  version "0.4.51"
+  resolved "https://registry.yarnpkg.com/redstone-smartweave/-/redstone-smartweave-0.4.51.tgz#fa42cf8bf4536b9406b626cd71d9712ec51f83cb"
+  integrity sha512-3UfEZlj4riOH6m4PFzCTpww2iRmFIVit8O9Qu0OvpU2HOWIVyJODfYjkg9dQig6Qz9yfQxLz8wK1JITSbD+UgA==
   dependencies:
     "@assemblyscript/loader" "^0.19.23"
     archiver "^5.3.0"
@@ -5377,7 +5377,7 @@ rimraf@2, rimraf@^2.6.1:
   dependencies:
     glob "^7.1.3"
 
-rimraf@^3.0.0:
+rimraf@^3.0.0, rimraf@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-3.0.2.tgz#f1a5402ba6220ad52cc1282bac1ae3aa49fd061a"
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
