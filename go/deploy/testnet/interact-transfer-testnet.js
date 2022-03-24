@@ -1,6 +1,6 @@
-const { readContractState } = require('../scripts/read-contract-state');
+const { interactTransfer } = require('../scripts/interact-transfer');
 
-readContractState(
+interactTransfer(
   'testnet.redstone.tools',
   443,
   'https',
