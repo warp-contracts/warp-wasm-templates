@@ -177,6 +177,8 @@ We need to import them in a `contract.ts` file. Remember - they are needed even 
 import { Contract } from './imports/smartweave/contract';
 ```
 
+An example of how to access imports can be found here: [contract.ts](assembly/contract.ts#L26)
+
 ### Errors
 
 Instead of using SDK's `ContractError` we need to throw an `Error` object with a following message convention:
