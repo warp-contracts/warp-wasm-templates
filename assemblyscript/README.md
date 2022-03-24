@@ -1,4 +1,4 @@
-# 🅰️ Redstone SmartWeave contracts - AssemblyScript template
+# <span style="color: #007acc">AS</span> Redstone SmartWeave contracts - AssemblyScript template
 
 Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
 
