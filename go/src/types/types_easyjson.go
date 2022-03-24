@@ -36,12 +36,12 @@ func easyjson6601e8cdDecodeGithubComRedstoneFinanceRedstoneContractsWasmGoSrcTyp
 			continue
 		}
 		switch key {
-		case "function":
-			out.Function = string(in.String())
 		case "target":
 			out.Target = string(in.String())
 		case "qty":
 			out.Qty = uint64(in.Uint64())
+		case "function":
+			out.Function = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -57,19 +57,19 @@ func easyjson6601e8cdEncodeGithubComRedstoneFinanceRedstoneContractsWasmGoSrcTyp
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"function\":"
-		out.RawString(prefix[1:])
-		out.String(string(in.Function))
-	}
-	{
 		const prefix string = ",\"target\":"
-		out.RawString(prefix)
+		out.RawString(prefix[1:])
 		out.String(string(in.Target))
 	}
 	{
 		const prefix string = ",\"qty\":"
 		out.RawString(prefix)
 		out.Uint64(uint64(in.Qty))
+	}
+	{
+		const prefix string = ",\"function\":"
+		out.RawString(prefix)
+		out.String(string(in.Function))
 	}
 	out.RawByte('}')
 }

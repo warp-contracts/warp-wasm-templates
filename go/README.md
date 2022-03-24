@@ -61,8 +61,8 @@ yarn install
 If you want to edit contract's code and create your own implementation you can do it by following these steps:
 
 1. Edit `init-state.json` by adding the initial state for your contract - [deploy/state/init-state.json](deploy/state/init-state.json)
-2. Modify the state definition of the contract - [src/types/types.go](src/types/types.go).    
-   Add schemas which should describe input and output types for your actions - [src/types/types.go](src/types/types.go).  
+2. Modify the state definition of the contract - [src/types/types.go](src/types/types.go#L7).    
+   Add schemas which should describe input and output types for your actions - [src/types/types.go](src/types/types.go#L16).  
 Each time you change the definitions in the file above, run
 ```bash
 yarn generate
