@@ -1,9 +1,0 @@
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/target/wasm32-unknown-unknown/release/deps/wasm_bindgen_futures-8994ef55836437f9.rmeta: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/queue.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/task/singlethread.rs
-
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/target/wasm32-unknown-unknown/release/deps/libwasm_bindgen_futures-8994ef55836437f9.rlib: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/queue.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/task/singlethread.rs
-
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/target/wasm32-unknown-unknown/release/deps/wasm_bindgen_futures-8994ef55836437f9.d: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/queue.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/task/singlethread.rs
-
-/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/lib.rs:
-/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/queue.rs:
-/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-futures-0.4.29/src/task/singlethread.rs:
