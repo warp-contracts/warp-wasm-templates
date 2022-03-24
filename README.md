@@ -6,7 +6,7 @@ This repo contains SmartWeave WASM contracts templates in:
 * [Go](go/README.md)  
 
 It allows to quickly jump into contract development - each template contains an example PST contract,
-deployment scripts (on localhost, testnet and mainnet), build scripts and example tests.
+deployment scripts (on localhost, testnet and mainnet), build scripts and example tests - all backed-up by the [RedStone Contracts SDK](https://github.com/redstone-finance/redstone-smartcontracts).
 
 | Feature                | JS                                        | WASM - AS | WASM - Rust | WASM - Go |
 |------------------------|-------------------------------------------|-----------|-------------|-----------|
