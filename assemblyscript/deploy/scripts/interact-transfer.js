@@ -13,7 +13,6 @@ module.exports.interactTransfer = async function (
 ) {
   const arweave = connectArweave(host, port, protocol);
   const wallet = await loadWallet(arweave, walletJwk, target, true);
-  const walletAddress = await arweave.wallets.jwkToAddress(wallet);
   const txId = contractTxId(target);
   const pst = await connectPstContract(arweave, wallet, txId);
 
@@ -27,5 +26,12 @@ module.exports.interactTransfer = async function (
 
   console.log('Updated state:', state);
   console.log('Contract tx id', txId);
-  console.log('Transfer tx id', transferId);
+
+  if (target == 'testnet') {
+    console.log(
+      `Check transfer interaction at https://sonar.redstone.tools/#/app/interaction/${transferId}?network=testnet`
+    );
+  } else {
+    console.log('Transfer tx id', transferId);
+  }
 };
