@@ -5,5 +5,5 @@ deploy(
   443,
   'https',
   'testnet',
-  'deploy/local/wallet_local.json'
+  'deploy/testnet/wallet_testnet.json'
 ).finally();
