@@ -52,14 +52,13 @@ If you want to edit contract's code and create your own implementation you can d
 
 1. Edit `init-state.json` by adding the initial state for your contract - [deploy/state/init-state.json](deploy/state/init-state.json)
 2. Modify the state definition of the contract - [src/types/types.go](src/types/types.go).    
-   Add schemas which should describe input and output types for your actions - [src/action.rs](src/action.rs).  
+   Add schemas which should describe input and output types for your actions - [src/types/types.go](src/types/types.go).  
 Each time you change the definitions in the file above, run
 ```bash
 yarn generate
 ```
 3. Edit/add actions which user will be able to call while interacting with the contract - [src/impl/actions](src/impl/actions.go).
-4. Add schemas which should describe input and output types for your actions - [src/action.rs](src/action.rs)
-5. Add above action functions to the pattern matching in `Handle` function in [src/impl/contract.go](src/impl/contract.go#L16)
+4. Add above action functions to the pattern matching in `Handle` function in [src/impl/contract.go](src/impl/contract.go#L16)
 
 ### 👷 Build
 Compile your contract to WASM binary by running following command:
