@@ -23,6 +23,20 @@ let contractState: StateSchema;
 function handle(state: StateSchema, action: ActionSchema): ResultSchema | null {
   console.log(`Function called: "${action.function}"`);
 
+  // this is how you can access functions imported from js
+  /*
+  Block.height();
+  Block.indep_hash();
+  Block.timestamp();
+
+  Transaction.id();
+  Transaction.owner();
+  Transaction.target();
+
+  Contract.id();
+  Contract.owner();
+  */
+
   const fn = action.function;
   if (functions.has(fn)) {
     const handlerResult = functions.get(fn)(state, action);
