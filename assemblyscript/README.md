@@ -324,10 +324,24 @@ These are the steps which are followed by the scripts in order to deploy the con
 
 ## 🟥 Using SDK
 
-Optionally - you can run following script:
+Optionally - you can run one of the scripts which uses RedStone SmartWeave SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
+
+💡**NOTE** You will need to have a file with the wallet key and a file with the contract id to run these scripts. If you do not have them please run a [deploy](#-deploy) script.
+
+1. `read` - reads contract state, check out the code in [deploy/scripts/read-contract-state.js](deploy/scripts/read-contract-state.js)
 
 ```bash
     npm run read:[network]
 ```
 
-...which compiles contract, deploys it and then reads its state. Using SDKs' methods works exactly the same as in case of a regular JS contract.
+2. `balance` - get balance for a wallet address, check out the code in [deploy/scripts/interact-balance.js](deploy/scripts/interact-balance.js)
+
+```bash
+    npm run balance:[network]
+```
+
+3. `transfer` - transfer specific amount of tokens to the indicated wallet, check out the code in [deploy/scripts/interact-transfer.js](deploy/scripts/interact-transfer.js)
+
+```bash
+    npm run transfer:[network]
+```
