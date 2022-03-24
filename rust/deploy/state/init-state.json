@@ -1,6 +1,6 @@
 {
-  "ticker": "PST TMPL AS",
-  "name": "PST Template AS",
+  "ticker": "PST TMPL RUST",
+  "name": "PST Template Rust",
   "balances": {},
   "canEvolve": true,
   "evolve": null
