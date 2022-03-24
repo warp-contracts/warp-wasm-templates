@@ -33,11 +33,6 @@ module.exports.deploy = async function (
       },
     },
   };
-
-  console.log('addd', initialState);
-
-  const addr = await arweave.wallets.jwkToAddress(wallet);
-  console.log('addr2', addr);
   const contractTxId = await smartweave.createContract.deploy(
     {
       wallet,
