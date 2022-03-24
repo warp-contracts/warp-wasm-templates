@@ -1731,10 +1731,10 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-arlocal@1.1.26:
-  version "1.1.26"
-  resolved "https://registry.yarnpkg.com/arlocal/-/arlocal-1.1.26.tgz#8193fc7792507c2038dc720e69b8d9bf64ec3c33"
-  integrity sha512-5rY7z777o5D1sJ+OtanZOPsuJwgeONKLy7PWr4fAWS72q0RAP4JaoTsFk99nhZZcDd4BZJQhtpnbpUih1fs4Aw==
+arlocal@1.1.30:
+  version "1.1.30"
+  resolved "https://registry.yarnpkg.com/arlocal/-/arlocal-1.1.30.tgz#8c9f0580ade2b67c91526652b21a80b8d5c38b5f"
+  integrity sha512-0YBidTuTwUXUv0UoTs8fb+1+3LrBf3B4/fyTTPhcekmhFTtmH/Rx70EwrldDDWFEMZ8VBnTtWVBCGQZTpuNKQw==
   dependencies:
     "@koa/cors" "^3.1.0"
     apollo-server-koa "^3.6.2"
@@ -5178,10 +5178,10 @@ redstone-isomorphic@1.1.4, redstone-isomorphic@^1.1.0:
     safe-buffer "^5.1.2"
     undici "^4.15.1"
 
-redstone-smartweave@0.4.51:
-  version "0.4.51"
-  resolved "https://registry.yarnpkg.com/redstone-smartweave/-/redstone-smartweave-0.4.51.tgz#fa42cf8bf4536b9406b626cd71d9712ec51f83cb"
-  integrity sha512-3UfEZlj4riOH6m4PFzCTpww2iRmFIVit8O9Qu0OvpU2HOWIVyJODfYjkg9dQig6Qz9yfQxLz8wK1JITSbD+UgA==
+redstone-smartweave@0.4.53:
+  version "0.4.53"
+  resolved "https://registry.yarnpkg.com/redstone-smartweave/-/redstone-smartweave-0.4.53.tgz#760ce97756deef7e47e209c458b167f67094591b"
+  integrity sha512-2267urw7T1BkKvonu/coA8QwdmugtZTBDeu/1IdqJCliD+zIXWYDj/62J7RHd8qCYtd+BPar6i8Pw3Ff06QRmg==
   dependencies:
     "@assemblyscript/loader" "^0.19.23"
     archiver "^5.3.0"

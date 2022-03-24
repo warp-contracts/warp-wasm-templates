@@ -30,10 +30,10 @@
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
-    "arlocal": "1.1.26",
+    "arlocal": "1.1.30",
     "arweave": "^1.10.23",
     "jest": "^27.5.1",
-    "redstone-smartweave": "0.4.51",
+    "redstone-smartweave": "0.4.53",
     "ts-jest": "^27.1.3"
   }
 }
