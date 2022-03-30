@@ -20,6 +20,7 @@ deployment scripts (on localhost, testnet and mainnet), build scripts and exampl
 | Transaction data (1)   | ✅                                         | ✅         | ✅           | ✅         |
 | Block data (2)         | ✅                                         | ✅         | ✅           | ✅         |
 | Contract data (3)      | ✅                                         | ✅         | ✅           | ✅         |
+| Gas metering           | 🚫                                         | ✅         | ✅           | ✅         |
 
 Legend:  
 * `R&D` - we need to make some research and development before implementing the feature
