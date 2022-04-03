@@ -2,10 +2,12 @@ use crate::error::ContractError::{CallerBalanceNotEnough, TransferAmountMustBeHi
 use crate::state::State;
 use crate::action::ActionResult;
 use crate::contract_utils::handler_result::HandlerResult;
-use crate::contract_utils::js_imports::Transaction;
-
+use crate::contract_utils::js_imports::{log, SmartWeave, Transaction};
 
 pub fn transfer(mut state: State, qty: u64, target: String) -> ActionResult {
+    log(("caller ".to_owned() + &SmartWeave::caller()).as_str());
+    log(("Transaction owner ".to_owned() + &Transaction::owner()).as_str());
+
     if qty == 0 {
         return Err(TransferAmountMustBeHigherThanZero);
     }

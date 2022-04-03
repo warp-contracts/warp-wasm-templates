@@ -62,10 +62,13 @@ extern "C" {
     pub async fn view_contract_state(contract_id: &str) -> JsValue;
 
     #[wasm_bindgen(static_method_of = SmartWeave, js_name = write)]
-    pub async fn write(contract_id: &str, input: &JsValue) -> JsValue;
+    pub async fn write(contract_id: &str, input: JsValue) -> JsValue;
 
     #[wasm_bindgen(static_method_of = SmartWeave, js_name = refreshState)]
     pub async fn refresh_state();
+
+    #[wasm_bindgen(static_method_of = SmartWeave, js_name = caller)]
+    pub fn caller() -> String;
 }
 
 #[wasm_bindgen]

@@ -5,3 +5,5 @@ __tests__/*.json
 .DS_Store
 .secrets
 .idea
+.yalc
+yalc.lock

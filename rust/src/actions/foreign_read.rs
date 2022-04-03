@@ -5,7 +5,7 @@ use crate::action::ActionResult;
 use crate::contract_utils::handler_result::HandlerResult;
 use crate::contract_utils::js_imports::log;
 
-pub async fn foreign_call(mut state: State, contract_tx_id: String) -> ActionResult {
+pub async fn foreign_read(mut state: State, contract_tx_id: String) -> ActionResult {
     if contract_tx_id == "bad_contract" {
         Err(ContractError::IDontLikeThisContract)
     } else {
