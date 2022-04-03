@@ -10,6 +10,7 @@ If you are not familiar with the concept of Profit Sharing Tokens, check out a [
 - [Writing contract](#-writing-contract)
   - [Accessing JavaScript imports](#accessing-javascript-imports)
   - [Foreign contract read](#foreign-contract-read)
+  - [Foreign contract write](#foreign-contract-write)
 - [Build](#-build)
 - [Tests](#-tests)
 - [Deploy](#-deploy)
@@ -66,7 +67,14 @@ An example of how to access imports can be found here: [src/contract.rs](src/con
 
 ### Foreign contract read
 
-An example of how to read other contract state can be found here: [src/actions/foreign_call.rs](src/actions/foreign_call.rs#L12)
+An example of how to read other contract state can be found here: [src/actions/foreign_read.rs](src/actions/foreign_read#L12)
+
+### Foreign contract write
+
+An example of how to call other contract function can be found here: [src/actions/foreign_write.rs](src/actions/foreign_write#L25)
+
+Keep in mind that internal contract writes require the flag `internalWrites` to be turned on in the
+evaluation options (for both calling and callee contracts). See [tests/contract.spec.ts](tests/contract.spec.ts#L111).
 
 ## 👷 Build
 

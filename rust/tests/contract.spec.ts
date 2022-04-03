@@ -30,6 +30,7 @@ describe('Testing the Profit Sharing Token', () => {
   let arlocal: ArLocal;
   let smartweave: SmartWeave;
   let pst: PstContract;
+  let pst2: PstContract;
 
   let foreignContractTxId: string;
   let contractTxId: string;
@@ -47,7 +48,8 @@ describe('Testing the Profit Sharing Token', () => {
     });
 
     LoggerFactory.INST.logLevel('error');
-    LoggerFactory.INST.logLevel('debug', 'WASM');
+    //LoggerFactory.INST.logLevel('debug', 'WASM:Rust');
+    //LoggerFactory.INST.logLevel('debug', 'WasmContractHandlerApi');
 
     smartweave = SmartWeaveNodeFactory.memCached(arweave);
 
@@ -84,6 +86,8 @@ describe('Testing the Profit Sharing Token', () => {
       path.join(__dirname, '../pkg/rust-contract.js')
     );
 
+    console.log(contractTxId);
+
     foreignContractTxId = await smartweave.createContract.deploy(
       {
         wallet,
@@ -100,11 +104,20 @@ describe('Testing the Profit Sharing Token', () => {
       path.join(__dirname, '../pkg/rust-contract.js')
     );
 
+    console.log(foreignContractTxId);
+
     // connecting to the PST contract
-    pst = smartweave.pst(contractTxId);
+    pst = smartweave.pst(contractTxId).setEvaluationOptions({
+      internalWrites: true
+    }) as PstContract;
+
+    pst2 = smartweave.pst(foreignContractTxId).setEvaluationOptions({
+      internalWrites: true
+    }) as PstContract;
 
     // connecting wallet to the PST contract
     pst.connect(wallet);
+    pst2.connect(wallet);
 
     await mineBlock(arweave);
   });
@@ -175,7 +188,7 @@ describe('Testing the Profit Sharing Token', () => {
   // to each address, if the foreign contract state 'ticker' field = 'FOREIGN_PST'
   it('should properly read foreign contract state', async () => {
     await pst.writeInteraction({
-      function: 'foreignCall',
+      function: 'foreignRead',
       contractTxId: foreignContractTxId,
     });
     await mineBlock(arweave);
@@ -187,6 +200,22 @@ describe('Testing the Profit Sharing Token', () => {
         'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
       ]
     ).toEqual(10000000 + 555 + 1000);
+  });
+
+  it('should properly perform internal write', async () => {
+    expect((await pst2.currentBalance("uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M")).balance).toEqual(10000000)
+
+    await pst.writeInteraction({
+      function: 'foreignWrite',
+      contractTxId: foreignContractTxId,
+      target: "uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M",
+      qty: 555,
+    });
+    await mineBlock(arweave);
+
+
+    expect((await pst2.currentBalance("uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M")).balance).toEqual(10000555)
+    expect((await pst2.currentBalance(walletAddress)).balance).toEqual(555669 - 555);
   });
 
   it("should properly evolve contract's source code", async () => {
