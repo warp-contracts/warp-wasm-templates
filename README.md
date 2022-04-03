@@ -13,7 +13,7 @@ deployment scripts (on localhost, testnet and mainnet), build scripts and exampl
 | Sandboxing             | [vm2](https://github.com/patriksimek/vm2) | ✅         | ✅           | ✅         |
 | Foreign contract read  | ✅                                         | R&D       | ✅           | ✅         | 
 | Foreign contract view  | ✅                                         | R&D       | Soon        | Soon      |
-| Foreign contract write | ✅                                         | R&D       | Soon        | Soon      |
+| Foreign contract write | ✅                                         | R&D       | ✅        | Soon      |
 | Arweave.utils          | ✅                                         | Soon      | Soon        | Soon      |
 | Evolve                 | ✅                                         | ✅         | ✅           | ✅         |
 | Logging from contract  | ✅                                         | ✅         | ✅           | ✅         |
