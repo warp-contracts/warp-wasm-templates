@@ -67,11 +67,11 @@ An example of how to access imports can be found here: [src/contract.rs](src/con
 
 ### Foreign contract read
 
-An example of how to read other contract state can be found here: [src/actions/foreign_read.rs](src/actions/foreign_read#L12)
+An example of how to read other contract state can be found here: [src/actions/foreign_read.rs](src/actions/foreign_read.rs#L12)
 
 ### Foreign contract write
 
-An example of how to call other contract function can be found here: [src/actions/foreign_write.rs](src/actions/foreign_write#L25)
+An example of how to call other contract function can be found here: [src/actions/foreign_write.rs](src/actions/foreign_write.rs#L25)
 
 Keep in mind that internal contract writes require the flag `internalWrites` to be turned on in the
 evaluation options (for both calling and callee contracts). See [tests/contract.spec.ts](tests/contract.spec.ts#L111).
