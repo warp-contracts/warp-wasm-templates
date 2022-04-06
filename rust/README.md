@@ -76,6 +76,11 @@ An example of how to call other contract function can be found here: [src/action
 Keep in mind that internal contract writes require the flag `internalWrites` to be turned on in the
 evaluation options (for both calling and callee contracts). See [tests/contract.spec.ts](tests/contract.spec.ts#L111).
 
+In order to access the calling contract tx id - use `SmartWeave::caller()`.
+`SmartWeave::caller()` returns:
+1. same value as `Transaction::owner()` - for standard interactions with contract
+2. transaction id of the calling contract - in case of internal writes
+
 ## 👷 Build
 
 Compile your contract to WASM binary by running following command:
