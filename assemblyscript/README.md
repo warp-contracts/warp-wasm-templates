@@ -71,7 +71,7 @@ If you want to edit contract's code and create your own implementation you can d
 5. Compile your contract to WASM binary by running following command:
 
 ```bash
-yarn asbuild
+yarn build
 ```
 
 6. Write tests for your contract (we will use Jest library for testing) and execute them - you can find a template in the [tests/](tests) folder.
@@ -254,13 +254,13 @@ Instead of providing the options on the command line, a configuration file typic
 Now we need to compile our contract. You can achieve that by running following command:
 
 ```bash
-yarn asbuild
+yarn build
 ```
 
-Running `asbuild` command will compile `contract.ts` file to WebAssembly. Compiled binary will be emitted to the `build/` directory. You can also compile file in debug mode like so:
+Running `build` command will compile `contract.ts` file to WebAssembly. Compiled binary will be emitted to the `build/` directory. You can also compile file in debug mode like so:
 
 ```bash
-yarn asbuild:debug
+yarn build:debug
 ```
 
 In case of debug mode - also source map and text format will be emitted.
@@ -275,7 +275,7 @@ Similar to TypeScript's `tsc` transpiling to JavaScript, AssemblyScript's `asc` 
 - `target` - configuration file target to use. Defaults to 'release'.
 
 ```bash
-    "asbuild": "asc assembly/contract.ts --sourceMap --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release"
+    "build": "asc assembly/contract.ts --sourceMap --runtime stub --exportRuntime --transform ./ContractTransform --exportTable --target release"
 ```
 
 You can view the whole list of compile options [here](https://www.assemblyscript.org/compiler.html#compiler-options).
