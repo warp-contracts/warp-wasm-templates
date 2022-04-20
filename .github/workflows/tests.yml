@@ -18,7 +18,7 @@ jobs:
         run: yarn
         working-directory: assemblyscript
       - name: AssemblyScript - build
-        run: yarn asbuild
+        run: yarn build
         working-directory: assemblyscript
       - name: AssemblyScript - run tests
         run: yarn test
