@@ -55,7 +55,9 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
         // cannot pass any data from action.error here - ends up with
         // "FnOnce called more than once" error from wasm-bindgen for
         // "foreign_call" testcase.
-        result = Err(ContractError::RuntimeError("Error while parsing input".to_string()));
+        result = Err(ContractError::RuntimeError(
+            "Error while parsing input".to_string(),
+        ));
     } else {
         // not sure about clone here
         let current_state = STATE.with(|service| service.borrow().clone());
@@ -63,21 +65,13 @@ pub async fn handle(interaction: JsValue) -> Option<JsValue> {
         result = contract::handle(current_state, action.unwrap()).await;
     }
 
-    if result.is_ok() {
-        let handler_result = result.as_ref().ok().unwrap();
-
-        return if let HandlerResult::NewState(state) = handler_result {
-            // not sure about clone here
-            STATE.with(|service| service.replace(state.clone()));
-            None
-        } else {
-            Some(JsValue::from_serde(&result).unwrap())
-        };
+    if let Ok(HandlerResult::NewState(state)) = result {
+        STATE.with(|service| service.replace(state));
+        None
     } else {
         Some(JsValue::from_serde(&result).unwrap())
     }
 }
-
 
 #[wasm_bindgen(js_name = initState)]
 pub fn init_state(state: &JsValue) {
