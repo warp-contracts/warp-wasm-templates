@@ -4,26 +4,26 @@ use crate::actions::evolve::evolve;
 use crate::actions::foreign_read::{foreign_read};
 use crate::actions::foreign_write::foreign_write;
 use crate::actions::transfer::transfer;
+use crate::contract_utils::js_imports::{Block, Contract, log, SmartWeave, Transaction};
 use crate::state::State;
 
 pub async fn handle(current_state: State, action: Action) -> ActionResult {
-    /*
-    Example of accessing functions imported from js:
 
+    //Example of accessing functions imported from js:
     log("log from contract");
-    Transaction::id();
-    Transaction::owner();
-    Transaction::target();
+    log(&("Transaction::id()".to_owned() + &Transaction::id()));
+    log(&("Transaction::owner()".to_owned() + &Transaction::owner()));
+    log(&("Transaction::target()".to_owned() + &Transaction::target()));
 
-    Contract::id();
-    Contract::owner();
+    log(&("Block::height()".to_owned() + &Block::height().to_string()));
+    log(&("Block::indep_hash()".to_owned() + &Block::indep_hash()));
+    log(&("Block::timestamp()".to_owned() + &Block::timestamp().to_string()));
 
-    Block::height();
-    Block::indep_hash();
-    Block::timestamp();
+    log(&("Contract::id()".to_owned() + &Contract::id()));
+    log(&("Contract::owner()".to_owned() + &Contract::owner()));
 
-    SmartWeave:caller();
-    */
+    log(&("SmartWeave::caller()".to_owned() + &SmartWeave::caller()));
+
     match action {
         Action::Transfer { qty, target } => transfer(current_state, qty, target),
         Action::Balance { target } => balance(current_state, target),

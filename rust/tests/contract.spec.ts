@@ -48,7 +48,7 @@ describe('Testing the Profit Sharing Token', () => {
     });
 
     LoggerFactory.INST.logLevel('error');
-    //LoggerFactory.INST.logLevel('debug', 'WASM:Rust');
+    LoggerFactory.INST.logLevel('debug', 'WASM:Rust');
     //LoggerFactory.INST.logLevel('debug', 'WasmContractHandlerApi');
 
     smartweave = SmartWeaveNodeFactory.memCached(arweave);
@@ -81,9 +81,9 @@ describe('Testing the Profit Sharing Token', () => {
         wallet,
         initState: JSON.stringify(initialState),
         src: contractSrc,
+        wasmSrcCodeDir: path.join(__dirname, '../src'),
+        wasmGlueCode: path.join(__dirname, '../pkg/rust-contract.js')
       },
-      path.join(__dirname, '../src'),
-      path.join(__dirname, '../pkg/rust-contract.js')
     );
 
     console.log(contractTxId);
@@ -99,9 +99,9 @@ describe('Testing the Profit Sharing Token', () => {
           },
         }),
         src: contractSrc,
+        wasmSrcCodeDir: path.join(__dirname, '../src'),
+        wasmGlueCode: path.join(__dirname, '../pkg/rust-contract.js')
       },
-      path.join(__dirname, '../src'),
-      path.join(__dirname, '../pkg/rust-contract.js')
     );
 
     console.log(foreignContractTxId);
@@ -130,8 +130,6 @@ describe('Testing the Profit Sharing Token', () => {
     const contractTx = await arweave.transactions.get(contractTxId);
 
     expect(contractTx).not.toBeNull();
-    expect(getTag(contractTx, SmartWeaveTags.CONTRACT_TYPE)).toEqual('wasm');
-    expect(getTag(contractTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
 
     const contractSrcTx = await arweave.transactions.get(
       getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID)
