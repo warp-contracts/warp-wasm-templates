@@ -27,7 +27,7 @@ extern "C" {
     pub type Contract;
 
     #[wasm_bindgen(static_method_of = Contract, js_name = contractId)]
-    pub fn id() -> i32;
+    pub fn id() -> String;
 
     #[wasm_bindgen(static_method_of = Contract, js_name = contractOwner)]
     pub fn owner() -> String;
@@ -40,7 +40,7 @@ extern "C" {
     pub type Transaction;
 
     #[wasm_bindgen(static_method_of = Transaction, js_name = id)]
-    pub fn id() -> i32;
+    pub fn id() -> String;
 
     #[wasm_bindgen(static_method_of = Transaction, js_name = owner)]
     pub fn owner() -> String;

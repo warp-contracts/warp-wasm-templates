@@ -38,9 +38,9 @@ module.exports.deploy = async function (
       wallet,
       initState: JSON.stringify(initialState),
       src: contractSrc,
-    },
-    path.join(__dirname, '../../src'),
-    path.join(__dirname, '../../pkg/rust-contract.js')
+      wasmSrcCodeDir: path.join(__dirname, '../../src'),
+      wasmGlueCode: path.join(__dirname, '../../pkg/rust-contract.js')
+    }
   );
   fs.writeFileSync(
     path.join(__dirname, `../${target}/contract-tx-id.txt`),
