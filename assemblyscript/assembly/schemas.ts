@@ -26,6 +26,6 @@ export class ResultSchema {
 
 @serializable
 export class HandlerResultSchema {
-  state: StateSchema;
+  state: StateSchema | null;
   result: ResultSchema | null;
 }
