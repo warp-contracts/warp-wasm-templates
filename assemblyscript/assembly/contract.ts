@@ -42,7 +42,7 @@ function handle(state: StateSchema, action: ActionSchema): ResultSchema | null {
     const handlerResult = functions.get(fn)(state, action);
     if (handlerResult.state != null) {
       console.logO('Setting new state', stringify(handlerResult.state))
-      contractState = handlerResult.state;
+      contractState = handlerResult.state!!;
     }
     return handlerResult.result;
   } else {
