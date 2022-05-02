@@ -5,23 +5,13 @@ const { mineBlock } = require('./utils/mine-block');
 const { loadWallet, walletAddress } = require('./utils/load-wallet');
 const { connectArweave } = require('./utils/connect-arweave');
 
-module.exports.deploy = async function (
-  host,
-  port,
-  protocol,
-  target,
-  walletJwk
-) {
+module.exports.deploy = async function (host, port, protocol, target, walletJwk) {
   const arweave = connectArweave(host, port, protocol);
   const smartweave = SmartWeaveNodeFactory.memCached(arweave);
   const wallet = await loadWallet(arweave, walletJwk, target);
   const walletAddr = await walletAddress(arweave, wallet);
-  const contractSrc = fs.readFileSync(
-    path.join(__dirname, '../../pkg/rust-contract_bg.wasm')
-  );
-  const stateFromFile = JSON.parse(
-    fs.readFileSync(path.join(__dirname, '../state/init-state.json'), 'utf-8')
-  );
+  const contractSrc = fs.readFileSync(path.join(__dirname, '../../pkg/rust-contract_bg.wasm'));
+  const stateFromFile = JSON.parse(fs.readFileSync(path.join(__dirname, '../state/init-state.json'), 'utf-8'));
 
   const initialState = {
     ...stateFromFile,
@@ -39,22 +29,18 @@ module.exports.deploy = async function (
       initState: JSON.stringify(initialState),
       src: contractSrc,
       wasmSrcCodeDir: path.join(__dirname, '../../src'),
-      wasmGlueCode: path.join(__dirname, '../../pkg/rust-contract.js')
-    }
+      wasmGlueCode: path.join(__dirname, '../../pkg/rust-contract.js'),
+    },
+    true
   );
-  fs.writeFileSync(
-    path.join(__dirname, `../${target}/contract-tx-id.txt`),
-    contractTxId
-  );
+  fs.writeFileSync(path.join(__dirname, `../${target}/contract-tx-id.txt`), contractTxId);
 
   if (target == 'testnet' || target == 'local') {
     await mineBlock(arweave);
   }
 
   if (target == 'testnet') {
-    console.log(
-      `Check contract at https://sonar.redstone.tools/#/app/contract/${contractTxId}?network=testnet`
-    );
+    console.log(`Check contract at https://sonar.redstone.tools/#/app/contract/${contractTxId}?network=testnet`);
   } else {
     console.log('Contract tx id', contractTxId);
   }
