@@ -30,7 +30,7 @@ module.exports.deploy = async function (host, port, protocol, target, walletJwk)
       src: contractSrc,
       wasmSrcCodeDir: path.join(__dirname, '../../src'),
     },
-    true
+    target == 'mainnet'
   );
   fs.writeFileSync(path.join(__dirname, `../${target}/contract-tx-id.txt`), contractTxId);
 
