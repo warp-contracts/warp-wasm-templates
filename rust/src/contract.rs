@@ -24,6 +24,10 @@ pub async fn handle(current_state: State, action: Action) -> ActionResult {
 
     log(&("SmartWeave::caller()".to_owned() + &SmartWeave::caller()));
 
+    // for vrf-compatible interactions
+    /*log(&("Vrf::value()".to_owned() + &Vrf::value()));
+    log(&("Vrf::randomInt()".to_owned() + &Vrf::randomInt(7).to_string()));*/
+
     match action {
         Action::Transfer { qty, target } => transfer(current_state, qty, target),
         Action::Balance { target } => balance(current_state, target),

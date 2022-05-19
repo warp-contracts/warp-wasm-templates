@@ -73,6 +73,18 @@ extern "C" {
 
 #[wasm_bindgen]
 extern "C" {
+    #[wasm_bindgen]
+    pub type Vrf;
+
+    #[wasm_bindgen(static_method_of = Vrf, js_name = value)]
+    pub fn value() -> String;
+
+    #[wasm_bindgen(static_method_of = Vrf, js_name = randomInt)]
+    pub fn randomInt(max_value: i32) -> i32;
+}
+
+#[wasm_bindgen]
+extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     pub fn log(s: &str);
 }
