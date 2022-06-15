@@ -1,7 +1,7 @@
 {
-  "name": "redstone-smartcontracts-assemblyscript-tmpl",
+  "name": "warp-contracts-assemblyscript-tmpl",
   "version": "0.0.1",
-  "description": "RedStone SmartWeave wasm assemblyscript contract template",
+  "description": "Warp WASM assemblyscript contract template",
   "main": "index.js",
   "author": "Redstone Team <dev@redstone.finance>",
   "license": "MIT",
@@ -34,12 +34,12 @@
   "devDependencies": {
     "@assemblyscript/loader": "0.19.23",
     "@types/jest": "^27.4.1",
-    "arlocal": "1.1.30",
-    "arweave": "^1.10.23",
+    "arlocal": "1.1.42",
+    "arweave": "1.11.4",
     "assemblyscript": "^0.19.23",
     "asyncify-wasm": "^1.2.1",
     "jest": "^27.5.1",
-    "redstone-smartweave": "0.4.79",
+    "warp-contracts": "1.0.1",
     "ts-jest": "^27.1.3",
     "visitor-as": "^0.8.0"
   }

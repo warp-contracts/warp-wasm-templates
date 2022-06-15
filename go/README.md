@@ -1,9 +1,9 @@
-# 🐿 RedStone SmartWeave contracts - Go template
+# 🐿 Warp contracts - Go template
 
-Following repository is a template for writing SmartWeave contracts in Go and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
+Following repository is a template for writing SmartWeave contracts in Go and building them into WASM binaries which can be then processed by Warp SDK.
 
 It contains an example implementation of a PST contract - which you can use as a base for implementing your own contract.
-If you are not familiar with the concept of Profit Sharing Tokens, check out a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our RedStone Academy.
+If you are not familiar with the concept of Profit Sharing Tokens, check out a [tutorial](https://academy.warp.cc/docs/pst/introduction/intro) for writing your first PST contract in our Warp Academy.
 
 - [Installation](#-installation)
 - [Code structure](#-code-structure)
@@ -108,7 +108,7 @@ yarn test
 
 ## 📜 Deploy
 
-Deploy your contract to one of the networks (mainnet/RedStone public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
+Deploy your contract to one of the networks (mainnet/Warp public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
 
 ```bash
 yarn deploy:[network]
@@ -126,7 +126,7 @@ You can view deploy script code [here](deploy/scripts/deploy.js).
 
 ## 🟥 Using SDK
 
-Optionally - you can run one of the scripts which uses RedStone SmartWeave SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
+Optionally - you can run one of the scripts which uses Warp SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
 
 💡**NOTE** You will need to have a file with the wallet key and a file with the contract id to run these scripts. If you do not have them please run a [deploy](#-deploy) script.
 

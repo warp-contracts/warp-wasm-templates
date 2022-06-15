@@ -1,8 +1,8 @@
-# 🚀 Redstone SmartWeave contracts - AssemblyScript template
+# 🚀 Warp contracts - AssemblyScript template
 
-Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by RedStone SmartWeave SDK.
+Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by Warp SDK.
 
-It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://redstone.academy/docs/pst/introduction/intro) for writing your first PST contract in our [RedStone Academy](https://redstone.academy).
+It's a template for writing PST contract. If you are not familiar with the concept of Profit Sharing Tokens we created a [tutorial](https://academy.warp.cc/docs/pst/introduction/intro) for writing your first PST contract in our [Warp Academy](https://academy.warp.cc).
 
 - [Introduction](#-introduction)
 - [Code structure](#-code-structure)
@@ -37,7 +37,7 @@ This template lets you quickly write AssemblyScript contract, test it, compile i
 
 ### Current implementation limitations
 
-Please note, that current implementation for AssemblyScript has its limits. RedStone SDK's **Smarteave.readContractState method** which allows to read other contracts' state is not supported. It will be available in other implementation - Rust and Go - which will be soon released and enabled to use.
+Please note, that current implementation for AssemblyScript has its limits. Warp SDK's **Smarteave.readContractState method** which allows to read other contracts' state is not supported. It will be available in other implementation - Rust and Go - which will be soon released and enabled to use.
 
 ### Installation
 
@@ -54,7 +54,7 @@ yarn install
 
 ### Implementation
 
-Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and RedStone SmartWeave SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you feel the need to explore some more - walk through the rest of the tutorial starting with [Writing contract](#writing-contract) section.
+Following template is designed for you to quickly understand basic concepts of writing contracts using AssemblyScript and Warp SDK. If you want to play around with the code jump to the [Quick start chapter](#quick-start). If you feel the need to explore some more - walk through the rest of the tutorial starting with [Writing contract](#writing-contract) section.
 
 ## 🏃‍♂️ Quick start
 
@@ -80,7 +80,7 @@ yarn build
 yarn test
 ```
 
-7. Deploy your contract to one of the networks (mainnet/RedStone public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
+7. Deploy your contract to one of the networks (mainnet/Warp public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
 
 ```bash
 yarn deploy:[network]
@@ -96,7 +96,7 @@ npx arlocal
 
 You can view deploy script code [here](deploy/scripts/deploy.js)
 
-8. Using RedStone SmartWeave SDKs' methods is similair to how you should use them in case of regular JS contracts. You can run a script which compiles contract, deploys it and reads its state by running:
+8. Using Warp SDKs' methods is similair to how you should use them in case of regular JS contracts. You can run a script which compiles contract, deploys it and reads its state by running:
 
 ```bash
 yarn read:[network]
@@ -292,7 +292,7 @@ Writing tests do not differ much from writing tests for regular JS contracts. Th
 You also need to pass the path to the original wasm contract source code while deploying the contract. SDK will then zip it and pass to the data deployed while creating the transaction.
 
 ```js
-const contractTxId = await smartweave.createContract.deploy(
+const contractTxId = await warp.createContract.deploy(
   {
     wallet,
     initState: JSON.stringify(initialState),
@@ -304,7 +304,7 @@ const contractTxId = await smartweave.createContract.deploy(
 
 ## 📜 Deploy
 
-You can deploy the contract to three types of networks - mainnet, RedStone public testnet and local testnet. All of them share some common code which you can view in [deploy/scripts/utils](deploy/scripts/utils).
+You can deploy the contract to three types of networks - mainnet, Warp public testnet and local testnet. All of them share some common code which you can view in [deploy/scripts/utils](deploy/scripts/utils).
 Deploy script does not differ from the one you would write when deploying a regular JavaScript contract.
 
 You can deploy contract by running proper deploy command which firstly compiles the contract and then fire correct NodeJS script:
@@ -316,7 +316,7 @@ You can deploy contract by running proper deploy command which firstly compiles 
 These are the steps which are followed by the scripts in order to deploy the contract:
 
 - initialize Arweave
-- initialize SmartWeave
+- initialize Warp
 - load wallet
 - add funds to the wallet - in case of test wallets
 - read `initial-state.json` file
@@ -326,7 +326,7 @@ These are the steps which are followed by the scripts in order to deploy the con
 
 ## 🟥 Using SDK
 
-Optionally - you can run one of the scripts which uses RedStone SmartWeave SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
+Optionally - you can run one of the scripts which uses Warp SDK to interact with the contract. Using SDKs' methods works exactly the same as in case of a regular JS contract.
 
 💡**NOTE** You will need to have a file with the wallet key and a file with the contract id to run these scripts. If you do not have them please run a [deploy](#-deploy) script.
 

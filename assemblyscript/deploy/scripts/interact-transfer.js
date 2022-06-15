@@ -29,7 +29,7 @@ module.exports.interactTransfer = async function (
 
   if (target == 'testnet') {
     console.log(
-      `Check transfer interaction at https://sonar.redstone.tools/#/app/interaction/${transferId}?network=testnet`
+      `Check transfer interaction at https://sonar.warp.cc/#/app/interaction/${transferId}?network=testnet`
     );
   } else {
     console.log('Transfer tx id', transferId);
