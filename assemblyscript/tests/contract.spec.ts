@@ -9,10 +9,10 @@ import {
   LoggerFactory,
   PstContract,
   PstState,
-  SmartWeave,
-  SmartWeaveNodeFactory,
+  Warp,
+  WarpNodeFactory,
   SmartWeaveTags,
-} from 'redstone-smartweave';
+} from 'warp-contracts';
 import path from 'path';
 import { addFunds, mineBlock } from '../utils';
 
@@ -28,7 +28,7 @@ describe('Testing the Profit Sharing Token', () => {
 
   let arweave: Arweave;
   let arlocal: ArLocal;
-  let smartweave: SmartWeave;
+  let warp: Warp;
   let pst: PstContract;
   let contractTxId: string;
 
@@ -46,7 +46,7 @@ describe('Testing the Profit Sharing Token', () => {
 
     LoggerFactory.INST.logLevel('error');
 
-    smartweave = SmartWeaveNodeFactory.memCached(arweave);
+    warp = WarpNodeFactory.forTesting(arweave);
 
     wallet = await arweave.wallets.generate();
     await addFunds(arweave, wallet);
@@ -67,18 +67,15 @@ describe('Testing the Profit Sharing Token', () => {
     };
 
     // deploying contract using the new SDK.
-    contractTxId = await smartweave.createContract.deploy(
-      {
-        wallet,
-        initState: JSON.stringify(initialState),
-        src: contractSrc,
-        wasmSrcCodeDir: path.join(__dirname, '../assembly'),
-      },
-
-    );
+    contractTxId = await warp.createContract.deploy({
+      wallet,
+      initState: JSON.stringify(initialState),
+      src: contractSrc,
+      wasmSrcCodeDir: path.join(__dirname, '../assembly'),
+    });
 
     // connecting to the PST contract
-    pst = smartweave.pst(contractTxId);
+    pst = warp.pst(contractTxId);
 
     // connecting wallet to the PST contract
     pst.connect(wallet);
@@ -131,7 +128,7 @@ describe('Testing the Profit Sharing Token', () => {
 
     const newSource = fs.readFileSync(path.join(__dirname, './data/token-evolve.js'), 'utf8');
 
-    const newSrcTxId = await pst.saveNewSource(newSource);
+    const newSrcTxId = await pst.save({ src: newSource });
     console.log('txid', newSrcTxId);
     await mineBlock(arweave);
 

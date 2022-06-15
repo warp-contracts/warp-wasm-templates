@@ -9,10 +9,10 @@ import {
   LoggerFactory,
   PstContract,
   PstState,
-  SmartWeave,
-  SmartWeaveNodeFactory,
+  Warp,
+  WarpNodeFactory,
   SmartWeaveTags,
-} from 'redstone-smartweave';
+} from 'warp-contracts';
 import path from 'path';
 import { addFunds, mineBlock } from '../utils';
 
@@ -28,7 +28,7 @@ describe('Testing the Profit Sharing Token', () => {
 
   let arweave: Arweave;
   let arlocal: ArLocal;
-  let smartweave: SmartWeave;
+  let warp: Warp;
   let pst: PstContract;
 
   let contractTxId: string;
@@ -49,18 +49,14 @@ describe('Testing the Profit Sharing Token', () => {
     LoggerFactory.INST.logLevel('error');
     LoggerFactory.INST.logLevel('debug', 'WASM:Go');
 
-    smartweave = SmartWeaveNodeFactory.memCached(arweave);
+    warp = WarpNodeFactory.forTesting(arweave);
 
     wallet = await arweave.wallets.generate();
     await addFunds(arweave, wallet);
     walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
-    contractSrc = fs.readFileSync(
-      path.join(__dirname, '../.out/go-contract.wasm')
-    );
-    const stateFromFile: PstState = JSON.parse(
-      fs.readFileSync(path.join(__dirname, './data/token-pst.json'), 'utf8')
-    );
+    contractSrc = fs.readFileSync(path.join(__dirname, '../.out/go-contract.wasm'));
+    const stateFromFile: PstState = JSON.parse(fs.readFileSync(path.join(__dirname, './data/token-pst.json'), 'utf8'));
 
     initialState = {
       ...stateFromFile,
@@ -74,32 +70,28 @@ describe('Testing the Profit Sharing Token', () => {
     };
 
     // deploying contract using the new SDK.
-    contractTxId = await smartweave.createContract.deploy(
-      {
-        wallet,
-        initState: JSON.stringify(initialState),
-        src: contractSrc,
-        wasmSrcCodeDir: path.join(__dirname, '../src')
-      },
-    );
+    contractTxId = await warp.createContract.deploy({
+      wallet,
+      initState: JSON.stringify(initialState),
+      src: contractSrc,
+      wasmSrcCodeDir: path.join(__dirname, '../src'),
+    });
 
-    foreignContractTxId = await smartweave.createContract.deploy(
-      {
-        wallet,
-        initState: JSON.stringify({
-          ...initialState,
-          ...{
-            ticker: 'FOREIGN_PST',
-            name: 'foreign contract',
-          },
-        }),
-        src: contractSrc,
-        wasmSrcCodeDir: path.join(__dirname, '../src')
-      },
-    );
+    foreignContractTxId = await warp.createContract.deploy({
+      wallet,
+      initState: JSON.stringify({
+        ...initialState,
+        ...{
+          ticker: 'FOREIGN_PST',
+          name: 'foreign contract',
+        },
+      }),
+      src: contractSrc,
+      wasmSrcCodeDir: path.join(__dirname, '../src'),
+    });
 
     // connecting to the PST contract
-    pst = smartweave.pst(contractTxId);
+    pst = warp.pst(contractTxId);
 
     // connecting wallet to the PST contract
     pst.connect(wallet);
@@ -116,26 +108,16 @@ describe('Testing the Profit Sharing Token', () => {
 
     expect(contractTx).not.toBeNull();
 
-    const contractSrcTx = await arweave.transactions.get(
-      getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID)
-    );
-    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual(
-      'application/wasm'
-    );
+    const contractSrcTx = await arweave.transactions.get(getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID));
+    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
     expect(getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('go');
   });
 
   it('should read pst state and balance data', async () => {
     expect(await pst.currentState()).toEqual(initialState);
 
-    expect(
-      (await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'))
-        .balance
-    ).toEqual(10000000);
-    expect(
-      (await pst.currentBalance('33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA'))
-        .balance
-    ).toEqual(23111222);
+    expect((await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M')).balance).toEqual(10000000);
+    expect((await pst.currentBalance('33F0QHcb22W7LwWR1iRC8Az1ntZG09XQ03YWuw2ABqA')).balance).toEqual(23111222);
     expect((await pst.currentBalance(walletAddress)).balance).toEqual(555669);
   });
 
@@ -146,25 +128,15 @@ describe('Testing the Profit Sharing Token', () => {
     });
     await mineBlock(arweave);
 
-    expect((await pst.currentState()).balances[walletAddress]).toEqual(
-      555669 - 555
-    );
-    expect(
-      (await pst.currentState()).balances[
-        'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-      ]
-    ).toEqual(10000000 + 555);
+    expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555);
+    expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(10000000 + 555);
   });
 
   it('should properly view contract state', async () => {
-    const result = await pst.currentBalance(
-      'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-    );
+    const result = await pst.currentBalance('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M');
     expect(result.balance).toEqual(10000000 + 555);
     expect(result.ticker).toEqual('EXAMPLE_PST_TOKEN');
-    expect(result.target).toEqual(
-      'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-    );
+    expect(result.target).toEqual('uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M');
   });
 
   // note: the dummy logic on the test contract should add 1000 tokens
@@ -175,34 +147,25 @@ describe('Testing the Profit Sharing Token', () => {
       contractTxId: foreignContractTxId,
     });
     await mineBlock(arweave);
-    expect((await pst.currentState()).balances[walletAddress]).toEqual(
-      555669 - 555 + 1000
+    expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555 + 1000);
+    expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(
+      10000000 + 555 + 1000
     );
-    expect(
-      (await pst.currentState()).balances[
-        'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
-      ]
-    ).toEqual(10000000 + 555 + 1000);
   });
 
   it("should properly evolve contract's source code", async () => {
     expect((await pst.currentState()).balances[walletAddress]).toEqual(556114);
 
-    const newSource = fs.readFileSync(
-      path.join(__dirname, './data/token-evolve.js'),
-      'utf8'
-    );
+    const newSource = fs.readFileSync(path.join(__dirname, './data/token-evolve.js'), 'utf8');
 
-    const newSrcTxId = await pst.saveNewSource(newSource);
+    const newSrcTxId = await pst.save({ src: newSource });
     await mineBlock(arweave);
 
     await pst.evolve(newSrcTxId);
     await mineBlock(arweave);
 
     // note: the evolved balance always adds 555 to the result
-    expect((await pst.currentBalance(walletAddress)).balance).toEqual(
-      556114 + 555
-    );
+    expect((await pst.currentBalance(walletAddress)).balance).toEqual(556114 + 555);
   });
 
   it('should properly perform dry write with overwritten caller', async () => {
@@ -226,9 +189,7 @@ describe('Testing the Profit Sharing Token', () => {
     );
 
     expect(result.state.balances[walletAddress]).toEqual(555114 - 1000 + 1000);
-    expect(
-      result.state.balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']
-    ).toEqual(10000000 + 1000 + 555 + 333);
+    expect(result.state.balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(10000000 + 1000 + 555 + 333);
     expect(result.state.balances[overwrittenCaller]).toEqual(1000 - 333);
   });
 });
