@@ -28,10 +28,10 @@ jobs:
         working-directory: rust/pst
       - name: Rust - build
         run: yarn build
-        working-directory: rust
+        working-directory: rust/pst
       - name: Rust - run tests
         run: yarn test
-        working-directory: rust
+        working-directory: rust/pst
       - name: Go - install
         run: yarn
         working-directory: go
