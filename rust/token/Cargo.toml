@@ -13,6 +13,7 @@ wasm-bindgen-futures = { version = "0.4.29" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 js-sys = "0.3.56"
+warp_wasm_utils = { path = "../shared" }
 
 [package.metadata.wasm-pack.profile.profiling.wasm-bindgen]
 demangle-name-section = false

@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 
 use crate::action::{Action, QueryResponseMsg};
 use crate::contract;
-use crate::contract_utils::handler_result::HandlerResult;
+use warp_wasm_utils::contract_utils::handler_result::HandlerResult;
 use crate::error::ContractError;
 use crate::state::State;
 
