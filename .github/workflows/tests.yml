@@ -25,7 +25,7 @@ jobs:
         working-directory: assemblyscript
       - name: Rust - install
         run: yarn
-        working-directory: rust
+        working-directory: rust/pst
       - name: Rust - build
         run: yarn build
         working-directory: rust
