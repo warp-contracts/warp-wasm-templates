@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::contract_utils::handler_result::HandlerResult;
+use warp_wasm_utils::contract_utils::handler_result::HandlerResult;
 use crate::error::ContractError;
 use crate::state::State;
 

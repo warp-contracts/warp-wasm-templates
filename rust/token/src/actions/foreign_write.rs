@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use crate::action::ActionResult;
-use crate::contract_utils::foreign_call::write_foreign_contract;
-use crate::contract_utils::handler_result::HandlerResult;
-use crate::contract_utils::js_imports::{log};
+use warp_wasm_utils::contract_utils::foreign_call::write_foreign_contract;
+use warp_wasm_utils::contract_utils::handler_result::HandlerResult;
+use warp_wasm_utils::contract_utils::js_imports::{log};
 use crate::state::State;
 
 #[derive(Serialize)]
