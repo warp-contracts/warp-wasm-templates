@@ -309,6 +309,8 @@ Deploy script does not differ from the one you would write when deploying a regu
 
 You can deploy contract by running proper deploy command which firstly compiles the contract and then fire correct NodeJS script:
 
+Please note that in case of local deployment, you need to have `ArLocal` instance running - `npx arlocal`
+
 ```bash
     npm run deploy:[network]
 ```
