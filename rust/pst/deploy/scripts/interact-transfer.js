@@ -8,7 +8,7 @@ module.exports.interactTransfer = async function (host, port, protocol, target, 
   const arweave = connectArweave(host, port, protocol);
   const wallet = await loadWallet(arweave, walletJwk, target, true);
   const txId = contractTxId(target);
-  const pst = await connectPstContract(arweave, wallet, txId);
+  const pst = await connectPstContract(arweave, wallet, txId, target);
 
   const transferId = await pst.transfer({
     target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
