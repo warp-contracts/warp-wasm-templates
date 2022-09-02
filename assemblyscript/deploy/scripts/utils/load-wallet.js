@@ -14,6 +14,7 @@ module.exports.loadWallet = async function (
   if (!generated) {
     await generateWallet(arweave, target);
   }
+
   try {
     wallet = JSON.parse(fs.readFileSync(path.join(walletJwk), 'utf-8'));
   } catch (e) {

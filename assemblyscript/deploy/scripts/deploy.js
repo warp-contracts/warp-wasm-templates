@@ -7,8 +7,7 @@ const { connectArweave } = require('./utils/connect-arweave');
 
 module.exports.deploy = async function (host, port, protocol, target, walletJwk) {
   const arweave = connectArweave(host, port, protocol);
-  const warp =
-    module.exports.getWarpInstance(port, target);
+  const warp = module.exports.getWarpInstance(port, target);
   const wallet = await loadWallet(arweave, walletJwk, target);
   const walletAddr = await walletAddress(arweave, wallet);
   const contractSrc = fs.readFileSync(path.join(__dirname, '../../build/optimized.wasm'));
