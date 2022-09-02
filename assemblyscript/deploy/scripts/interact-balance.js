@@ -16,8 +16,8 @@ module.exports.interactBalance = async function (
   const walletAddress = await arweave.wallets.jwkToAddress(wallet);
 
   const txId = contractTxId(target);
-  const pst = await connectPstContract(arweave, wallet, txId);
+  const pst = await connectPstContract(arweave, wallet, txId, target);
   const balance = await pst.currentBalance(walletAddress);
 
-  console.log(balance);
+  console.log('Current balance:', balance);
 };

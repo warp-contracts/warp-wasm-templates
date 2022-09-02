@@ -1,11 +1,15 @@
-const { WarpNodeFactory } = require('warp-contracts');
+const { getWarpInstance } = require("../deploy");
 
 module.exports.connectContract = async function (
   arweave,
   wallet,
-  contractTxId
+  contractTxId,
+  target
 ) {
-  return WarpNodeFactory.memCached(arweave)
+  console.log('Target:', target);
+
+  const warp = getWarpInstance(arweave.api.config.port, target);
+  return warp
     .contract(contractTxId)
     .connect(wallet);
 };
