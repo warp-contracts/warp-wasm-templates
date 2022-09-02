@@ -11,7 +11,7 @@ module.exports.loadWallet = async function (
   generated
 ) {
   let wallet;
-  if (!generated && (target == 'local' || target == 'testnet')) {
+  if (!generated) {
     await generateWallet(arweave, target);
   }
 

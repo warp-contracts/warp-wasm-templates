@@ -5,5 +5,5 @@ interactBalance(
   443,
   'https',
   'mainnet',
-  'deploy/mainnet/.secrets/wallet_mainnet.json'
+  'deploy/mainnet/wallet_mainnet.json'
 ).finally();

@@ -11,13 +11,14 @@ module.exports.loadWallet = async function (
   generated
 ) {
   let wallet;
-  if (!generated && (target == 'local' || target == 'testnet')) {
+  if (!generated) {
     await generateWallet(arweave, target);
   }
+
   try {
     wallet = JSON.parse(fs.readFileSync(path.join(walletJwk), 'utf-8'));
   } catch (e) {
-    throw new Error('Wallet file not found! Please run deploy script first.');
+    throw new Error(`Wallet file ${walletJwk} not found! Please run deploy script first.`);
   }
 
   if (target == 'testnet' || target == 'local') {

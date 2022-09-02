@@ -14,9 +14,9 @@ module.exports.readContractState = async function (
   const wallet = await loadWallet(arweave, walletJwk, target, true);
 
   const txId = contractTxId(target);
-  const contract = await connectContract(arweave, wallet, txId);
-  const { state } = await contract.readState();
+  const contract = await connectContract(arweave, wallet, txId, target);
+  const { cachedValue } = await contract.readState();
 
-  console.log('Init state:', state);
+  console.log('Current state:', cachedValue.state);
   console.log('Contract tx id', txId);
 };
