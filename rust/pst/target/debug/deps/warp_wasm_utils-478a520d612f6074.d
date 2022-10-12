@@ -1,9 +1,0 @@
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst/target/debug/deps/warp_wasm_utils-478a520d612f6074.rmeta: /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/lib.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/mod.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/js_imports.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/foreign_call.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/handler_result.rs
-
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst/target/debug/deps/warp_wasm_utils-478a520d612f6074.d: /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/lib.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/mod.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/js_imports.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/foreign_call.rs /Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/handler_result.rs
-
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/lib.rs:
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/mod.rs:
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/js_imports.rs:
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/foreign_call.rs:
-/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/shared/src/contract_utils/handler_result.rs:
