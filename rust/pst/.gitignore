@@ -1,12 +1,28 @@
-node_modules
-dist
-pkg
-target
-__tests__/*.json
-/coverage
-.DS_Store
-.secrets
-.idea
+# Dependency directories
+node_modules/
 
-# so that each developer won't overwrite their own local contract address
-contracts-registry.address.test.txt
+# Optional eslint cache
+.eslintcache
+
+lib/
+
+# WebStorm Local files
+.idea/
+
+.DS_Store
+
+yarn-error.log
+
+.experiments/
+
+yalc.lock
+
+.yalc/
+
+/cache/
+
+/db/
+
+bundles/
+
+.secrets

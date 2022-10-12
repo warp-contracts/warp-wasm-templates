@@ -1,0 +1,10 @@
+/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst-new/target/wasm32-unknown-unknown/release/deps/async_stream-0ff3ac82e9c7f45f.rmeta: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/async_stream.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/next.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/yielder.rs
+
+/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst-new/target/wasm32-unknown-unknown/release/deps/libasync_stream-0ff3ac82e9c7f45f.rlib: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/async_stream.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/next.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/yielder.rs
+
+/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst-new/target/wasm32-unknown-unknown/release/deps/async_stream-0ff3ac82e9c7f45f.d: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/async_stream.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/next.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/yielder.rs
+
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/lib.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/async_stream.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/next.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-stream-0.3.3/src/yielder.rs:

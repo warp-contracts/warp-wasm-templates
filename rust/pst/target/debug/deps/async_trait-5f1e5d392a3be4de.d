@@ -1,0 +1,10 @@
+/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst/target/debug/deps/libasync_trait-5f1e5d392a3be4de.dylib: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/args.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/expand.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/lifetime.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/parse.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/receiver.rs
+
+/Users/asiaziola/arweave/redstone-smartcontracts-assemblyscript-tmpl/rust/pst/target/debug/deps/async_trait-5f1e5d392a3be4de.d: /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/lib.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/args.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/expand.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/lifetime.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/parse.rs /Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/receiver.rs
+
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/lib.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/args.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/expand.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/lifetime.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/parse.rs:
+/Users/asiaziola/.cargo/registry/src/github.com-1ecc6299db9ec823/async-trait-0.1.57/src/receiver.rs:

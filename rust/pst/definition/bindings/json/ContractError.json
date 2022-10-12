@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ContractError",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "data",
+        "kind"
+      ],
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "RuntimeError"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "TransferAmountMustBeHigherThanZero"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "IDontLikeThisContract"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "data",
+        "kind"
+      ],
+      "properties": {
+        "data": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "CallerBalanceNotEnough"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "OnlyOwnerCanEvolve"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "EvolveNotAllowed"
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "data",
+        "kind"
+      ],
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "WalletHasNoBalanceDefined"
+          ]
+        }
+      }
+    }
+  ]
+}

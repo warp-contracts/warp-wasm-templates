@@ -102,8 +102,6 @@ yarn test
 
 Deploy your contract to one of the networks (mainnet/Warp public testnet/localhost) by running following command (`network`: `mainnet` | `testnet` | `local`)
 
-Please note that in case of local deployment, you need to have `ArLocal` instance running - `npx arlocal`.
-
 ```bash
 yarn deploy:[network]
 ```
