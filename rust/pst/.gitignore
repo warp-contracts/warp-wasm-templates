@@ -1,28 +1,17 @@
-# Dependency directories
-node_modules/
-
-# Optional eslint cache
+node_modules
+dist
+pkg
+target
+__tests__/*.json
+/coverage
 .eslintcache
-
 lib/
-
-# WebStorm Local files
-.idea/
-
 .DS_Store
-
 yarn-error.log
-
 .experiments/
-
 yalc.lock
-
 .yalc/
-
 /cache/
-
 /db/
-
 bundles/
-
 .secrets
