@@ -5,7 +5,7 @@ import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import { getTag, InteractionResult, LoggerFactory, PstState, Warp, SmartWeaveTags, WarpFactory } from 'warp-contracts';
 import path from 'path';
-import { TestContractImpl } from '../definition/bindings/ts/Implementation';
+import { PstContractImpl } from '../definition/bindings/ts/PstContractImpl';
 import { State } from '../definition/bindings/ts/ContractState';
 
 jest.setTimeout(30000);
@@ -21,8 +21,8 @@ describe('Testing the Profit Sharing Token', () => {
   let arweave: Arweave;
   let arlocal: ArLocal;
   let warp: Warp;
-  let pst: TestContractImpl;
-  let pst2: TestContractImpl;
+  let pst: PstContractImpl;
+  let pst2: PstContractImpl;
 
   let foreignContractTxId: string;
   let contractTxId: string;
