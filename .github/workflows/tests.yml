@@ -29,6 +29,9 @@ jobs:
       - name: Rust - build
         run: yarn build
         working-directory: rust/pst
+      - name: Rust - generate bindings
+        run: yarn gen-bindings
+        working-directory: rust/pst
       - name: Rust - run tests
         run: yarn test
         working-directory: rust/pst
