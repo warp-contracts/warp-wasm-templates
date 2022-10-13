@@ -15,3 +15,4 @@ yalc.lock
 /db/
 bundles/
 .secrets
+bindings/

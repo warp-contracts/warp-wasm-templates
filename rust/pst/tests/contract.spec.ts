@@ -6,7 +6,7 @@ import { JWKInterface } from 'arweave/node/lib/wallet';
 import { getTag, InteractionResult, LoggerFactory, PstState, Warp, SmartWeaveTags, WarpFactory } from 'warp-contracts';
 import path from 'path';
 import { TestContractImpl } from '../definition/bindings/ts/Implementation';
-import { State } from '../definition/bindings/ts/State';
+import { State } from '../definition/bindings/ts/ContractState';
 
 jest.setTimeout(30000);
 
