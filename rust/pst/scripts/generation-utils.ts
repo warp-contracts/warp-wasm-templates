@@ -7,7 +7,7 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
   const actionsWrite = getActionsName(actions[1]);
   const actionsResponse = getActionsName(actions[2]);
 
-  resImpl = `import { WriteInteractionOptions, WriteInteractionResponse, Contract, Warp, ArWallet, ContractError, EvaluationOptions, DefaultEvaluationOptions } from 'warp-contracts';\nimport { ${actionsRead} } from './ReadAction';\nimport { ${actionsWrite} } from './WriteAction';\nimport { ${actionsResponse} } from './ReadResponse';\nimport { State } from './State';\n`;
+  resImpl = `import { WriteInteractionOptions, WriteInteractionResponse, Contract, Warp, ArWallet, ContractError, EvaluationOptions, DefaultEvaluationOptions } from 'warp-contracts';\nimport { ${actionsRead} } from './ReadAction';\nimport { ${actionsWrite} } from './WriteAction';\nimport { ${actionsResponse} } from './ReadResponse';\nimport { State } from './ContractState';\n`;
   resImpl += `export class TestContractImpl {
         readonly contract: Contract<State>;
 

@@ -1,6 +1,6 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use strum_macros::EnumIter; // 0.17.1
+use strum_macros::EnumIter;
 
 use crate::error::ContractError;
 use crate::state::{State};
@@ -52,6 +52,24 @@ pub enum Action {
     ForeignWrite(ForeignWrite)
 }
 
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
+#[serde(rename_all = "camelCase", tag = "function")]
+pub enum ReadAction {
+    Balance(Balance),
+}
+
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
+#[serde(rename_all = "camelCase", tag = "function")]
+pub enum WriteAction {
+    Transfer(Transfer),
+
+    Evolve(Evolve),
+
+    ForeignRead(ForeignRead),
+    
+    ForeignWrite(ForeignWrite)
+}
+
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct BalanceResult {
@@ -74,21 +92,3 @@ pub enum HandlerResult {
 }
 
 pub type ActionResult = Result<HandlerResult, ContractError>;
-
-#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
-#[serde(rename_all = "camelCase", tag = "function")]
-pub enum ReadAction {
-    Balance(Balance),
-}
-
-#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
-#[serde(rename_all = "camelCase", tag = "function")]
-pub enum WriteAction {
-    Transfer(Transfer),
-
-    Evolve(Evolve),
-
-    ForeignRead(ForeignRead),
-    
-    ForeignWrite(ForeignWrite)
-}
