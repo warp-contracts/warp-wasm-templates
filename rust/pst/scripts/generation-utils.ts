@@ -1,5 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import path from 'path';
 
 export const writeImplementationFile = async (bindings: any, actions: any[]) => {
   let resImpl = ``;
@@ -7,8 +8,8 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
   const actionsWrite = getActionsName(actions[1]);
   const actionsResponse = getActionsName(actions[2]);
 
-  resImpl = `import { WriteInteractionOptions, WriteInteractionResponse, Contract, Warp, ArWallet, ContractError, EvaluationOptions, DefaultEvaluationOptions } from 'warp-contracts';\nimport { ${actionsRead} } from './ReadAction';\nimport { ${actionsWrite} } from './WriteAction';\nimport { ${actionsResponse} } from './ReadResponse';\nimport { State } from './ContractState';\n`;
-  resImpl += `export class TestContractImpl {
+  resImpl = `import { WriteInteractionOptions, WriteInteractionResponse, Contract, Warp, ArWallet, ContractError, EvaluationOptions, DefaultEvaluationOptions } from 'warp-contracts';\nimport { ${actionsRead} } from './ReadAction';\nimport { ${actionsWrite} } from './WriteAction';\nimport { ${actionsResponse} } from './ReadResponse';\nimport { State } from './ContractState';\n\n`;
+  resImpl += `export class ${makeFirstCharUpper(implName)}ContractImpl {
         readonly contract: Contract<State>;
 
         constructor(contractId: string, warp: Warp, evaluationOptions: Partial<EvaluationOptions> = new DefaultEvaluationOptions()) {
@@ -33,12 +34,12 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
     resImpl += generateInteractions(writeObj, false);
   }
   resImpl += `}`;
-  writeFileSync(join(bindings, 'Implementation.ts'), resImpl);
+  writeFileSync(join(bindings, `${makeFirstCharUpper(implName)}ContractImpl.ts`), resImpl);
 };
 
 const generateInteractions = (functionObj: any, read: boolean) => {
   const interactionName = functionObj.examples[0].function;
-  const interactionNameUpper = interactionName.charAt(0).toUpperCase() + interactionName.slice(1);
+  const interactionNameUpper = makeFirstCharUpper(interactionName);
   if (read) {
     return `async ${interactionName}(${interactionName}: ${interactionNameUpper}): Promise<${interactionNameUpper}Result> {
             const interactionResult = await this.contract.viewState<any, ${interactionNameUpper}Result>({ function: '${interactionName}', ...${interactionName} });
@@ -51,7 +52,7 @@ const generateInteractions = (functionObj: any, read: boolean) => {
           }\n\n`;
   } else {
     return `async ${interactionName}(
-            ${interactionName}: ${interactionName.charAt(0).toUpperCase() + interactionName.slice(1)}, 
+            ${interactionName}: ${makeFirstCharUpper(interactionName)}, 
             options?: WriteInteractionOptions
             ): Promise<WriteInteractionResponse | null> {
             return await this.contract.writeInteraction<any>(
@@ -83,4 +84,10 @@ const getActionsName = (action: any) => {
     actionsFunctions.indexOf(a) == actionsFunctions.length - 1 ? (actionsName += a) : (actionsName += `${a}, `);
   });
   return actionsName;
+};
+
+const implName = path.basename(process.cwd());
+
+const makeFirstCharUpper = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 };
