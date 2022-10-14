@@ -5,8 +5,8 @@ import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import { getTag, InteractionResult, LoggerFactory, PstState, Warp, SmartWeaveTags, WarpFactory } from 'warp-contracts';
 import path from 'path';
-import { PstContractImpl } from '../definition/bindings/ts/PstContractImpl';
-import { State } from '../definition/bindings/ts/ContractState';
+import { PstContractImpl } from '../contract/definition/bindings/ts/PstContractImpl';
+import { State } from '../contract/definition/bindings/ts/ContractState';
 
 jest.setTimeout(30000);
 
@@ -42,7 +42,7 @@ describe('Testing the Profit Sharing Token', () => {
 
     ({ jwk: wallet, address: walletAddress } = await warp.testing.generateWallet());
 
-    contractSrc = fs.readFileSync(path.join(__dirname, '../implementation/pkg/rust-contract_bg.wasm'));
+    contractSrc = fs.readFileSync(path.join(__dirname, '../contract/implementation/pkg/rust-contract_bg.wasm'));
     const stateFromFile: PstState = JSON.parse(fs.readFileSync(path.join(__dirname, './data/token-pst.json'), 'utf8'));
 
     initialState = {
@@ -61,8 +61,8 @@ describe('Testing the Profit Sharing Token', () => {
       wallet,
       initState: JSON.stringify(initialState),
       src: contractSrc,
-      wasmSrcCodeDir: path.join(__dirname, '../implementation/src'),
-      wasmGlueCode: path.join(__dirname, '../implementation/pkg/rust-contract.js')
+      wasmSrcCodeDir: path.join(__dirname, '../contract/implementation/src'),
+      wasmGlueCode: path.join(__dirname, '../contract/implementation/pkg/rust-contract.js')
     }));
 
     ({ contractTxId: foreignContractTxId } = await warp.createContract.deploy({
@@ -75,25 +75,17 @@ describe('Testing the Profit Sharing Token', () => {
         }
       }),
       src: contractSrc,
-      wasmSrcCodeDir: path.join(__dirname, '../implementation/src'),
-      wasmGlueCode: path.join(__dirname, '../implementation/pkg/rust-contract.js')
+      wasmSrcCodeDir: path.join(__dirname, '../contract/implementation/src'),
+      wasmGlueCode: path.join(__dirname, '../contract/implementation/pkg/rust-contract.js')
     }));
 
-    pst = new TestContractImpl(contractTxId, warp, { internalWrites: true });
+    pst = new PstContractImpl(contractTxId, warp);
 
-    // connecting to the PST contract
-    // pst = warp.pst(contractTxId).setEvaluationOptions({
-    //   internalWrites: true,
-    // }) as PstContract;
-
-    pst2 = new TestContractImpl(foreignContractTxId, warp, { internalWrites: true });
-    // warp.pst(foreignContractTxId).setEvaluationOptions({
-    //   internalWrites: true,
-    // }) as PstContract;
+    pst2 = new PstContractImpl(foreignContractTxId, warp);
 
     // connecting wallet to the PST contract
-    pst.connect(wallet);
-    pst2.connect(wallet);
+    pst.connect(wallet).setEvaluationOptions({ internalWrites: true });
+    pst2.connect(wallet).setEvaluationOptions({ internalWrites: true });
   });
 
   afterAll(async () => {
