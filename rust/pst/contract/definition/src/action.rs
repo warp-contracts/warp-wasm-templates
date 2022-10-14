@@ -54,8 +54,9 @@ pub enum Action {
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
 #[serde(rename_all = "camelCase", tag = "function")]
-pub enum ReadAction {
+pub enum View {
     Balance(Balance),
+    BalanceResult(BalanceResult)
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]

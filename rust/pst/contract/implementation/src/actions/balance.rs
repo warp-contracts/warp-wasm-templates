@@ -1,5 +1,5 @@
 use warp_pst::{
-    action::{ActionResult, Balance, HandlerResult, BalanceResult, ReadResponse},
+    action::{ActionResult, HandlerResult, BalanceResult, ReadResponse, Balance},
     error::ContractError,
     state::State,
 };

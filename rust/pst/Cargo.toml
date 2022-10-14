@@ -1,2 +1,2 @@
 [workspace]
-members = ["definition", "implementation"]
+members = ["contract/definition"]

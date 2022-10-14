@@ -4,22 +4,35 @@ import path from 'path';
 
 export const writeImplementationFile = async (bindings: any, actions: any[]) => {
   let resImpl = ``;
-  const actionsRead = getActionsName(actions[0]);
+  const actionsView = getActionsName(actions[0]);
   const actionsWrite = getActionsName(actions[1]);
-  const actionsResponse = getActionsName(actions[2]);
 
-  resImpl = `import { WriteInteractionOptions, WriteInteractionResponse, Contract, Warp, ArWallet, ContractError, EvaluationOptions, DefaultEvaluationOptions } from 'warp-contracts';\nimport { ${actionsRead} } from './ReadAction';\nimport { ${actionsWrite} } from './WriteAction';\nimport { ${actionsResponse} } from './ReadResponse';\nimport { State } from './ContractState';\n\n`;
-  resImpl += `export class ${makeFirstCharUpper(implName)}ContractImpl {
+  resImpl = `
+  /**
+ * This file was automatically generated. Do not modify it, if you encounter any problems \n- please raise an issue: https://github.com/warp-contracts/warp-wasm-templates/issues.
+ */\n\n
+  import { WriteInteractionOptions, WriteInteractionResponse, Contract, Warp, ArWallet, ContractError, EvaluationOptions } from 'warp-contracts';\nimport { ${actionsView} } from './View';\nimport { ${actionsWrite} } from './WriteAction';\nimport { State } from './ContractState';\n\n`;
+  resImpl += `
+  export interface BaseInput {
+    function: string;
+  }
+
+  export class ${makeFirstCharUpper(implName)}ContractImpl {
         readonly contract: Contract<State>;
 
-        constructor(contractId: string, warp: Warp, evaluationOptions: Partial<EvaluationOptions> = new DefaultEvaluationOptions()) {
-          this.contract = warp.contract<State>(contractId).setEvaluationOptions(evaluationOptions);
-        }
+        constructor(contractId: string, warp: Warp) {
+          this.contract = warp.contract<State>(contractId);
+        }      
 
-            async connect(wallet: ArWallet) {
+            connect(wallet: ArWallet) {
                 this.contract.connect(wallet);
                 return this;
               }
+
+            setEvaluationOptions(evaluationOptions: Partial<EvaluationOptions>) {
+              this.contract.setEvaluationOptions(evaluationOptions);
+              return this;
+            }
 
             async currentState(): Promise<State> {
                 const { cachedValue } = await this.contract.readState();
@@ -38,11 +51,16 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
 };
 
 const generateInteractions = (functionObj: any, read: boolean) => {
-  const interactionName = functionObj.examples[0].function;
+  const interactionName = functionObj.title;
   const interactionNameUpper = makeFirstCharUpper(interactionName);
   if (read) {
-    return `async ${interactionName}(${interactionName}: ${interactionNameUpper}): Promise<${interactionNameUpper}Result> {
-            const interactionResult = await this.contract.viewState<any, ${interactionNameUpper}Result>({ function: '${interactionName}', ...${interactionName} });
+    if (functionObj.title.includes('Result')) {
+      return '';
+    } else {
+      return `async ${interactionName}(${interactionName}: ${interactionNameUpper}): Promise<${interactionNameUpper}Result> {
+            const interactionResult = await this.contract.viewState<BaseInput & ${makeFirstCharUpper(
+              interactionNameUpper
+            )}, ${interactionNameUpper}Result>({ function: '${interactionName}', ...${interactionName} });
             if (interactionResult.type == 'error') {
               throw new ContractError(interactionResult.errorMessage);
             } else if (interactionResult.type == 'exception') {
@@ -50,12 +68,13 @@ const generateInteractions = (functionObj: any, read: boolean) => {
             }
             return interactionResult.result;
           }\n\n`;
+    }
   } else {
     return `async ${interactionName}(
-            ${interactionName}: ${makeFirstCharUpper(interactionName)}, 
+            ${interactionName}: ${interactionNameUpper}, 
             options?: WriteInteractionOptions
             ): Promise<WriteInteractionResponse | null> {
-            return await this.contract.writeInteraction<any>(
+            return await this.contract.writeInteraction<BaseInput & ${interactionNameUpper}>(
                 { function: '${interactionName}', ...${interactionName} }, 
                 options
                 );
@@ -70,7 +89,7 @@ export const interfaceString = (interfaceName: string, properties: string) => {
 const getFunctionNames = (list: any[]) => {
   const functionNames = [];
   for (const typeObj of list) {
-    const functionName = typeObj.examples[0].function;
+    const functionName = typeObj.title;
     functionName != 'function' && functionNames.push(functionName.charAt(0).toUpperCase() + functionName.slice(1));
   }
   return functionNames;
