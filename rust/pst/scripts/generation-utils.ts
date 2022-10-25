@@ -17,7 +17,7 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
     function: string;
   }
 
-  export class ${makeFirstCharUpper(implName)}ContractImpl {
+  export class ${makeFirstCharUpper(implName)}Contract {
         readonly contract: Contract<State>;
 
         constructor(contractId: string, warp: Warp) {
@@ -47,7 +47,7 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
     resImpl += generateInteractions(writeObj, false);
   }
   resImpl += `}`;
-  writeFileSync(join(bindings, `${makeFirstCharUpper(implName)}ContractImpl.ts`), resImpl);
+  writeFileSync(join(bindings, `${makeFirstCharUpper(implName)}Contract.ts`), resImpl);
 };
 
 const generateInteractions = (functionObj: any, read: boolean) => {
