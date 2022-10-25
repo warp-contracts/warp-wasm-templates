@@ -5,7 +5,7 @@ import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import { getTag, InteractionResult, LoggerFactory, PstState, Warp, SmartWeaveTags, WarpFactory } from 'warp-contracts';
 import path from 'path';
-import { PstContractImpl } from '../contract/definition/bindings/ts/PstContractImpl';
+import { PstContract } from '../contract/definition/bindings/ts/PstContract';
 import { State } from '../contract/definition/bindings/ts/ContractState';
 
 jest.setTimeout(30000);
@@ -21,8 +21,8 @@ describe('Testing the Profit Sharing Token', () => {
   let arweave: Arweave;
   let arlocal: ArLocal;
   let warp: Warp;
-  let pst: PstContractImpl;
-  let pst2: PstContractImpl;
+  let pst: PstContract;
+  let pst2: PstContract;
 
   let foreignContractTxId: string;
   let contractTxId: string;
@@ -79,9 +79,9 @@ describe('Testing the Profit Sharing Token', () => {
       wasmGlueCode: path.join(__dirname, '../contract/implementation/pkg/rust-contract.js')
     }));
 
-    pst = new PstContractImpl(contractTxId, warp);
+    pst = new PstContract(contractTxId, warp);
 
-    pst2 = new PstContractImpl(foreignContractTxId, warp);
+    pst2 = new PstContract(foreignContractTxId, warp);
 
     // connecting wallet to the PST contract
     pst.connect(wallet).setEvaluationOptions({ internalWrites: true });
