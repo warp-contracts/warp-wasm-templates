@@ -23,7 +23,7 @@ If you are not familiar with the concept of Profit Sharing Tokens, check out a [
 You will need:
 
 - Rust :-) (https://doc.rust-lang.org/cargo/getting-started/installation.html)
-- [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) (on Apple's M1s use `cargo install wasm-pack`)
+- [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) (on Apple's M1s you may need Rosetta `softwareupdate --install-rosetta` for wasm-pack to run)
 - [Node.js](https://nodejs.org/en/download/) version 16.5 or above
 - [yarn](https://yarnpkg.com/getting-started/install) installed
 
