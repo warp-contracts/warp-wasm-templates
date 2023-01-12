@@ -3,7 +3,7 @@
 This repo contains Warp WASM contracts templates in:
 
 - [AssemblyScript](assemblyscript/README.md)
-- [Rust](rust/README.md)
+- [Rust](rust/pst/README.md)
 - [Go](go/README.md)
 
 It allows to quickly jump into contract development - each template contains an example PST contract,
