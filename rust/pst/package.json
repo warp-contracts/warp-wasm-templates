@@ -37,7 +37,7 @@
     "arweave": "1.11.8",
     "json-schema-to-typescript": "^11.0.1",
     "typescript": "^4.6.2",
-    "warp-contracts": "^1.2.45"
+    "warp-contracts": "^1.2.46"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",

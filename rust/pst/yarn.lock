@@ -5895,22 +5895,22 @@ redstone-isomorphic@1.1.8:
     safe-buffer "^5.1.2"
     undici "^5.8.0"
 
-redstone-wasm-json-toolkit@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/redstone-wasm-json-toolkit/-/redstone-wasm-json-toolkit-1.0.3.tgz#5479c0f093862cdd71fb5eab41cbbeb8ddc2b824"
-  integrity sha512-5TumLje/czphGt9B2hXqLnQEmvJ3olvdp5gvLr0ayDMZ6FXhDF7Sfo//xIgug4Uyif5o4tJyYvOeo5Of17/01w==
+redstone-wasm-json-toolkit@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/redstone-wasm-json-toolkit/-/redstone-wasm-json-toolkit-1.0.5.tgz#b117ecc403d89577abc1bb00b9f26fa0690dfa2c"
+  integrity sha512-xuMPgeTL3Jl010uj261eBNS21fWFjy1RQREfnZFckY1IEOn/wGrydrqEhY7Gb6f8oQMk2uVYhjkgVYJ29GVD0w==
   dependencies:
     buffer-pipe "0.0.3"
     leb128 "0.0.4"
     redstone-isomorphic "1.1.0"
 
-redstone-wasm-metering@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/redstone-wasm-metering/-/redstone-wasm-metering-1.0.3.tgz#3fc12b24c814b9fc114ac552fbeed0d545a4bfa1"
-  integrity sha512-hrvvzjTdc3TEY/6DuqHQtvbX6/iSmvIyFIOY/yw4qPcJIueD9AAPK7JrGpssKSAYEcgJhgRhZOXksC+3TvgRQg==
+redstone-wasm-metering@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/redstone-wasm-metering/-/redstone-wasm-metering-1.0.5.tgz#fac2f8e6f6b28945f37aa1920489adca7ff809e9"
+  integrity sha512-A8XGdH5OBVMLk/s2To2WjfAmOssiy0Jrh3GZ2i0zhdKcTltMD2t+EC/46iNZAsxWpfMJPajxrJ1dNgrgWkY3Zw==
   dependencies:
     leb128 "^0.0.4"
-    redstone-wasm-json-toolkit "1.0.3"
+    redstone-wasm-json-toolkit "1.0.5"
 
 regexp.prototype.flags@^1.4.3:
   version "1.4.3"
@@ -6822,10 +6822,10 @@ walker@^1.0.8:
   dependencies:
     makeerror "1.0.12"
 
-warp-contracts@^1.2.45:
-  version "1.2.45"
-  resolved "https://registry.yarnpkg.com/warp-contracts/-/warp-contracts-1.2.45.tgz#837d966d3f143472018353970f2df4543826926d"
-  integrity sha512-wykrhUkKjS5XTve6rWm2ZTEe7iWxzAUb9l67/CCvZsu33qLV0s8rMMmFL+0ZSUzEEnXb5ydaonV2OGU9UiBbbg==
+warp-contracts@^1.2.46:
+  version "1.2.46"
+  resolved "https://registry.yarnpkg.com/warp-contracts/-/warp-contracts-1.2.46.tgz#e60af9eeb4ba9eb7268ea0a6f7157589a6c0bb30"
+  integrity sha512-q32MACDScWyiMsuMpqHGM9ePX+meOxZRdSfhDzJC/uj74poQo9d11PDjOYqhncbOiaoVNxz4gbfhTh+oiSUNvw==
   dependencies:
     "@assemblyscript/loader" "^0.19.23"
     "@idena/vrf-js" "^1.0.1"
@@ -6837,7 +6837,7 @@ warp-contracts@^1.2.45:
     level "^8.0.0"
     memory-level "^1.0.0"
     redstone-isomorphic "1.1.8"
-    redstone-wasm-metering "1.0.3"
+    redstone-wasm-metering "1.0.5"
     safe-stable-stringify "2.4.1"
     stream-buffers "^3.0.2"
     unzipit "^1.4.0"
