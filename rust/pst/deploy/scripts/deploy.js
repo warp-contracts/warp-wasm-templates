@@ -10,7 +10,7 @@ module.exports.deploy = async function (host, port, protocol, target, walletJwk)
   const warp = module.exports.getWarpInstance(port, target);
   const wallet = await loadWallet(arweave, walletJwk, target);
   const walletAddr = await walletAddress(arweave, wallet);
-  const contractSrc = fs.readFileSync(path.join(__dirname, '../../pkg/rust-contract_bg.wasm'));
+  const contractSrc = fs.readFileSync(path.join(__dirname, '../../contract/implementation/pkg/rust-contract_bg.wasm'));
   const stateFromFile = JSON.parse(fs.readFileSync(path.join(__dirname, '../state/init-state.json'), 'utf-8'));
 
   const initialState = {
@@ -29,7 +29,7 @@ module.exports.deploy = async function (host, port, protocol, target, walletJwk)
       initState: JSON.stringify(initialState),
       src: contractSrc,
       wasmSrcCodeDir: path.join(__dirname, '../../src'),
-      wasmGlueCode: path.join(__dirname, '../../pkg/rust-contract.js'),
+      wasmGlueCode: path.join(__dirname, '../../contract/implementation/pkg/rust-contract.js'),
     }
   );
   fs.writeFileSync(path.join(__dirname, `../${target}/contract-tx-id.txt`), contractTxId);
