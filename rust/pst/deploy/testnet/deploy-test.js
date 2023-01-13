@@ -1,7 +1,7 @@
 const { deploy } = require('../scripts/deploy');
 
 deploy(
-  'testnet.redstone.tools',
+  'arweave.net',
   443,
   'https',
   'testnet',

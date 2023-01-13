@@ -3,7 +3,15 @@ import fs from 'fs';
 import ArLocal from 'arlocal';
 import Arweave from 'arweave';
 import { JWKInterface } from 'arweave/node/lib/wallet';
-import { getTag, InteractionResult, LoggerFactory, PstState, Warp, SmartWeaveTags, WarpFactory } from 'warp-contracts';
+import {
+  InteractionResult,
+  LoggerFactory,
+  PstState,
+  Warp,
+  SmartWeaveTags,
+  WarpFactory,
+  TagsParser
+} from 'warp-contracts';
 import path from 'path';
 import { PstContract } from '../contract/definition/bindings/ts/PstContract';
 import { State } from '../contract/definition/bindings/ts/ContractState';
@@ -27,11 +35,15 @@ describe('Testing the Profit Sharing Token', () => {
   let foreignContractTxId: string;
   let contractTxId: string;
 
+  let tagsParser;
+
   beforeAll(async () => {
     // note: each tests suit (i.e. file with tests that Jest is running concurrently
     // with another files has to have ArLocal set to a different port!)
     arlocal = new ArLocal(1820, false);
     await arlocal.start();
+
+    tagsParser = new TagsParser();
 
     LoggerFactory.INST.logLevel('error');
     LoggerFactory.INST.logLevel('debug', 'WASM:Rust');
@@ -40,7 +52,7 @@ describe('Testing the Profit Sharing Token', () => {
     warp = WarpFactory.forLocal(1820);
     arweave = warp.arweave;
 
-    ({ jwk: wallet, address: walletAddress } = await warp.testing.generateWallet());
+    ({ jwk: wallet, address: walletAddress } = await warp.generateWallet());
 
     contractSrc = fs.readFileSync(path.join(__dirname, '../contract/implementation/pkg/rust-contract_bg.wasm'));
     const stateFromFile: PstState = JSON.parse(fs.readFileSync(path.join(__dirname, './data/token-pst.json'), 'utf8'));
@@ -97,9 +109,11 @@ describe('Testing the Profit Sharing Token', () => {
 
     expect(contractTx).not.toBeNull();
 
-    const contractSrcTx = await arweave.transactions.get(getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID));
-    expect(getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
-    expect(getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
+    const contractSrcTx = await arweave.transactions.get(
+      tagsParser.getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID)
+    );
+    expect(tagsParser.getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
+    expect(tagsParser.getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
   });
 
   it('should read pst state and balance data', async () => {
@@ -156,7 +170,8 @@ describe('Testing the Profit Sharing Token', () => {
 
     const newSource = fs.readFileSync(path.join(__dirname, './data/token-evolve.js'), 'utf8');
 
-    const newSrcTxId = await pst.contract.save({ src: newSource });
+    const srcTx = await warp.createSourceTx({ src: newSource }, wallet);
+    const newSrcTxId = await warp.saveSourceTx(srcTx);
 
     await pst.evolve({ value: newSrcTxId });
 
@@ -165,7 +180,7 @@ describe('Testing the Profit Sharing Token', () => {
   });
 
   it('should properly perform dry write with overwritten caller', async () => {
-    const { address: overwrittenCaller } = await warp.testing.generateWallet();
+    const { address: overwrittenCaller } = await warp.generateWallet();
 
     await pst.transfer({
       target: overwrittenCaller,
