@@ -28,7 +28,7 @@ module.exports.deploy = async function (host, port, protocol, target, walletJwk)
       wallet,
       initState: JSON.stringify(initialState),
       src: contractSrc,
-      wasmSrcCodeDir: path.join(__dirname, '../../src'),
+      wasmSrcCodeDir: path.join(__dirname, '../../contract/implementation/src'),
       wasmGlueCode: path.join(__dirname, '../../contract/implementation/pkg/rust-contract.js'),
     }
   );
