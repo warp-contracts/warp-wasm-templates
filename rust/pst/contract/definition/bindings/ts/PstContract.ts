@@ -12,7 +12,7 @@ import {
   ContractError,
   EvaluationOptions
 } from 'warp-contracts';
-import { Balance, BalanceResult } from './View';
+import { Balance, BalanceResult, ForeignView, ForeignViewResult } from './View';
 import { Transfer, Evolve, ForeignRead, ForeignWrite } from './WriteAction';
 import { State } from './ContractState';
 
@@ -46,6 +46,19 @@ export class PstContract {
     const interactionResult = await this.contract.viewState<BaseInput & Balance, BalanceResult>({
       function: 'balance',
       ...balance
+    });
+    if (interactionResult.type == 'error') {
+      throw new ContractError(interactionResult.errorMessage);
+    } else if (interactionResult.type == 'exception') {
+      throw Error(interactionResult.errorMessage);
+    }
+    return interactionResult.result;
+  }
+
+  async foreignView(foreignView: ForeignView): Promise<ForeignViewResult> {
+    const interactionResult = await this.contract.viewState<BaseInput & ForeignView, ForeignViewResult>({
+      function: 'foreignView',
+      ...foreignView
     });
     if (interactionResult.type == 'error') {
       throw new ContractError(interactionResult.errorMessage);

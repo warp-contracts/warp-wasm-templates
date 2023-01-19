@@ -5,12 +5,21 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type View = Balance | BalanceResult;
+export type View = Balance | BalanceResult | ForeignView | ForeignViewResult;
 
 export interface Balance {
   target: string;
 }
 export interface BalanceResult {
+  balance: number;
+  target: string;
+  ticker: string;
+}
+export interface ForeignView {
+  contractTxId: string;
+  target: string;
+}
+export interface ForeignViewResult {
   balance: number;
   target: string;
   ticker: string;

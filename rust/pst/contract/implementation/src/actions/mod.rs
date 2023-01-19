@@ -4,12 +4,14 @@ use warp_pst::{action::ActionResult, state::State};
 pub mod balance;
 pub mod evolve;
 pub mod foreign_read;
+pub mod foreign_view;
 pub mod foreign_write;
 pub mod transfer;
 
 pub use balance::*;
 pub use evolve::*;
 pub use foreign_read::*;
+pub use foreign_view::*;
 pub use foreign_write::*;
 pub use transfer::*;
 

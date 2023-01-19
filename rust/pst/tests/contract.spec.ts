@@ -152,6 +152,29 @@ describe('Testing the Profit Sharing Token', () => {
     );
   });
 
+  it('should properly view foreign contract state', async () => {
+    let res = await pst.foreignView({
+      contractTxId: foreignContractTxId,
+      target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M'
+    });
+    expect(res.ticker).toEqual("FOREIGN_PST");
+    expect(res.target).toEqual("uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M");
+    expect(res.balance).toEqual(10_000_000);
+  });
+
+  it('should propagate error from view foreign contract state', async () => {
+    let exc;
+    try {
+      let res = await pst.foreignView({
+        contractTxId: foreignContractTxId,
+        target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6Ma'
+      });
+    } catch(e) {
+      exc = e;
+    }
+    expect(exc).toHaveProperty("name", "ContractError");
+  });
+
   it('should properly perform internal write', async () => {
     expect((await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance).toEqual(10000000);
 

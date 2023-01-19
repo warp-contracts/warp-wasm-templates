@@ -35,6 +35,7 @@ pub async fn handle(state: State, action: Action) -> ActionResult {
         Action::Balance(action) => action.action(effective_caller, state),
         Action::Evolve(action) => action.action(effective_caller, state),
         Action::ForeignRead(action) => action.action(effective_caller, state).await,
+        Action::ForeignView(action) => action.action(effective_caller, state).await,
         Action::ForeignWrite(action) => action.action(effective_caller, state).await,
     }
 }
