@@ -5895,23 +5895,6 @@ redstone-isomorphic@1.1.8:
     safe-buffer "^5.1.2"
     undici "^5.8.0"
 
-redstone-wasm-json-toolkit@1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/redstone-wasm-json-toolkit/-/redstone-wasm-json-toolkit-1.0.5.tgz#b117ecc403d89577abc1bb00b9f26fa0690dfa2c"
-  integrity sha512-xuMPgeTL3Jl010uj261eBNS21fWFjy1RQREfnZFckY1IEOn/wGrydrqEhY7Gb6f8oQMk2uVYhjkgVYJ29GVD0w==
-  dependencies:
-    buffer-pipe "0.0.3"
-    leb128 "0.0.4"
-    redstone-isomorphic "1.1.0"
-
-redstone-wasm-metering@1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/redstone-wasm-metering/-/redstone-wasm-metering-1.0.5.tgz#fac2f8e6f6b28945f37aa1920489adca7ff809e9"
-  integrity sha512-A8XGdH5OBVMLk/s2To2WjfAmOssiy0Jrh3GZ2i0zhdKcTltMD2t+EC/46iNZAsxWpfMJPajxrJ1dNgrgWkY3Zw==
-  dependencies:
-    leb128 "^0.0.4"
-    redstone-wasm-json-toolkit "1.0.5"
-
 regexp.prototype.flags@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.3.tgz#87cab30f80f66660181a3bb7bf5981a872b367ac"
@@ -6822,10 +6805,10 @@ walker@^1.0.8:
   dependencies:
     makeerror "1.0.12"
 
-warp-contracts@^1.2.46:
-  version "1.2.46"
-  resolved "https://registry.yarnpkg.com/warp-contracts/-/warp-contracts-1.2.46.tgz#e60af9eeb4ba9eb7268ea0a6f7157589a6c0bb30"
-  integrity sha512-q32MACDScWyiMsuMpqHGM9ePX+meOxZRdSfhDzJC/uj74poQo9d11PDjOYqhncbOiaoVNxz4gbfhTh+oiSUNvw==
+warp-contracts@^1.2.48:
+  version "1.2.48"
+  resolved "https://registry.yarnpkg.com/warp-contracts/-/warp-contracts-1.2.48.tgz#2a325e80093eb54ed59af495e21c3b2c98b796a9"
+  integrity sha512-TBZJ/VZdr+9mFjH2gjf55kTeHc9/tXQ3bsym41+ujq6m1kIreyhL1I0G7bn6qSHpAbOIZKIjP5GC5+pp9pm8Ew==
   dependencies:
     "@assemblyscript/loader" "^0.19.23"
     "@idena/vrf-js" "^1.0.1"
@@ -6837,11 +6820,28 @@ warp-contracts@^1.2.46:
     level "^8.0.0"
     memory-level "^1.0.0"
     redstone-isomorphic "1.1.8"
-    redstone-wasm-metering "1.0.5"
     safe-stable-stringify "2.4.1"
     stream-buffers "^3.0.2"
     unzipit "^1.4.0"
     vm2 "3.9.11"
+    warp-wasm-metering "1.0.0"
+
+warp-wasm-json-toolkit@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/warp-wasm-json-toolkit/-/warp-wasm-json-toolkit-1.0.0.tgz#f08b555b64fac2b102450e6a5e94f4bf71405508"
+  integrity sha512-pFJpP3djS6GvDu5ohgBjSjkYQrKs1Toi7hsvjW5FIJO1Q/msclbeoUY3Poiyx0Hz6oRVfuO2MZkmCreDnNaUTg==
+  dependencies:
+    buffer-pipe "0.0.3"
+    leb128 "0.0.4"
+    redstone-isomorphic "1.1.0"
+
+warp-wasm-metering@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/warp-wasm-metering/-/warp-wasm-metering-1.0.0.tgz#ff2ded687885af22c8fc6560409a582e127c3af3"
+  integrity sha512-lOlVz7BDTnTMuvhrtIbVtozGJANoVgVn6gD3dTEFyIMehC250CKHmsqenX1jy5OM2DNL/VuFNdCTLHCGaPg64w==
+  dependencies:
+    leb128 "^0.0.4"
+    warp-wasm-json-toolkit "1.0.0"
 
 wcwidth@^1.0.1:
   version "1.0.1"

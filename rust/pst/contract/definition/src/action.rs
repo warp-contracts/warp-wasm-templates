@@ -32,6 +32,13 @@ pub struct ForeignRead {
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
 #[serde(rename_all = "camelCase")]
+pub struct ForeignView {
+    pub contract_tx_id: String,
+    pub target: String,
+}
+
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase")]
 pub struct ForeignWrite {
     pub contract_tx_id: String,
     pub qty: u64,
@@ -47,6 +54,8 @@ pub enum Action {
 
     Evolve(Evolve),
 
+    ForeignView(ForeignView),
+
     ForeignRead(ForeignRead),
     
     ForeignWrite(ForeignWrite)
@@ -56,7 +65,9 @@ pub enum Action {
 #[serde(rename_all = "camelCase", tag = "function")]
 pub enum View {
     Balance(Balance),
-    BalanceResult(BalanceResult)
+    BalanceResult(BalanceResult),
+    ForeignView(ForeignView),
+    ForeignViewResult(ForeignViewResult)
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
@@ -67,13 +78,21 @@ pub enum WriteAction {
     Evolve(Evolve),
 
     ForeignRead(ForeignRead),
-    
+
     ForeignWrite(ForeignWrite)
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct BalanceResult {
+    pub balance: u64,
+    pub ticker: String,
+    pub target: String,
+}
+
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct ForeignViewResult {
     pub balance: u64,
     pub ticker: String,
     pub target: String,
@@ -90,6 +109,7 @@ pub enum ReadResponse {
 pub enum HandlerResult {
     Write(State),
     Read(ReadResponse),
+    View(ForeignViewResult),
 }
 
 pub type ActionResult = Result<HandlerResult, ContractError>;
