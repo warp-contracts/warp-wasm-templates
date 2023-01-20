@@ -1,7 +1,7 @@
 const { readContractState } = require('../scripts/read-contract-state');
 
 readContractState(
-  'testnet.redstone.tools',
+  'sonar.warp.cc',
   443,
   'https',
   'testnet',

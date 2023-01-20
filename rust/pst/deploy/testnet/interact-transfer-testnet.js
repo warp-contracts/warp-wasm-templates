@@ -1,7 +1,7 @@
 const { interactTransfer } = require('../scripts/interact-transfer');
 
 interactTransfer(
-  'testnet.redstone.tools',
+  'sonar.warp.cc',
   443,
   'https',
   'testnet',

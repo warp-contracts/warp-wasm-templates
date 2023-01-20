@@ -1,7 +1,7 @@
 const { deploy } = require('../scripts/deploy');
 
 deploy(
-  'testnet.redstone.tools',
+  'sonar.warp.cc',
   443,
   'https',
   'testnet',

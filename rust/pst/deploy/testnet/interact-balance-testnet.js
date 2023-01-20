@@ -1,7 +1,7 @@
 const { interactBalance } = require('../scripts/interact-balance');
 
 interactBalance(
-  'testnet.redstone.tools',
+  'sonar.warp.cc',
   443,
   'https',
   'testnet',
