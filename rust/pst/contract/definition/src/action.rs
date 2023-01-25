@@ -3,12 +3,25 @@ use serde::{Deserialize, Serialize};
 use strum_macros::EnumIter;
 
 use crate::error::ContractError;
-use crate::state::{State};
+use crate::state::State;
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct Balance {
     pub target: String
+}
+
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct KvPut {
+    pub key: String,
+    pub value: String
+}
+
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct KvGet {
+    pub key: String
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
@@ -58,7 +71,12 @@ pub enum Action {
 
     ForeignRead(ForeignRead),
     
-    ForeignWrite(ForeignWrite)
+    ForeignWrite(ForeignWrite),
+
+    KvGet(KvGet),
+
+    KvPut(KvPut),
+
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
@@ -67,7 +85,9 @@ pub enum View {
     Balance(Balance),
     BalanceResult(BalanceResult),
     ForeignView(ForeignView),
-    ForeignViewResult(ForeignViewResult)
+    ForeignViewResult(ForeignViewResult),
+    KvGet(KvGet),
+    KvGetResult(KvGetResult),
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, EnumIter)]
@@ -79,7 +99,9 @@ pub enum WriteAction {
 
     ForeignRead(ForeignRead),
 
-    ForeignWrite(ForeignWrite)
+    ForeignWrite(ForeignWrite),
+
+    KvPut(KvPut)
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
@@ -88,6 +110,13 @@ pub struct BalanceResult {
     pub balance: u64,
     pub ticker: String,
     pub target: String,
+}
+
+#[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct KvGetResult {
+    pub key: String,
+    pub value: String,
 }
 
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, Hash, PartialEq, Eq, Default)]
@@ -101,7 +130,8 @@ pub struct ForeignViewResult {
 #[derive(JsonSchema, Clone, PartialEq, Debug, Serialize, Deserialize, Hash, Eq, EnumIter)]
 #[serde(rename_all = "camelCase", tag = "function")]
 pub enum ReadResponse {
-    BalanceResult(BalanceResult)
+    BalanceResult(BalanceResult),
+    KvGetResult(KvGetResult),
 }
 
 #[derive(Serialize, Deserialize)]

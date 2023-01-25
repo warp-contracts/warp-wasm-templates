@@ -3,7 +3,6 @@ use warp_pst::error::ContractError;
 use warp_pst::state::State;
 use warp_wasm_utils::contract_utils::foreign_call::view_foreign_contract_state;
 use async_trait::async_trait;
-use warp_wasm_utils::contract_utils::js_imports::log;
 use serde::{Deserialize, Serialize};
 
 use super::AsyncActionable;

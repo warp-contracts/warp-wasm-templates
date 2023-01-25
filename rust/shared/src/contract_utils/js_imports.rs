@@ -20,7 +20,6 @@ extern "C" {
     pub fn timestamp() -> i32;
 }
 
-
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen]
@@ -32,7 +31,6 @@ extern "C" {
     #[wasm_bindgen(static_method_of = Contract, js_name = contractOwner)]
     pub fn owner() -> String;
 }
-
 
 #[wasm_bindgen]
 extern "C" {
@@ -49,6 +47,17 @@ extern "C" {
     pub fn target() -> String;
 }
 
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen]
+    pub type KV;
+
+    #[wasm_bindgen(catch, static_method_of = KV, js_name = kvGet)]
+    pub async fn get(key: &str) -> Result<JsValue, JsValue>;
+
+    #[wasm_bindgen(catch, static_method_of = KV, js_name = kvPut)]
+    pub async fn put(key: &str, value: JsValue) -> Result<(), JsValue>;
+}
 
 #[wasm_bindgen]
 extern "C" {

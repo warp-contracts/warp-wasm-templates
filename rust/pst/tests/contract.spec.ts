@@ -34,6 +34,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
   let warp: Warp;
   let pst: PstContract;
   let pst2: PstContract;
+  let pst3: PstContract;
 
   let contractTxId: string;
 
@@ -116,12 +117,13 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     }));
 
     pst = new PstContract(contractTxId, warp);
-
     pst2 = new PstContract(properForeignContractTxId, warp);
+    pst3 = new PstContract(wrongForeignContractTxId, warp);
 
     // connecting wallet to the PST contract
     pst.connect(wallet).setEvaluationOptions({ internalWrites: true });
     pst2.connect(wallet).setEvaluationOptions({ internalWrites: true });
+    pst3.connect(wallet).setEvaluationOptions({ useKVStorage: true });
   });
 
   afterAll(async () => {
@@ -144,7 +146,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     expect(wasmSrc.additionalCode()).toEqual(
       fs.readFileSync(contractGlueCodeFile, 'utf-8')
     );
-    expect((await wasmSrc.sourceCode()).size).toEqual(12);
+    expect((await wasmSrc.sourceCode()).size).toEqual(14);
 
   });
 
@@ -163,6 +165,19 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
 
     expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555);
     expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(10000000 + 555);
+  });
+
+  it('should properly use KV', async () => {
+    await pst3.kvPut({
+      key: 'key1',
+      value: 'value1'
+    });
+    let ok = await pst3.kvGet({key: 'key1'});
+    expect(ok.key).toEqual("key1");
+    expect(ok.value).toEqual("value1");
+    let nok = await pst3.kvGet({key: 'non-existent'});
+    expect(nok.key).toEqual("non-existent");
+    expect(nok.value).toEqual("");
   });
 
   it('should properly view contract state', async () => {

@@ -6,6 +6,8 @@ pub mod evolve;
 pub mod foreign_read;
 pub mod foreign_view;
 pub mod foreign_write;
+pub mod kv_get;
+pub mod kv_put;
 pub mod transfer;
 
 pub use balance::*;
