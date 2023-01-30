@@ -7,3 +7,4 @@ __tests__/*.json
 .idea
 .yalc
 yalc.lock
+/rust/pst/contract/definition/bindings
