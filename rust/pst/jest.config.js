@@ -4,7 +4,7 @@ module.exports = {
 
   moduleFileExtensions: ['ts', 'js'],
 
-  testPathIgnorePatterns: ['/.yalc/', '/data/', '/utils'],
+  testPathIgnorePatterns: ['/tests\/data/'],
 
   testEnvironment: 'node',
 
