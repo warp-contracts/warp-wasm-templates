@@ -209,7 +209,8 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     } catch(e) {
       exc = e;
     }
-    expect(exc).toHaveProperty("name", "ContractError");
+    expect(exc).toHaveProperty("name", "Error");
+    expect(exc.message).toMatch(/\[RE:RE\]/);
   });
 
   xit('should properly perform internal write', async () => {
