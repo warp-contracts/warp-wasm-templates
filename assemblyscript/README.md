@@ -1,3 +1,5 @@
+> ⚠️ The support for AssemblyScript contracts has been removed in SDK version `1.2.52`. More details [here](https://github.com/warp-contracts/warp/issues/348).
+
 # 🚀 Warp contracts - AssemblyScript template
 
 Following repository is a template for writing SmartWeave contracts in AssemblyScript and building them into WASM binaries which can be then processed by Warp SDK.

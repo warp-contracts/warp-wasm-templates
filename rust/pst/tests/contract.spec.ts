@@ -213,8 +213,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     expect(exc.message).toMatch(/\[RE:RE\]/);
   });
 
-  xit('should properly perform internal write', async () => {
-    // FIXME
+  it('should properly perform internal write', async () => {
     expect((await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance).toEqual(10000000);
 
     await pst.foreignWrite({

@@ -1,3 +1,6 @@
+> ⚠️ The support for Go contracts has been removed in SDK version `1.2.52`. More details [here](https://github.com/warp-contracts/warp/issues/348).
+
+
 # 🐿 Warp contracts - Go template
 
 > ⚠️ This template is using previous version of Warp SDK API (`1.0.1`). It will soon be updated to the `1.2.x` version.
