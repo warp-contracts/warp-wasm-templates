@@ -64,14 +64,14 @@ extern "C" {
     #[wasm_bindgen]
     pub type SmartWeave;
 
-    #[wasm_bindgen(static_method_of = SmartWeave, js_name = readContractState)]
-    pub async fn read_contract_state(contract_id: &str) -> JsValue;
+    #[wasm_bindgen(catch, static_method_of = SmartWeave, js_name = readContractState)]
+    pub async fn read_contract_state(contract_id: &str) -> Result<JsValue, JsValue>;
 
-    #[wasm_bindgen(static_method_of = SmartWeave, js_name = viewContractState)]
-    pub async fn view_contract_state(contract_id: &str, input: JsValue) -> JsValue;
+    #[wasm_bindgen(catch, static_method_of = SmartWeave, js_name = viewContractState)]
+    pub async fn view_contract_state(contract_id: &str, input: JsValue) -> Result<JsValue, JsValue>;
 
-    #[wasm_bindgen(static_method_of = SmartWeave, js_name = write)]
-    pub async fn write(contract_id: &str, input: JsValue) -> JsValue;
+    #[wasm_bindgen(catch, static_method_of = SmartWeave, js_name = write)]
+    pub async fn write(contract_id: &str, input: JsValue) -> Result<JsValue, JsValue>;
 
     #[wasm_bindgen(static_method_of = SmartWeave, js_name = refreshState)]
     pub async fn refresh_state();

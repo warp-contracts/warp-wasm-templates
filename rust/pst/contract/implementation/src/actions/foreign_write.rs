@@ -26,12 +26,15 @@ struct Result {
 #[async_trait(?Send)]
 impl AsyncActionable for ForeignWrite {
     async fn action(self, caller: String, mut state: State) -> ActionResult {
-        let result: Result =
+        let result: Result = match
             write_foreign_contract(&self.contract_tx_id, Input{
                 function: "transfer".to_string(),
                 qty: self.qty,
                 target: self.target
-            }).await;
+            }).await {
+                Ok(r) => r,
+                Err(e) => return Err(ContractError::RuntimeError(e))
+        };
     
         log(("Write done! ".to_owned() + &result.state.ticker).as_str());
         log(("Result type ".to_owned() + &result.result_type).as_str());
