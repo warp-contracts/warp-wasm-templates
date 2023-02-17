@@ -16,9 +16,10 @@ impl AsyncActionable for ForeignRead {
         if self.contract_tx_id == "bad_contract" {
             Err(ContractError::IDontLikeThisContract)
         } else {
-            let foreign_contract_state: State =
-                read_foreign_contract_state(&self.contract_tx_id).await;
-    
+            let foreign_contract_state: State = match read_foreign_contract_state(&self.contract_tx_id).await {
+                Ok(s) => s,
+                Err(e) => return Err(ContractError::RuntimeError(e))
+            };
             // Some dummy logic - just for the sake of the integration test
             if foreign_contract_state.ticker == "FOREIGN_PST" {
                 log("Adding to tokens");

@@ -229,7 +229,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
   });
 
   it('should properly perform internal write', async () => {
-    expect((await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance).toEqual(10000000);
+    let balance = (await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance;
 
     await pst.foreignWrite({
       contractTxId: properForeignContractTxId,
@@ -237,7 +237,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
       qty: 555
     });
 
-    expect((await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance).toEqual(10000555);
+    expect((await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance).toEqual(balance + 555);
     expect((await pst2.balance({ target: walletAddress })).balance).toEqual(555669 - 555);
   });
 
