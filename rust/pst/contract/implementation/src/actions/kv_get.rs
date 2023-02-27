@@ -1,21 +1,28 @@
+use super::AsyncViewActionable;
 use async_trait::async_trait;
+use warp_contracts::{handler_result::ViewResult::*, kv_operations::kv_get};
 use warp_pst::{
-    action::{ActionResult, HandlerResult, KvGetResult, ReadResponse, KvGet},
-    state::State,
+    action::{KvGet, PstKvGetResult, PstViewResponse, PstViewResult},
+    state::PstState,
 };
-use warp_wasm_utils::contract_utils::kv_operations::kv_get;
-
-use super::AsyncActionable;
 
 #[async_trait(?Send)]
-impl AsyncActionable for KvGet {
-    async fn action(self, _caller: String, _state: State) -> ActionResult {
+impl AsyncViewActionable for KvGet {
+    async fn action(self, _caller: String, _state: &PstState) -> PstViewResult {
         match kv_get(&self.key).await {
-            Ok(a) =>
-                Ok(HandlerResult::Read(ReadResponse::KvGetResult(KvGetResult { key: self.key, value: a }))),
-            Err(_) =>
-                // handle the error!
-                Ok(HandlerResult::Read(ReadResponse::KvGetResult(KvGetResult { key: self.key, value: "".to_owned() }))),
+            Success(a) => {
+                PstViewResult::Success(PstViewResponse::KvGetResult(PstKvGetResult {
+                    key: self.key,
+                    value: a,
+                }))
+            }
+            ContractError(_) =>  {
+                PstViewResult::Success(PstViewResponse::KvGetResult(PstKvGetResult {
+                    key: self.key,
+                    value: "".to_owned(),
+                }))
+            },
+            RuntimeError(e) => RuntimeError(e),
         }
     }
 }

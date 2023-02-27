@@ -147,7 +147,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     expect(wasmSrc.additionalCode()).toEqual(
       fs.readFileSync(contractGlueCodeFile, 'utf-8')
     );
-    expect((await wasmSrc.sourceCode()).size).toEqual(14);
+    expect((await wasmSrc.sourceCode()).size).toEqual(11);
 
   });
 
@@ -162,7 +162,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     await pst.transfer({
       target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
       qty: 555
-    });
+    }, { vrf: true });
 
     expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555);
     expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(10000000 + 555);
@@ -172,11 +172,11 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     await pst3.kvPut({
       key: 'key1',
       value: 'value1'
-    });
-    let ok = await pst3.kvGet({key: 'key1'});
+    }, { vrf: true });
+    let ok = await pst3.kvGet({ key: 'key1' });
     expect(ok.key).toEqual("key1");
     expect(ok.value).toEqual("value1");
-    let nok = await pst3.kvGet({key: 'non-existent'});
+    let nok = await pst3.kvGet({ key: 'non-existent' });
     expect(nok.key).toEqual("non-existent");
     expect(nok.value).toEqual("");
   });
@@ -193,12 +193,12 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
   it('should properly read foreign contract state', async () => {
     await pst.foreignRead({
       contractTxId: wrongForeignContractTxId
-    });
+    }, { vrf: true });
     expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555);
     expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(10000000 + 555);
     await pst.foreignRead({
       contractTxId: properForeignContractTxId
-    });
+    }, { vrf: true });
     expect((await pst.currentState()).balances[walletAddress]).toEqual(555669 - 555 + 1000);
     expect((await pst.currentState()).balances['uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M']).toEqual(
       10000000 + 555 + 1000
@@ -222,11 +222,11 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
         contractTxId: properForeignContractTxId,
         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M-Invalid'
       });
-    } catch(e) {
+    } catch (e) {
       exc = e;
     }
-    expect(exc).toHaveProperty("name", "Error");
-    expect(exc.message).toMatch(/\[RE:RE\]/);
+    expect(exc).toHaveProperty("error.kind", "WalletHasNoBalanceDefined");
+    expect(exc).toHaveProperty("error.data", 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M-Invalid');
   });
 
   it('should properly perform internal write', async () => {
@@ -236,7 +236,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
       contractTxId: properForeignContractTxId,
       target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
       qty: 555
-    });
+    }, { vrf: true });
 
     expect((await pst2.balance({ target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M' })).balance).toEqual(balance + 555);
     expect((await pst2.balance({ target: walletAddress })).balance).toEqual(555669 - 555);
@@ -248,7 +248,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     await pst.transfer({
       target: overwrittenCaller,
       qty: 1000
-    });
+    }, { vrf: true });
 
     // note: transfer should be done from the "overwrittenCaller" address, not the "walletAddress"
     const result: InteractionResult<State, unknown> = await pst.contract.dryWrite(
@@ -256,8 +256,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
         function: 'transfer',
         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
         qty: 333
-      },
-      overwrittenCaller
+      }, overwrittenCaller, undefined, undefined, true
     );
 
     expect(result.state.balances[walletAddress]).toEqual(555114 - 1000 + 1000);
@@ -269,10 +268,10 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     const result = await pst.contract.dryWrite({
       target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
       qty: 555
-    });
+    }, undefined, undefined, undefined, true);
 
     expect(result.type).toEqual('exception');
-    expect(result.errorMessage).toEqual('[RE:RE] Error while parsing input');
+    expect(result).toHaveProperty("errorMessage");
   });
 
   it('should properly handle contract errors', async () => {
@@ -280,10 +279,10 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
       function: 'transfer',
       target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
       qty: 0
-    });
+    }, undefined, undefined, undefined, true);
 
     expect(result.type).toEqual('error');
-    expect(result.errorMessage).toEqual('[CE:TransferAmountMustBeHigherThanZero]');
+    expect(result.error).toHaveProperty("kind", 'TransferAmountMustBeHigherThanZero');
   });
 
   xit('should return stable gas results', async () => {
@@ -294,7 +293,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
         function: 'transfer',
         target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
         qty: 555
-      });
+      }, undefined, undefined, undefined, true);
       results.push(result);
     }
 
@@ -312,7 +311,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
       function: 'transfer',
       target: 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M',
       qty: 555
-    });
+    }, undefined, undefined, undefined, true);
 
     expect(result.type).toEqual('exception');
     expect(result.errorMessage.startsWith('[RE:OOG] Out of gas!')).toBeTruthy();
@@ -326,7 +325,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     const srcTx = await warp.createSource({ src: newSource }, wallet);
     const newSrcTxId = await warp.saveSource(srcTx);
 
-    await pst.evolve({ value: newSrcTxId });
+    await pst.evolve({ value: newSrcTxId }, { vrf: true });
 
     // note: the evolved balance always adds 555 to the result
     expect((await pst.balance({ target: walletAddress })).balance).toEqual(balance + 555);

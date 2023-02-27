@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use warp_pst::{action::ActionResult, state::State};
+use warp_pst::{action::{PstViewResult, PstWriteResult}, state::PstState};
 
 pub mod balance;
 pub mod evolve;
@@ -17,13 +17,20 @@ pub use foreign_view::*;
 pub use foreign_write::*;
 pub use transfer::*;
 
-use warp_wasm_utils::contract_utils::js_imports::log;
-
-pub trait Actionable {
-    fn action(self, caller: String, state: State) -> ActionResult;
+pub trait ViewActionable {
+    fn action(self, caller: String, state: &PstState) -> PstViewResult;
 }
 
 #[async_trait(?Send)]
-pub trait AsyncActionable {
-    async fn action(self, caller: String, state: State) -> ActionResult;
+pub trait AsyncViewActionable {
+    async fn action(self, caller: String, state: &PstState) -> PstViewResult;
+}
+
+pub trait WriteActionable {
+    fn action(self, caller: String, state: PstState) -> PstWriteResult;
+}
+
+#[async_trait(?Send)]
+pub trait AsyncWriteActionable {
+    async fn action(self, caller: String, state: PstState) -> PstWriteResult;
 }

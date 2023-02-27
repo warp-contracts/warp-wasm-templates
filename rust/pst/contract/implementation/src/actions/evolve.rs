@@ -1,21 +1,23 @@
-use warp_pst::action::{ActionResult, Evolve, HandlerResult};
-use warp_pst::error::ContractError;
-use warp_pst::state::State;
+use super::WriteActionable;
+use warp_contracts::js_imports::Transaction;
+use warp_pst::{
+    action::{Evolve, PstWriteResult},
+    error::PstError::*,
+    state::PstState,
+};
 
-use warp_wasm_utils::contract_utils::js_imports::Transaction;
-
-use super::Actionable;
-
-impl Actionable for Evolve {
-    fn action(self, caller: String, mut state: State) -> ActionResult {
+impl WriteActionable for Evolve {
+    fn action(self, _caller: String, mut state: PstState) -> PstWriteResult {
         match state.can_evolve {
-            Some(can_evolve) => if can_evolve && state.owner == Transaction::owner() {
-                state.evolve = Option::from(self.value);
-                Ok(HandlerResult::Write(state))
-            } else {
-                Err(ContractError::OnlyOwnerCanEvolve)
-            },
-            None => Err(ContractError::EvolveNotAllowed),
+            Some(true) => {
+                if state.owner == Transaction::owner() {
+                    state.evolve = Option::from(self.value);
+                    PstWriteResult::Success(state)
+                } else {
+                    PstWriteResult::ContractError(OnlyOwnerCanEvolve)
+                }
+            }
+            _ => PstWriteResult::ContractError(EvolveNotAllowed),
         }
     }
 }

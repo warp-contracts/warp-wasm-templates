@@ -4,8 +4,7 @@
     "target": "ES2018",
     "lib": ["dom"],
     "esModuleInterop": true,
-    "downlevelIteration": true,
-    "allowJs": true
+    "downlevelIteration": true
   },
-  "exclude": ["node_modules", "tools", "rust/tests"]
+  "exclude": ["node_modules", "tools", "contract/implementation/pkg"]
 }

@@ -5,7 +5,7 @@ mod tests {
 
     use schemars::JsonSchema;
 
-    use crate::action::{WriteAction, View};
+    use crate::action::{View, WriteAction};
     use crate::state::ContractState;
 
     const SCHEMAS_DIR: &str = "./bindings/json";

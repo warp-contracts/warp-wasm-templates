@@ -7067,19 +7067,15 @@ walker@^1.0.8:
   dependencies:
     makeerror "1.0.12"
 
-warp-contracts-plugin-deploy@^1.0.0:
+"warp-contracts-plugin-deploy@file:.yalc/warp-contracts-plugin-deploy":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/warp-contracts-plugin-deploy/-/warp-contracts-plugin-deploy-1.0.0.tgz#c3d8ab88b8b838f59e34653589a82ae09dc4c86e"
-  integrity sha512-HU4A0GZAP6XATFv7fuHA2EUP6V+h0ZluGiv2JjH6AE6LTqFBtP+PixgtNZds5YcOf+eLO01gv15vaT7pea0W6w==
   dependencies:
     arbundles "^0.7.3"
     arlocal "^1.1.59"
     node-stdlib-browser "^1.2.0"
 
-warp-contracts@1.2.54:
-  version "1.2.54"
-  resolved "https://registry.yarnpkg.com/warp-contracts/-/warp-contracts-1.2.54.tgz#6f79cc5ff42c615a81d26114f5025e58711e5db3"
-  integrity sha512-L+axxbyJmk9JwILjddjKYVxJhofgRwXU2K8gDZxGotSA2632YkYVcXOZN7VOKgeXK+tzxEQniB4n4csnO+/GKA==
+"warp-contracts@file:.yalc/warp-contracts":
+  version "1.2.56"
   dependencies:
     "@idena/vrf-js" "^1.0.1"
     archiver "^5.3.0"

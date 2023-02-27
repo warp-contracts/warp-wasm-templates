@@ -5,7 +5,7 @@ use strum_macros::EnumIter;
 
 #[derive(JsonSchema, Serialize, Deserialize, Clone, Default, Debug)]
 #[serde(rename_all = "camelCase")]
-pub struct State {
+pub struct PstState {
     pub ticker: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
@@ -20,5 +20,5 @@ pub struct State {
 #[derive(JsonSchema, Clone, Debug, Serialize, Deserialize, EnumIter)]
 #[serde(rename_all = "camelCase", tag = "function")]
 pub enum ContractState {
-    State(State)
+    State(PstState),
 }
