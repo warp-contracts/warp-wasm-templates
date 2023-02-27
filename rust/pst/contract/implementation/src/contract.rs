@@ -1,14 +1,15 @@
-use async_recursion::async_recursion;
+use warp_pst::{
+    action::{Action, PstWriteResult, PstViewResult},
+    state::PstState,
+};
+use wasm_bindgen::prelude::wasm_bindgen;
 
-use warp_pst::action::{Action, ActionResult};
-use warp_pst::state::State;
+use crate::actions::*;
+use warp_contracts::{js_imports::SmartWeave, warp_contract};
 
-use crate::actions::{Actionable, *};
-use warp_wasm_utils::contract_utils::js_imports::{Block, Contract, log, SmartWeave, Transaction};
-
-#[async_recursion(?Send)]
-pub async fn handle(state: State, action: Action) -> ActionResult {
-    let original_caller = Transaction::owner();
+#[warp_contract(write)]
+pub async fn handle_write(state: PstState, action: Action) -> PstWriteResult {
+    console_error_panic_hook::set_once();
     let effective_caller = SmartWeave::caller();
 
     //Example of accessing functions imported from js:
@@ -27,17 +28,28 @@ pub async fn handle(state: State, action: Action) -> ActionResult {
     // log(&("SmartWeave::caller()".to_owned() + &SmartWeave::caller()));
 
     // for vrf-compatible interactions
-    /*log(&("Vrf::value()".to_owned() + &Vrf::value()));
-    log(&("Vrf::randomInt()".to_owned() + &Vrf::randomInt(7).to_string()));*/
+    // log(&("Vrf::value()".to_owned() + &Vrf::value()));
+    // log(&("Vrf::randomInt()".to_owned() + &Vrf::randomInt(7).to_string()));
 
     match action {
         Action::Transfer(action) => action.action(effective_caller, state),
-        Action::Balance(action) => action.action(effective_caller, state),
         Action::Evolve(action) => action.action(effective_caller, state),
         Action::ForeignRead(action) => action.action(effective_caller, state).await,
-        Action::ForeignView(action) => action.action(effective_caller, state).await,
         Action::ForeignWrite(action) => action.action(effective_caller, state).await,
-        Action::KvGet(action) => action.action(effective_caller, state).await,
         Action::KvPut(action) => action.action(effective_caller, state).await,
+        _ => PstWriteResult::RuntimeError("invalid method for write".to_owned()),
+    }
+}
+
+#[warp_contract(view)]
+pub async fn handle_view(state: &PstState, action: Action) -> PstViewResult {
+    console_error_panic_hook::set_once();
+    let effective_caller = SmartWeave::caller();
+
+    match action {
+        Action::Balance(action) => action.action(effective_caller, state),
+        Action::ForeignView(action) => action.action(effective_caller, state).await,
+        Action::KvGet(action) => action.action(effective_caller, state).await,
+        _ => PstViewResult::RuntimeError("invalid method for write".to_owned()),
     }
 }

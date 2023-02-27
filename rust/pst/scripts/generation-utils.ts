@@ -62,7 +62,7 @@ const generateInteractions = (functionObj: any, read: boolean) => {
               interactionNameUpper
             )}, ${interactionNameUpper}Result>({ function: '${interactionName}', ...${interactionName} });
             if (interactionResult.type == 'error') {
-              throw new ContractError(interactionResult.errorMessage);
+              throw new ContractError(interactionResult.error);
             } else if (interactionResult.type == 'exception') {
                 throw Error(interactionResult.errorMessage);
             }

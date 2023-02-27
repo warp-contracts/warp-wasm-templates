@@ -1,34 +1,31 @@
-use warp_pst::action::{ActionResult, ForeignRead, HandlerResult};
-use warp_pst::error::ContractError;
-use warp_pst::state::State;
-use warp_wasm_utils::contract_utils::foreign_call::read_foreign_contract_state;
-use warp_wasm_utils::contract_utils::js_imports::log;
-
+use super::AsyncWriteActionable;
 use async_trait::async_trait;
-
-use warp_wasm_utils::contract_utils::js_imports::Transaction;
-
-use super::AsyncActionable;
+use warp_contracts::{foreign_call::read_foreign_contract_state, js_imports::log};
+use warp_pst::{
+    action::{ForeignRead, PstWriteResult},
+    error::PstError::*,
+    state::PstState,
+};
 
 #[async_trait(?Send)]
-impl AsyncActionable for ForeignRead {
-    async fn action(self, caller: String, mut state: State) -> ActionResult {
+impl AsyncWriteActionable for ForeignRead {
+    async fn action(self, _caller: String, mut state: PstState) -> PstWriteResult {
         if self.contract_tx_id == "bad_contract" {
-            Err(ContractError::IDontLikeThisContract)
-        } else {
-            let foreign_contract_state: State = match read_foreign_contract_state(&self.contract_tx_id).await {
-                Ok(s) => s,
-                Err(e) => return Err(ContractError::RuntimeError(e))
-            };
-            // Some dummy logic - just for the sake of the integration test
-            if foreign_contract_state.ticker == "FOREIGN_PST" {
-                log("Adding to tokens");
-                for val in state.balances.values_mut() {
-                    *val += 1000;
-                }
-            }
-    
-            Ok(HandlerResult::Write(state))
+            return PstWriteResult::ContractError(IDontLikeThisContract);
         }
+        let foreign_contract_state: PstState =
+            match read_foreign_contract_state(&self.contract_tx_id).await {
+                Ok(s) => s,
+                Err(e) => return PstWriteResult::RuntimeError(e),
+            };
+        // Some dummy logic - just for the sake of the integration test
+        if foreign_contract_state.ticker == "FOREIGN_PST" {
+            log("Adding to tokens");
+            for val in state.balances.values_mut() {
+                *val += 1000;
+            }
+        }
+
+        PstWriteResult::WriteResponse(state)
     }
 }

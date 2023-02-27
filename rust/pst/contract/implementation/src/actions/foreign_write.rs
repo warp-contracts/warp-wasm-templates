@@ -1,44 +1,36 @@
-use warp_pst::action::{ActionResult, HandlerResult, ForeignWrite};
-use warp_pst::error::ContractError;
-use warp_pst::state::State;
-use warp_wasm_utils::contract_utils::foreign_call::write_foreign_contract;
+use super::AsyncWriteActionable;
 use async_trait::async_trait;
-use warp_wasm_utils::contract_utils::js_imports::log;
-use serde::{Deserialize, Serialize};
-// use warp_wasm_utils::contract_utils::actionable::AsyncActionable;
-
-use super::{AsyncActionable};
+use serde::Serialize;
+use warp_contracts::{foreign_call::write_foreign_contract, handler_result::WriteResult::*};
+use warp_pst::{
+    action::{ForeignWrite, PstWriteResult},
+    error::PstError,
+    state::PstState,
+};
 
 #[derive(Serialize)]
 struct Input {
     function: String,
     qty: u64,
-    target: String
-}
-
-#[derive(Deserialize)]
-struct Result {
-    state: State,
-    #[serde(rename = "type")]
-    result_type: String,
+    target: String,
 }
 
 #[async_trait(?Send)]
-impl AsyncActionable for ForeignWrite {
-    async fn action(self, caller: String, mut state: State) -> ActionResult {
-        let result: Result = match
-            write_foreign_contract(&self.contract_tx_id, Input{
+impl AsyncWriteActionable for ForeignWrite {
+    async fn action(self, _caller: String, state: PstState) -> PstWriteResult {
+        match write_foreign_contract::<Input, PstError>(
+            &self.contract_tx_id,
+            Input {
                 function: "transfer".to_string(),
                 qty: self.qty,
-                target: self.target
-            }).await {
-                Ok(r) => r,
-                Err(e) => return Err(ContractError::RuntimeError(e))
-        };
-    
-        log(("Write done! ".to_owned() + &result.state.ticker).as_str());
-        log(("Result type ".to_owned() + &result.result_type).as_str());
-    
-        Ok(HandlerResult::Write(state))
+                target: self.target,
+            },
+        )
+        .await
+        {
+            WriteResponse(_) => WriteResponse(state),
+            ContractError(e) => ContractError(e),
+            RuntimeError(e) => RuntimeError(e),
+        }
     }
 }

@@ -13,3 +13,4 @@ schemars = "0.8.10"
 strum = "0.15"
 strum_macros = "0.15"
 rand = "0.7.0"
+warp-contracts = { version = "0.1.0" }

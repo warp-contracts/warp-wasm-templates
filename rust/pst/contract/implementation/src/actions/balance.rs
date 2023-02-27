@@ -1,25 +1,20 @@
+use super::ViewActionable;
 use warp_pst::{
-    action::{ActionResult, HandlerResult, BalanceResult, ReadResponse, Balance},
-    error::ContractError,
-    state::State,
+    action::{Balance, PstBalanceResult, PstViewResponse::BalanceResult, PstViewResult},
+    error::PstError::*,
+    state::PstState,
 };
-use warp_wasm_utils::contract_utils::js_imports::log;
 
-use super::Actionable;
-
-impl Actionable for Balance {
-    fn action(self, caller: String, state: State) -> ActionResult {
+impl ViewActionable for Balance {
+    fn action(self, _caller: String, state: &PstState) -> PstViewResult {
         if !state.balances.contains_key(&self.target) {
-            Err(ContractError::WalletHasNoBalanceDefined(self.target))
-        } else {
-            let balance_response = BalanceResult {
-                balance: *state.balances.get( & self.target).unwrap(),
-                ticker: state.ticker,
-                target: self.target
-            };
-            Ok(HandlerResult::Read(
-                ReadResponse::BalanceResult(balance_response)
-            ))
+            return PstViewResult::ContractError(WalletHasNoBalanceDefined(self.target));
         }
+        let balance_response = PstBalanceResult {
+            balance: *state.balances.get(&self.target).unwrap(),
+            ticker: state.ticker.clone(),
+            target: self.target,
+        };
+        PstViewResult::ViewResponse(BalanceResult(balance_response))
     }
 }

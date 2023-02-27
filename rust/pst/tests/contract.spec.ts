@@ -147,7 +147,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     expect(wasmSrc.additionalCode()).toEqual(
       fs.readFileSync(contractGlueCodeFile, 'utf-8')
     );
-    expect((await wasmSrc.sourceCode()).size).toEqual(14);
+    expect((await wasmSrc.sourceCode()).size).toEqual(11);
 
   });
 
@@ -225,8 +225,8 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     } catch(e) {
       exc = e;
     }
-    expect(exc).toHaveProperty("name", "Error");
-    expect(exc.message).toMatch(/\[RE:RE\]/);
+    expect(exc).toHaveProperty("error.kind", "WalletHasNoBalanceDefined");
+    expect(exc).toHaveProperty("error.data", 'uhE-QeYS8i4pmUtnxQyHD7dzXFNaJ9oMK-IM-QPNY6M-Invalid');
   });
 
   it('should properly perform internal write', async () => {
@@ -272,7 +272,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     });
 
     expect(result.type).toEqual('exception');
-    expect(result.errorMessage).toEqual('[RE:RE] Error while parsing input');
+    expect(result).toHaveProperty("errorMessage");
   });
 
   it('should properly handle contract errors', async () => {
@@ -283,7 +283,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     });
 
     expect(result.type).toEqual('error');
-    expect(result.errorMessage).toEqual('[CE:TransferAmountMustBeHigherThanZero]');
+    expect(result.error).toHaveProperty("kind", 'TransferAmountMustBeHigherThanZero');
   });
 
   xit('should return stable gas results', async () => {
