@@ -14,6 +14,7 @@ import {
   ArweaveWrapper,
   WasmSrc,
 } from 'warp-contracts';
+import { DeployPlugin } from 'warp-contracts-plugin-deploy';
 import path from 'path';
 import { PstContract } from '../contract/definition/bindings/ts/PstContract';
 import { State } from '../contract/definition/bindings/ts/ContractState';
@@ -56,7 +57,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     LoggerFactory.INST.logLevel('debug', 'WASM:Rust');
     //LoggerFactory.INST.logLevel('debug', 'WasmContractHandlerApi');
 
-    warp = WarpFactory.forLocal(1820);
+    warp = WarpFactory.forLocal(1820).use(new DeployPlugin());
     ({ arweave } = warp);
     arweaveWrapper = new ArweaveWrapper(arweave);
 
@@ -322,8 +323,8 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
 
     const newSource = fs.readFileSync(path.join(__dirname, './data/token-evolve.js'), 'utf8');
 
-    const srcTx = await warp.createSourceTx({ src: newSource }, wallet);
-    const newSrcTxId = await warp.saveSourceTx(srcTx);
+    const srcTx = await warp.createSource({ src: newSource }, wallet);
+    const newSrcTxId = await warp.saveSource(srcTx);
 
     await pst.evolve({ value: newSrcTxId });
 
