@@ -5,24 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.17.3'
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
       - uses: jetli/wasm-pack-action@v0.3.0
         with:
           version: 'latest'
-      - name: AssemblyScript - install
-        run: yarn
-        working-directory: assemblyscript
-      - name: AssemblyScript - build
-        run: yarn build
-        working-directory: assemblyscript
-      - name: AssemblyScript - run tests
-        run: yarn test
-        working-directory: assemblyscript
       - name: Rust - install
         run: yarn
         working-directory: rust/pst
@@ -35,18 +23,3 @@ jobs:
       - name: Rust - run tests
         run: yarn test
         working-directory: rust/pst
-      - name: Go - install
-        run: yarn
-        working-directory: go
-      - name: Go - install easyjson
-        run: go get github.com/mailru/easyjson && go install github.com/mailru/easyjson/...@latest
-        working-directory: go
-      - name: Go - install tinygo
-        run: wget https://github.com/tinygo-org/tinygo/releases/download/v0.22.0/tinygo_0.22.0_amd64.deb && sudo dpkg -i tinygo_0.22.0_amd64.deb
-        working-directory: go
-      - name: Go - build
-        run: yarn build
-        working-directory: go
-      - name: Go - run tests
-        run: yarn test
-        working-directory: go
