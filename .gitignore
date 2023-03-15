@@ -9,3 +9,5 @@ __tests__/*.json
 .yalc
 yalc.lock
 /rust/pst/contract/definition/bindings
+logs
+cache
