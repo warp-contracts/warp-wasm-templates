@@ -13,6 +13,8 @@ import {
   TagsParser,
   ArweaveWrapper,
   WasmSrc,
+  SMART_WEAVE_TAGS,
+  WARP_TAGS,
 } from 'warp-contracts';
 import { DeployPlugin } from 'warp-contracts-plugin-deploy';
 import path from 'path';
@@ -135,11 +137,11 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     const contractTx = await arweave.transactions.get(contractTxId);
     expect(contractTx).not.toBeNull();
 
-    const contractSrcTxId = tagsParser.getTag(contractTx, SmartWeaveTags.CONTRACT_SRC_TX_ID);
+    const contractSrcTxId = tagsParser.getTag(contractTx, SMART_WEAVE_TAGS.CONTRACT_SRC_TX_ID);
     const contractSrcTx = await arweave.transactions.get(contractSrcTxId);
-    expect(tagsParser.getTag(contractSrcTx, SmartWeaveTags.CONTENT_TYPE)).toEqual('application/wasm');
-    expect(tagsParser.getTag(contractSrcTx, SmartWeaveTags.WASM_LANG)).toEqual('rust');
-    expect(tagsParser.getTag(contractSrcTx, SmartWeaveTags.WASM_META)).toBeTruthy();
+    expect(tagsParser.getTag(contractSrcTx, SMART_WEAVE_TAGS.CONTENT_TYPE)).toEqual('application/wasm');
+    expect(tagsParser.getTag(contractSrcTx, WARP_TAGS.WASM_LANG)).toEqual('rust');
+    expect(tagsParser.getTag(contractSrcTx, WARP_TAGS.WASM_META)).toBeTruthy();
 
     const srcTxData = await arweaveWrapper.txData(contractSrcTxId);
     const wasmSrc = new WasmSrc(srcTxData);

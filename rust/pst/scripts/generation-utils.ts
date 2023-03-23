@@ -22,22 +22,22 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
 
         constructor(contractId: string, warp: Warp) {
           this.contract = warp.contract<State>(contractId);
-        }      
+        }
 
-            connect(wallet: ArWallet) {
-                this.contract.connect(wallet);
-                return this;
-              }
+        connect(wallet: ArWallet) {
+          this.contract.connect(wallet);
+          return this;
+        }
 
-            setEvaluationOptions(evaluationOptions: Partial<EvaluationOptions>) {
-              this.contract.setEvaluationOptions(evaluationOptions);
-              return this;
-            }
+        setEvaluationOptions(evaluationOptions: Partial<EvaluationOptions>) {
+          this.contract.setEvaluationOptions(evaluationOptions);
+          return this;
+        }
 
-            async currentState(): Promise<State> {
-                const { cachedValue } = await this.contract.readState();
-                return cachedValue.state;
-              }
+        async currentState(): Promise<State> {
+          const { cachedValue } = await this.contract.readState();
+          return cachedValue.state;
+        }
 
         \n`;
   for (const readObj of actions[0].oneOf) {
@@ -50,7 +50,7 @@ export const writeImplementationFile = async (bindings: any, actions: any[]) => 
   writeFileSync(join(bindings, `${makeFirstCharUpper(implName)}Contract.ts`), resImpl);
 };
 
-const generateInteractions = (functionObj: any, read: boolean) => {
+const generateInteractions = (functionObj, read: boolean) => {
   const interactionName = functionObj.title;
   const interactionNameUpper = makeFirstCharUpper(interactionName);
   if (read) {
@@ -71,11 +71,11 @@ const generateInteractions = (functionObj: any, read: boolean) => {
     }
   } else {
     return `async ${interactionName}(
-            ${interactionName}: ${interactionNameUpper}, 
+            ${interactionName}: ${interactionNameUpper},
             options?: WriteInteractionOptions
             ): Promise<WriteInteractionResponse | null> {
             return await this.contract.writeInteraction<BaseInput & ${interactionNameUpper}>(
-                { function: '${interactionName}', ...${interactionName} }, 
+                { function: '${interactionName}', ...${interactionName} },
                 options
                 );
           }\n\n`;
@@ -87,7 +87,7 @@ export const interfaceString = (interfaceName: string, properties: string) => {
 };
 
 const getFunctionNames = (list: any[]) => {
-  const functionNames = [];
+  const functionNames = [] as string[];
   for (const typeObj of list) {
     const functionName = typeObj.title;
     functionName != 'function' && functionNames.push(functionName.charAt(0).toUpperCase() + functionName.slice(1));
@@ -95,9 +95,9 @@ const getFunctionNames = (list: any[]) => {
   return functionNames;
 };
 
-const getActionsName = (action: any) => {
+const getActionsName = (action) => {
   let actionsName = ``;
-  let actionsFunctions = [];
+  let actionsFunctions = [] as string[];
   actionsFunctions = [...actionsFunctions, ...getFunctionNames(action.oneOf || action.anyOf)];
   actionsFunctions.forEach((a) => {
     actionsFunctions.indexOf(a) == actionsFunctions.length - 1 ? (actionsName += a) : (actionsName += `${a}, `);

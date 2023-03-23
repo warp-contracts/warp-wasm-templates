@@ -10,7 +10,7 @@ license = "MIT"
 crate-type = ["cdylib"]
 
 [dependencies]
-warp-contracts = { version = "0.1.1" }
+warp-contracts = { version = "0.1.2" }
 wasm-bindgen = "=0.2.84"
 wasm-bindgen-futures = { version = "0.4.34" }
 serde = { version = "1.0", features = ["derive"] }
