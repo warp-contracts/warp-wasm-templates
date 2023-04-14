@@ -61,7 +61,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
 
     warp = WarpFactory.forLocal(1820).use(new DeployPlugin());
     ({ arweave } = warp);
-    arweaveWrapper = new ArweaveWrapper(arweave);
+    arweaveWrapper = new ArweaveWrapper(warp);
 
 
     ({ jwk: wallet, address: walletAddress } = await warp.generateWallet());
