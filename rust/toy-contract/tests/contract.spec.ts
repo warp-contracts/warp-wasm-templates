@@ -45,7 +45,6 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
   let warp: Warp;
   let toyContract: Contract<State>;
 
-
   let contractTxId: string;
 
   let arweaveWrapper: ArweaveWrapper;
@@ -62,8 +61,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
 
     warp = WarpFactory.forLocal(1820).use(new DeployPlugin());
     ({ arweave } = warp);
-    arweaveWrapper = new ArweaveWrapper(arweave);
-
+    arweaveWrapper = new ArweaveWrapper(warp);
 
     ({ jwk: wallet, address: walletAddress } = await warp.generateWallet());
 
@@ -77,7 +75,7 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
       initState: JSON.stringify(initialState),
       src: contractSrc,
       wasmSrcCodeDir: contractSrcCodeDir,
-      wasmGlueCode: contractGlueCodeFile
+      wasmGlueCode: contractGlueCodeFile,
     }));
 
     toyContract = warp.contract<State>(contractTxId);
@@ -103,11 +101,8 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     const srcTxData = await arweaveWrapper.txData(contractSrcTxId);
     const wasmSrc = new WasmSrc(srcTxData);
     expect(wasmSrc.wasmBinary()).not.toBeNull();
-    expect(wasmSrc.additionalCode()).toEqual(
-      fs.readFileSync(contractGlueCodeFile, 'utf-8')
-    );
+    expect(wasmSrc.additionalCode()).toEqual(fs.readFileSync(contractGlueCodeFile, 'utf-8'));
     expect((await wasmSrc.sourceCode()).size).toEqual(1);
-
   });
 
   it('should read state', async () => {
@@ -120,5 +115,4 @@ describe('Testing the Rust WASM Profit Sharing Token', () => {
     const interactionResult = await toyContract.viewState<Action, View>(new Action(17));
     expect(interactionResult.result.x).toEqual(4);
   });
-
 });
