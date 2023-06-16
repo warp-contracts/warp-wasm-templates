@@ -34,12 +34,13 @@
     "node": ">=16.5"
   },
   "dependencies": {
-    "arlocal": "^1.1.59",
-    "arweave": "1.12.4",
+    "arlocal": "^1.1.60",
+    "arweave": "1.13.7",
     "json-schema-to-typescript": "^11.0.1",
     "typescript": "^4.6.2",
-    "warp-contracts": "1.4.0",
-    "warp-contracts-plugin-deploy": "^1.0.1"
+    "warp-contracts": "^1.4.12",
+    "warp-contracts-plugin-deploy": "^1.0.8",
+    "warp-contracts-plugin-vrf": "^1.0.4"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
